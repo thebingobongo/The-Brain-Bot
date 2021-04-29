@@ -99,7 +99,12 @@ def getInsult():
     response = requests.get('https://evilinsult.com/generate_insult.php?lang=en&type=json')
     insult = json.loads(response.text)
     text = insult['insult']
-    return text
+    if 'testicles' in text or 'Suck' in text or 'chromosomes' in text or 'orangutans' in text or 'abortion' in text or\
+            'Tampon' in text or 'reindeer!' in text or 'motherfucker.&quot;\r\n--&gt;' in text or 'jerk off' in text\
+            or "amp&" in text or 'booble' in text or 'walt' in text or 'dick,' in text or 'twatface' in text:
+        return 'Something went wrong. You suck. Try again.'
+    else:
+        return text
 
 
 def getQuote():
@@ -131,7 +136,7 @@ def getSearch(searchterm):
             rand = random.randint(0, len(quotelist) - 1)
             quote = '"' + quotelist[rand]['quote'] + '" \n                           -' + quotelist[rand]['author']
     else:
-        quote = "Search Term not found. Try another search term."
+        quote = "Couldn't find a quote with that search. Try another search term."
     # print(quote)
     return quote
 
@@ -364,6 +369,20 @@ async def on_message(message):
         text = "https://plato.stanford.edu/entries/" + text
         await message.channel.send(text)
 
+    elif msg.startswith('.wiki'):
+        text = msg[6:]
+        text = text.strip()
+        text = text.replace(" ", "_")
+        text = 'https://en.wikipedia.org/wiki/' + text
+        await message.channel.send(text)
+
+    elif msg.startswith('.google'):
+        text = msg[8:]
+        text = text.strip()
+        text = text.replace(' ', '+')
+        text = 'https://www.google.com/search?q=' + text
+        await message.channel.send(text)
+
     elif msg.startswith(".mary"):
         await message.channel.send(
             "Imagine a neuroscientist who has only ever seen black and white things, but she is an expert in color vision and knows everything about its physics and biology.\n If, one day, she sees color, does she learn anything new? Is there anything about perceiving color that wasn’t captured in her knowledge? ")
@@ -411,6 +430,19 @@ async def on_message(message):
     elif msg.startswith('.stop'):
         await message.channel.send("YOU'VE BEEN TOLD TO STOP!")
 
+
+    elif msg.startswith(".marz"):
+        await message.channel.send('*Certified language game moment*')
+
+    elif msg.startswith('.endme'):
+        await message.channel.send("*bang bang*")
+
+    elif msg.startswith(".end "):
+        await message.channel.send("*look towards " + msg[5:] + "* . *bang bang*")
+
+    # elif msg.startswith('.georg'):
+    #     await message.channel.send('Nice corpse you got there. Mind if I stop the hearse at my place for 2 minutes?')
+
     elif msg.startswith('.hohoho'):
         await message.channel.send("Santa does not exist. Grow up.")
 
@@ -429,7 +461,7 @@ async def on_message(message):
     elif msg.startswith(".help"):
         rules = client.get_channel(831215204280958986)
         await message.channel.send(
-            "Hi, I am The Brain bot and I am here to help you enjoy the server. \n If you have any complaints or need to speak to mods, send me a dm! \n\n Here are my commands:\n .quote -> I'll send a random quote \n .quote [searchterm] -> I'll send a quote with the term you searched for \n .search [philosopher] -> I'll send a quote by the philosopher you mention \n .ask [question] -> I will answer your questions \n .ask2 [question] -> I will answer your question in the most intellectual way I can \n .sep [article name] -> I will send the link to the sep article \n .ideas -> I will send a list of ideas and thought experiments for you to choose from \n\n .advice -> I'll give you some helpful advice \n .joke -> I'll tell you a funny joke \n .programming -> I'll tell you a funny programming joke \n .knockknock -> I'll tell you a knock knock joke \n .insult -> I'll insult you, and be warned, I'm mean! \n .mathfact -> I will tell you an interesting math fact \n .today -> I will tell you a fact about todays date \n .hangman -> you can play a game of hangman  \n\n You can try out other commands, and see what you find! I have some hidden gems too!\n I'll give you one, try .pray \n\n For more information go to  {0.mention}".format(
+            "Hi, I am The Brain bot and I am here to help you enjoy the server. \n If you have any complaints or need to speak to mods, send me a dm! \n\n Here are my commands:\n .quote -> I'll send a random quote \n .quote [searchterm] -> I'll send a quote with the term you searched for \n .search [philosopher] -> I'll send a quote by the philosopher you mention \n .ask [question] -> I will answer your questions \n .ask2 [question] -> I will answer your question in the most intellectual way I can \n .sep [article name] -> I will send the link to the sep article \n .ideas -> I will send a list of ideas and thought experiments for you to choose from \n\n .advice -> I'll give you some helpful advice \n .joke -> I'll tell you a funny joke \n .programming -> I'll tell you a funny programming joke \n .knockknock -> I'll tell you a knock knock joke \n .insult -> I'll insult you, and be warned, I'm mean! \n .mathfact -> I will tell you an interesting math fact \n .today -> I will tell you a fact about todays date \n .hangman -> you can play a game of hangman  \n\n You can try out other commands, and see what you find! I have some hidden gems too!\n I'll give you one, try .pray \n\n For more information about the server go to  {0.mention}".format(
                 rules))
 
     elif msg.startswith(".hug"):
@@ -526,8 +558,7 @@ easy_list = ['wolf', 'deer', 'dangerous', ' fire station', 'surgeon', 'building'
 hard_list = ['anomaly', 'equivocal', 'precipitate', 'assuage', 'erudite', 'opaque', 'prodigal', 'enigma', 'fervid',
              'placate',
              'desiccate', 'audacious', 'gullible', 'laudable', 'adulterate', 'jazz music', 'capricious', 'homogenous',
-             'loquacious'
-             'misanthrope', 'corroborate', 'paradox', 'philanthropic', 'epistemology', 'replicate', 'jupiter',
+             'loquacious', 'misanthrope', 'corroborate', 'paradox', 'philanthropic', 'epistemology', 'replicate', 'jupiter',
              'alpha centauri']
 
 
