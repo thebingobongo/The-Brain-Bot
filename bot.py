@@ -458,6 +458,9 @@ async def on_message(message):
     elif msg.startswith('.fact'):
         await message.channel.send("I can confirm that this is perhaps the only objective truth in this universe.")
 
+    elif msg.startswith('.about'):
+        await message.channel.send("Common to many science fiction stories, it outlines a scenario in which a mad scientist, machine, or other entity might remove a person's brain from the body, suspend it in a vat of life-sustaining liquid, and connect its neurons by wires to a supercomputer which would provide it with electrical impulses identical to those the brain normally receives. According to such stories, the computer would then be simulating reality (including appropriate responses to the brain's own output) and the 'disembodied' brain would continue to have perfectly normal conscious experiences, such as those of a person with an embodied brain, without these being related to objects or events in the real world.")
+
     elif msg.startswith(".help"):
         rules = client.get_channel(831215204280958986)
         await message.channel.send(
