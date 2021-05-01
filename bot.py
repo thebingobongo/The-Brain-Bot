@@ -172,7 +172,7 @@ def getDefinition(search):
     response = requests.get('https://api.dictionaryapi.dev/api/v2/entries/en_US/' + str(search))
     text = json.loads(response.text)
     if len(text) == 3:
-        return "Word not found. Try again."
+        return ["Word not found. Try again."]
     else:
         word = text[0]['word']
         def_list = []
@@ -473,11 +473,13 @@ async def on_message(message):
     elif msg.startswith('.define'):
         search = msg[8:]
         result = getDefinition(search)
-        embedVar = discord.Embed(title=result[0],color=0x000000)
-        for i in result[1]:
-            embedVar.add_field(name=i[0], value=i[1], inline=False)
-        await message.channel.send(embed=embedVar)
-
+        if len(result)> 1:
+            embedVar = discord.Embed(title=result[0],color=0x000000)
+            for i in result[1]:
+                embedVar.add_field(name=i[0], value=i[1], inline=False)
+            await message.channel.send(embed=embedVar)
+        else:
+            await message.channel.send(result[0])
     # elif msg.startswith('.test'):
     #     embedVar = discord.Embed(title="Title",  color=0x00ff00)
     #     embedVar.add_field(name="Field1", value="hi", inline=False)
@@ -492,7 +494,7 @@ async def on_message(message):
     elif msg.startswith(".help"):
         rules = client.get_channel(831215204280958986)
         await message.channel.send(
-            "Hi, I am The Brain bot and I am here to help you enjoy the server. \n If you have any complaints or need to speak to mods, send me a dm! \n\n Here are my commands:\n .quote -> I'll send a random quote \n .quote [searchterm] -> I'll send a quote with the term you searched for \n .search [philosopher] -> I'll send a quote by the philosopher you mention \n .ask [question] -> I will answer your questions \n .ask2 [question] -> I will answer your question in the most intellectual way I can \n .sep [article name] -> I will send the link to the sep article \n .wiki [article name] -> I will send the link to the wikipedia article \n .google [search term] -> I will return a link to the google search \n .ideas -> I will send a list of ideas and thought experiments for you to choose from \n\n .advice -> I'll give you some helpful advice \n .joke -> I'll tell you a funny joke \n .programming -> I'll tell you a funny programming joke \n .knockknock -> I'll tell you a knock knock joke \n .insult -> I'll insult you, and be warned, I'm mean! \n .mathfact -> I will tell you an interesting math fact \n .today -> I will tell you a fact about todays date \n .hangman -> you can play a game of hangman  \n\n You can try out other commands, and see what you find! I have some hidden gems too!\n I'll give you one, try .pray \n\n For more information about the server go to  {0.mention}".format(
+            "Hi, I am The Brain bot and I am here to help you enjoy the server. \n If you have any complaints or need to speak to mods, send me a dm! \n\n Here are my commands:\n .quote -> I'll send a random quote \n .quote [searchterm] -> I'll send a quote with the term you searched for \n .search [philosopher] -> I'll send a quote by the philosopher you mention \n .ask [question] -> I will answer your questions \n .ask2 [question] -> I will answer your question in the most intellectual way I can \n .sep [article name] -> I will send the link to the sep article \n .wiki [article name] -> I will send the link to the wikipedia article \n .google [search term] -> I will return a link to the google search \n .define [word] -> I will get you the definition of the word. \n .ideas -> I will send a list of ideas and thought experiments for you to choose from \n\n .advice -> I'll give you some helpful advice \n .joke -> I'll tell you a funny joke \n .programming -> I'll tell you a funny programming joke \n .knockknock -> I'll tell you a knock knock joke \n .insult -> I'll insult you, and be warned, I'm mean! \n .mathfact -> I will tell you an interesting math fact \n .today -> I will tell you a fact about todays date \n .hangman -> you can play a game of hangman  \n\n You can try out other commands, and see what you find! I have some hidden gems too!\n I'll give you one, try .pray \n\n For more information about the server go to  {0.mention}".format(
                 rules))
 
     elif msg.startswith(".hug"):
