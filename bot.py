@@ -481,7 +481,6 @@ async def on_message(message):
     # elif msg.startswith('.test'):
     #     embedVar = discord.Embed(title="Title",  color=0x00ff00)
     #     embedVar.add_field(name="Field1", value="hi", inline=False)
-    #     embedVar.add_field(name="Field2", value="hi2", inline=False)
     #     await message.channel.send(embed=embedVar)
 
     elif msg.startswith('.fact'):
