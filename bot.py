@@ -168,6 +168,23 @@ def getDateFact():
     return response.text
 
 
+def getDefinition(search):
+    response = requests.get('https://api.dictionaryapi.dev/api/v2/entries/en_US/' + str(search))
+    text = json.loads(response.text)
+    if len(text) == 3:
+        return "Word not found. Try again."
+    else:
+        word = text[0]['word']
+        def_list = []
+        definitions = text[0]['meanings']
+        for i in range(len(definitions)):
+            type = definitions[i]['partOfSpeech']
+            definition = definitions[i]['definitions'][0]['definition']
+            def_list.append([type, definition])
+        return [word, def_list]
+
+
+
 # todolist = []
 with open('todo.pkl', 'rb') as f:
     todolist = pickle.load(f)
@@ -452,8 +469,20 @@ async def on_message(message):
     elif msg.startswith('.trumped'):
         await message.channel.send('Meat machine trying to join force with silicon machines')
 
+
+    elif msg.startswith('.define'):
+        search = msg[8:]
+        result = getDefinition(search)
+        embedVar = discord.Embed(title=result[0],color=0x000000)
+        for i in result[1]:
+            embedVar.add_field(name=i[0], value=i[1], inline=False)
+        await message.channel.send(embed=embedVar)
+
     # elif msg.startswith('.test'):
-    #     await message.channel.send("    ")
+    #     embedVar = discord.Embed(title="Title",  color=0x00ff00)
+    #     embedVar.add_field(name="Field1", value="hi", inline=False)
+    #     embedVar.add_field(name="Field2", value="hi2", inline=False)
+    #     await message.channel.send(embed=embedVar)
 
     elif msg.startswith('.fact'):
         await message.channel.send("I can confirm that this is perhaps the only objective truth in this universe.")
