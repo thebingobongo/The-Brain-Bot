@@ -302,6 +302,18 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
             await member.remove_roles(dungeon_role, reason = "time's up ")
 
 
+@client.command()
+@commands.has_role(831214459682029588)
+async def kick(ctx, member: discord.Member, *, reason = None):
+    await member.kick(reason=reason)
+
+
+@client.command()
+@commands.has_role(831214459682029588)
+async def ban(ctx, member: discord.Member, *, reason=None):
+    await member.ban(reason=reason)
+
+
 @client.event
 async def on_message(message):
     if message.author == client.user:
