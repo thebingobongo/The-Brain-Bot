@@ -306,12 +306,14 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
 @commands.has_role(831214459682029588)
 async def kick(ctx, member: discord.Member, *, reason = None):
     await member.kick(reason=reason)
+    await ctx.send("{0.mention} has been kicked by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
 
 @client.command()
 @commands.has_role(831214459682029588)
 async def ban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
+    await ctx.send("{0.mention} has been banned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
 
 @client.event
