@@ -235,8 +235,15 @@ async def on_ready():
 async def mute(ctx, members: commands.Greedy[discord.Member],
                    mute_minutes: typing.Optional[int] = 0,
                    *, reason: str = "None"):
+
     """Mass mute members with an optional mute_minutes parameter to time it"""
 
+    rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
+    bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
+    knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
+    pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
+
+    member_role = []
 
     if not members:
         await ctx.send("You need to name someone to mute")
@@ -245,13 +252,30 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
     muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
 
     for member in members:
+        if rook_role in member.roles:
+            member_role.append(rook_role)
+            await member.remove_roles(rook_role,reason=reason)
+        elif bishop_role in member.roles:
+            member_role.append(bishop_role)
+            await member.remove_roles(bishop_role,reason=reason)
+        elif knight_role in member.roles:
+            member_role.append(knight_role)
+            await member.remove_roles(knight_role,reason=reason)
+        elif pawn_role in member.roles:
+            member_role.append(pawn_role)
+            await member.remove_roles(pawn_role,reason=reason)
         await member.add_roles(muted_role, reason = reason)
+        await member.edit(mute=True)
         await ctx.send("{0.mention} has been muted by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason, mute_minutes))
 
     if mute_minutes > 0:
         await asyncio.sleep(mute_minutes * 60)
+        count = 0
         for member in members:
             await member.remove_roles(muted_role, reason = "time's up ")
+            await member.edit(mute=False)
+            await member.add_roles(member_role[count],reason=reason)
+            count += 1
 
 
 @client.command()
@@ -262,6 +286,7 @@ async def unmute(ctx, member: discord.Member, *, reason=None):
         await ctx.send("You need to name someone to unmute.")
         return
     await member.remove_roles(muted_role, reason=reason)
+    await member.edit(mute=False)
     await ctx.send(
         "{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
@@ -324,28 +349,23 @@ async def promote(ctx, member: discord.Member, *, reason='Promotion'):
     knight_role = discord.utils.get(ctx.guild.roles,id=831213165105643520)
     pawn_role = discord.utils.get(ctx.guild.roles,id=831213206155952179)
     member_role = discord.utils.get(ctx.guild.roles,id=835286042176127027)
-    sendchannel = client.get_channel(831211215878488078)
     if rook_role in member.roles:
         await ctx.send("{0.mention} is already a Rook!".format(member))
     elif bishop_role in member.roles:
         await member.remove_roles(bishop_role, reason=reason)
         await member.add_roles(rook_role, reason=reason)
         await ctx.send("{0.mention} has been promoted to Rook!".format(member))
-        await sendchannel.send("{0.mention} has been promoted to Rook!".format(member))
     elif knight_role in member.roles:
         await member.remove_roles(knight_role, reason=reason)
         await member.add_roles(bishop_role, reason=reason)
         await ctx.send("{0.mention} has been promoted to Bishop!".format(member))
-        await sendchannel.send("{0.mention} has been promoted to Bishop!".format(member))
     elif member_role in member.roles:
         await member.remove_roles(pawn_role, reason=reason)
         await member.add_roles(knight_role, reason=reason)
         await ctx.send("{0.mention} has been promoted to Knight!".format(member))
-        await sendchannel.send("{0.mention} has been promoted to Knight!".format(member))
     elif pawn_role in member.roles:
         await member.add_roles(member_role, reason=reason)
         await ctx.send("{0.mention} has been promoted to Member!".format(member))
-        await sendchannel.send("{0.mention} has been promoted to Member!".format(member))
     else:
         await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
 
@@ -362,17 +382,14 @@ async def demote(ctx, member: discord.Member, *, reason='Demotion'):
         await member.remove_roles(rook_role, reason=reason)
         await member.add_roles(bishop_role, reason=reason)
         await ctx.send("{0.mention} has been demoted to bishop.".format(member))
-        await sendchannel.send("{0.mention} has been demoted to bishop.".format(member))
     elif bishop_role in member.roles:
         await member.remove_roles(bishop_role, reason=reason)
         await member.add_roles(knight_role, reason=reason)
         await ctx.send("{0.mention} has been demoted to a Knight.".format(member))
-        await sendchannel.send("{0.mention} has been demoted to a Knight.".format(member))
     elif knight_role in member.roles:
         await member.remove_roles(knight_role, reason=reason)
         await member.add_roles(pawn_role, reason=reason)
         await ctx.send("{0.mention} has been demoted to Pawn.".format(member))
-        await sendchannel.send("{0.mention} has been demoted to Pawn.".format(member))
     elif pawn_role in member.roles:
         await ctx.send("{0.mention} is a Pawn. Cannot be further demoted.".format(member))
     else:
