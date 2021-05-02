@@ -316,6 +316,69 @@ async def ban(ctx, member: discord.Member, *, reason=None):
     await ctx.send("{0.mention} has been banned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
 
+@client.command()
+@commands.has_role(831214459682029588)
+async def promote(ctx, member: discord.Member, *, reason='Promotion'):
+    rook_role = discord.utils.get(ctx.guild.roles,id=831227767671619636)
+    bishop_role = discord.utils.get(ctx.guild.roles,id=831213133066534993)
+    knight_role = discord.utils.get(ctx.guild.roles,id=831213165105643520)
+    pawn_role = discord.utils.get(ctx.guild.roles,id=831213206155952179)
+    member_role = discord.utils.get(ctx.guild.roles,id=835286042176127027)
+    sendchannel = client.get_channel(831211215878488078)
+    if rook_role in member.roles:
+        await ctx.send("{0.mention} is already a Rook!".format(member))
+    elif bishop_role in member.roles:
+        await member.remove_roles(bishop_role, reason=reason)
+        await member.add_roles(rook_role, reason=reason)
+        await ctx.send("{0.mention} has been promoted to Rook!".format(member))
+        await sendchannel.send("{0.mention} has been promoted to Rook!".format(member))
+    elif knight_role in member.roles:
+        await member.remove_roles(knight_role, reason=reason)
+        await member.add_roles(bishop_role, reason=reason)
+        await ctx.send("{0.mention} has been promoted to Bishop!".format(member))
+        await sendchannel.send("{0.mention} has been promoted to Bishop!".format(member))
+    elif member_role in member.roles:
+        await member.remove_roles(pawn_role, reason=reason)
+        await member.add_roles(knight_role, reason=reason)
+        await ctx.send("{0.mention} has been promoted to Knight!".format(member))
+        await sendchannel.send("{0.mention} has been promoted to Knight!".format(member))
+    elif pawn_role in member.roles:
+        await member.add_roles(member_role, reason=reason)
+        await ctx.send("{0.mention} has been promoted to Member!".format(member))
+        await sendchannel.send("{0.mention} has been promoted to Member!".format(member))
+    else:
+        await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
+
+
+@client.command()
+@commands.has_role(831214459682029588)
+async def demote(ctx, member: discord.Member, *, reason='Demotion'):
+    rook_role = discord.utils.get(ctx.guild.roles,id=831227767671619636)
+    bishop_role = discord.utils.get(ctx.guild.roles,id=831213133066534993)
+    knight_role = discord.utils.get(ctx.guild.roles,id=831213165105643520)
+    pawn_role = discord.utils.get(ctx.guild.roles,id=831213206155952179)
+    sendchannel = client.get_channel(831211215878488078)
+    if rook_role in member.roles:
+        await member.remove_roles(rook_role, reason=reason)
+        await member.add_roles(bishop_role, reason=reason)
+        await ctx.send("{0.mention} has been demoted to bishop.".format(member))
+        await sendchannel.send("{0.mention} has been demoted to bishop.".format(member))
+    elif bishop_role in member.roles:
+        await member.remove_roles(bishop_role, reason=reason)
+        await member.add_roles(knight_role, reason=reason)
+        await ctx.send("{0.mention} has been demoted to a Knight.".format(member))
+        await sendchannel.send("{0.mention} has been demoted to a Knight.".format(member))
+    elif knight_role in member.roles:
+        await member.remove_roles(knight_role, reason=reason)
+        await member.add_roles(pawn_role, reason=reason)
+        await ctx.send("{0.mention} has been demoted to Pawn.".format(member))
+        await sendchannel.send("{0.mention} has been demoted to Pawn.".format(member))
+    elif pawn_role in member.roles:
+        await ctx.send("{0.mention} is a Pawn. Cannot be further demoted.".format(member))
+    else:
+        await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
+
+
 @client.event
 async def on_message(message):
     if message.author == client.user:
