@@ -245,10 +245,6 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
     muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
 
     for member in members:
-        # if self.bot.user == member: # what good is a muted bot?
-        #     embed = discord.Embed(title = "You can't mute me, I'm an almighty bot")
-        #     await ctx.send(embed = embed)
-        #     continue
         await member.add_roles(muted_role, reason = reason)
         await ctx.send("{0.mention} has been muted by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason, mute_minutes))
 
@@ -256,6 +252,29 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
         await asyncio.sleep(mute_minutes * 60)
         for member in members:
             await member.remove_roles(muted_role, reason = "time's up ")
+
+@client.command()
+@commands.has_role(831214459682029588)
+async def dungeon(ctx, members: commands.Greedy[discord.Member],
+                   dungeon_minutes: typing.Optional[int] = 0,
+                   *, reason: str = "None"):
+    """Mass mute members with an optional mute_minutes parameter to time it"""
+
+
+    if not members:
+        await ctx.send("You need to name someone to dungeon.")
+        return
+
+    dungeon_role = discord.utils.get(ctx.guild.roles, name="Punished")
+
+    for member in members:
+        await member.add_roles(dungeon_role, reason = reason)
+        await ctx.send("{0.mention} has been dungeoned by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason, dungeon_minutes))
+
+    if dungeon_minutes > 0:
+        await asyncio.sleep(dungeon_minutes * 60)
+        for member in members:
+            await member.remove_roles(dungeon_role, reason = "time's up ")
 
 
 @client.event
