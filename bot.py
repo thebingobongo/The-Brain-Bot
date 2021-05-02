@@ -459,7 +459,7 @@ async def on_message(message):
         text = msg[25:]
         await sendchannel.send(text)
 
-    elif '@everyone' in msg or '@here' in message:
+    elif '@everyone' in msg or '@here' in msg:
         await message.channel.send("I wont say that.")
 
     elif msg.startswith(".ask2"):
