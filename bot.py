@@ -454,7 +454,15 @@ async def on_message(message):
     global game_in_progress
     global debateTopics
 
-    if msg.startswith(".ask2"):
+    if msg.startswith('.echo'):
+        sendchannel = client.get_channel(int(msg[6:24]))
+        text = msg[25:]
+        await sendchannel.send(text)
+
+    elif '@everyone' in msg or '@here' in message:
+        await message.channel.send("I wont say that.")
+
+    elif msg.startswith(".ask2"):
         question = msg.split('.ask2 ', 1)[1]
         await message.channel.send(getAnswer2(question))
 
@@ -510,10 +518,6 @@ async def on_message(message):
         searchterm = msg.split('.search ', 1)[1]
         await message.channel.send(getSearchPhilosopher(searchterm))
 
-    elif msg.startswith('.echo'):
-        sendchannel = client.get_channel(int(msg[6:24]))
-        text = msg[25:]
-        await sendchannel.send(text)
 
     elif msg.startswith('.based'):
         await message.channel.send("That is, in fact, based.")
