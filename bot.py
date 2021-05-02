@@ -8,6 +8,8 @@ from dotenv import load_dotenv
 import os
 from datetime import date
 import pickle
+import asyncio
+import typing
 
 # get bot token and openai apikey
 load_dotenv()
@@ -219,13 +221,41 @@ def addToDo(task):
     return "Task has been successfully added!"
 
 
-client = commands.Bot(command_prefix='abra')
+client = commands.Bot(command_prefix='-')
 
 
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
     print("I am alive.")
+
+
+@client.command()
+@commands.has_role(831214459682029588)
+async def mute(ctx, members: commands.Greedy[discord.Member],
+                   mute_minutes: typing.Optional[int] = 0,
+                   *, reason: str = "None"):
+    """Mass mute members with an optional mute_minutes parameter to time it"""
+
+
+    if not members:
+        await ctx.send("You need to name someone to mute")
+        return
+
+    muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
+
+    for member in members:
+        # if self.bot.user == member: # what good is a muted bot?
+        #     embed = discord.Embed(title = "You can't mute me, I'm an almighty bot")
+        #     await ctx.send(embed = embed)
+        #     continue
+        await member.add_roles(muted_role, reason = reason)
+        await ctx.send("{0.mention} has been muted by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason, mute_minutes))
+
+    if mute_minutes > 0:
+        await asyncio.sleep(mute_minutes * 60)
+        for member in members:
+            await member.remove_roles(muted_role, reason = "time's up ")
 
 
 @client.event
