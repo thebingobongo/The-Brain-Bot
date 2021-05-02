@@ -223,6 +223,7 @@ def addToDo(task):
 
 client = commands.Bot(command_prefix='-')
 
+originalrole = {}
 
 @client.event
 async def on_ready():
@@ -236,6 +237,7 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
                    mute_minutes: typing.Optional[int] = 0,
                    *, reason: str = "None"):
 
+    global originalrole
     """Mass mute members with an optional mute_minutes parameter to time it"""
 
     rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
@@ -255,15 +257,20 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
         if rook_role in member.roles:
             member_role.append(rook_role)
             await member.remove_roles(rook_role,reason=reason)
+            originalrole[member] = rook_role
         elif bishop_role in member.roles:
             member_role.append(bishop_role)
             await member.remove_roles(bishop_role,reason=reason)
+            originalrole[member] = bishop_role
         elif knight_role in member.roles:
             member_role.append(knight_role)
             await member.remove_roles(knight_role,reason=reason)
+            originalrole[member] = knight_role
         elif pawn_role in member.roles:
             member_role.append(pawn_role)
+            originalrole[member] = pawn_role
             await member.remove_roles(pawn_role,reason=reason)
+
         await member.add_roles(muted_role, reason = reason)
         await member.edit(mute=True)
         await ctx.send("{0.mention} has been muted by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason, mute_minutes))
@@ -281,11 +288,14 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
 @client.command()
 @commands.has_role(831214459682029588)
 async def unmute(ctx, member: discord.Member, *, reason=None):
+    global originalrole
     muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
     if not member:
         await ctx.send("You need to name someone to unmute.")
         return
+    member_role = originalrole[member]
     await member.remove_roles(muted_role, reason=reason)
+    await member.add_roles(member_role,reason='unmuted')
     await member.edit(mute=False)
     await ctx.send(
         "{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason))
@@ -294,11 +304,14 @@ async def unmute(ctx, member: discord.Member, *, reason=None):
 @client.command()
 @commands.has_role(831214459682029588)
 async def undungeon(ctx, member: discord.Member, *, reason=None):
+    global originalrole
     dungeon_role = discord.utils.get(ctx.guild.roles, name="Punished")
     if not member:
         await ctx.send("You need to name someone to undungeon.")
         return
+    member_role = originalrole[member]
     await member.remove_roles(dungeon_role, reason=reason)
+    await member.add_roles(member_role,reason='unmuted')
     await ctx.send(
         "{0.mention} has been undungeoned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
@@ -308,8 +321,15 @@ async def undungeon(ctx, member: discord.Member, *, reason=None):
 async def dungeon(ctx, members: commands.Greedy[discord.Member],
                    dungeon_minutes: typing.Optional[int] = 0,
                    *, reason: str = "None"):
+    global originalrole
     """Mass mute members with an optional mute_minutes parameter to time it"""
 
+    rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
+    bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
+    knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
+    pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
+
+    member_role = []
 
     if not members:
         await ctx.send("You need to name someone to dungeon.")
@@ -318,13 +338,31 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
     dungeon_role = discord.utils.get(ctx.guild.roles, name="Punished")
 
     for member in members:
+        if rook_role in member.roles:
+            member_role.append(rook_role)
+            await member.remove_roles(rook_role, reason=reason)
+            originalrole[member] = rook_role
+        elif bishop_role in member.roles:
+            member_role.append(bishop_role)
+            await member.remove_roles(bishop_role, reason=reason)
+            originalrole[member] = bishop_role
+        elif knight_role in member.roles:
+            member_role.append(knight_role)
+            await member.remove_roles(knight_role, reason=reason)
+            originalrole[member] = knight_role
+        elif pawn_role in member.roles:
+            member_role.append(pawn_role)
+            originalrole[member] = pawn_role
+            await member.remove_roles(pawn_role, reason=reason)
         await member.add_roles(dungeon_role, reason = reason)
         await ctx.send("{0.mention} has been dungeoned by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason, dungeon_minutes))
 
     if dungeon_minutes > 0:
         await asyncio.sleep(dungeon_minutes * 60)
+        count = 0
         for member in members:
             await member.remove_roles(dungeon_role, reason = "time's up ")
+            await member.add_roles(member_role[count], reason=reason)
 
 
 @client.command()
