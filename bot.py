@@ -101,8 +101,8 @@ def getInsult():
     response = requests.get('https://evilinsult.com/generate_insult.php?lang=en&type=json')
     insult = json.loads(response.text)
     text = insult['insult']
-    if 'testicles' in text or 'Suck' in text or 'chromosomes' in text or 'orangutans' in text or 'abortion' in text or\
-            'Tampon' in text or 'reindeer!' in text or 'motherfucker.&quot;\r\n--&gt;' in text or 'jerk off' in text\
+    if 'testicles' in text or 'Suck' in text or 'chromosomes' in text or 'orangutans' in text or 'abortion' in text or \
+            'Tampon' in text or 'reindeer!' in text or 'motherfucker.&quot;\r\n--&gt;' in text or 'jerk off' in text \
             or "amp&" in text or 'booble' in text or 'walt' in text or 'dick,' in text or 'twatface' in text:
         return 'Something went wrong. You suck. Try again.'
     else:
@@ -186,7 +186,6 @@ def getDefinition(search):
         return [word, def_list]
 
 
-
 # todolist = []
 with open('todo.pkl', 'rb') as f:
     todolist = pickle.load(f)
@@ -225,6 +224,7 @@ client = commands.Bot(command_prefix='-')
 
 originalrole = {}
 
+
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
@@ -234,9 +234,8 @@ async def on_ready():
 @client.command()
 @commands.has_role(831214459682029588)
 async def mute(ctx, members: commands.Greedy[discord.Member],
-                   mute_minutes: typing.Optional[int] = 0,
-                   *, reason: str = "None"):
-
+               mute_minutes: typing.Optional[int] = 0,
+               *, reason: str = "None"):
     global originalrole
     """Mass mute members with an optional mute_minutes parameter to time it"""
 
@@ -256,32 +255,34 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
     for member in members:
         if rook_role in member.roles:
             member_role.append(rook_role)
-            await member.remove_roles(rook_role,reason=reason)
+            await member.remove_roles(rook_role, reason=reason)
             originalrole[member] = rook_role
         elif bishop_role in member.roles:
             member_role.append(bishop_role)
-            await member.remove_roles(bishop_role,reason=reason)
+            await member.remove_roles(bishop_role, reason=reason)
             originalrole[member] = bishop_role
         elif knight_role in member.roles:
             member_role.append(knight_role)
-            await member.remove_roles(knight_role,reason=reason)
+            await member.remove_roles(knight_role, reason=reason)
             originalrole[member] = knight_role
         elif pawn_role in member.roles:
             member_role.append(pawn_role)
-            originalrole[member] = pawn_role
-            await member.remove_roles(pawn_role,reason=reason)
+            originalrole[member] = pawn_role2
+            await member.remove_roles(pawn_role, reason=reason)
 
-        await member.add_roles(muted_role, reason = reason)
+        await member.add_roles(muted_role, reason=reason)
         await member.edit(mute=True)
-        await ctx.send("{0.mention} has been muted by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason, mute_minutes))
+        await ctx.send(
+            "{0.mention} has been muted by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason,
+                                                                                           mute_minutes))
 
     if mute_minutes > 0:
         await asyncio.sleep(mute_minutes * 60)
         count = 0
         for member in members:
-            await member.remove_roles(muted_role, reason = "time's up ")
+            await member.remove_roles(muted_role, reason="time's up ")
             await member.edit(mute=False)
-            await member.add_roles(member_role[count],reason=reason)
+            await member.add_roles(member_role[count], reason=reason)
             count += 1
 
 
@@ -295,7 +296,7 @@ async def unmute(ctx, member: discord.Member, *, reason=None):
         return
     member_role = originalrole[member]
     await member.remove_roles(muted_role, reason=reason)
-    await member.add_roles(member_role,reason='unmuted')
+    await member.add_roles(member_role, reason='unmuted')
     await member.edit(mute=False)
     await ctx.send(
         "{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason))
@@ -311,7 +312,7 @@ async def undungeon(ctx, member: discord.Member, *, reason=None):
         return
     member_role = originalrole[member]
     await member.remove_roles(dungeon_role, reason=reason)
-    await member.add_roles(member_role,reason='unmuted')
+    await member.add_roles(member_role, reason='unmuted')
     await ctx.send(
         "{0.mention} has been undungeoned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
@@ -319,8 +320,8 @@ async def undungeon(ctx, member: discord.Member, *, reason=None):
 @client.command()
 @commands.has_role(831214459682029588)
 async def dungeon(ctx, members: commands.Greedy[discord.Member],
-                   dungeon_minutes: typing.Optional[int] = 0,
-                   *, reason: str = "None"):
+                  dungeon_minutes: typing.Optional[int] = 0,
+                  *, reason: str = "None"):
     global originalrole
     """Mass mute members with an optional mute_minutes parameter to time it"""
 
@@ -354,20 +355,22 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
             member_role.append(pawn_role)
             originalrole[member] = pawn_role
             await member.remove_roles(pawn_role, reason=reason)
-        await member.add_roles(dungeon_role, reason = reason)
-        await ctx.send("{0.mention} has been dungeoned by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason, dungeon_minutes))
+        await member.add_roles(dungeon_role, reason=reason)
+        await ctx.send(
+            "{0.mention} has been dungeoned by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author,
+                                                                                               reason, dungeon_minutes))
 
     if dungeon_minutes > 0:
         await asyncio.sleep(dungeon_minutes * 60)
         count = 0
         for member in members:
-            await member.remove_roles(dungeon_role, reason = "time's up ")
+            await member.remove_roles(dungeon_role, reason="time's up ")
             await member.add_roles(member_role[count], reason=reason)
 
 
 @client.command()
 @commands.has_role(831214459682029588)
-async def kick(ctx, member: discord.Member, *, reason = None):
+async def kick(ctx, member: discord.Member, *, reason=None):
     await member.kick(reason=reason)
     await ctx.send("{0.mention} has been kicked by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
@@ -382,11 +385,11 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 @client.command()
 @commands.has_role(831214459682029588)
 async def promote(ctx, member: discord.Member, *, reason='Promotion'):
-    rook_role = discord.utils.get(ctx.guild.roles,id=831227767671619636)
-    bishop_role = discord.utils.get(ctx.guild.roles,id=831213133066534993)
-    knight_role = discord.utils.get(ctx.guild.roles,id=831213165105643520)
-    pawn_role = discord.utils.get(ctx.guild.roles,id=831213206155952179)
-    member_role = discord.utils.get(ctx.guild.roles,id=835286042176127027)
+    rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
+    bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
+    knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
+    pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
+    member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
     if rook_role in member.roles:
         await ctx.send("{0.mention} is already a Rook!".format(member))
     elif bishop_role in member.roles:
@@ -411,10 +414,10 @@ async def promote(ctx, member: discord.Member, *, reason='Promotion'):
 @client.command()
 @commands.has_role(831214459682029588)
 async def demote(ctx, member: discord.Member, *, reason='Demotion'):
-    rook_role = discord.utils.get(ctx.guild.roles,id=831227767671619636)
-    bishop_role = discord.utils.get(ctx.guild.roles,id=831213133066534993)
-    knight_role = discord.utils.get(ctx.guild.roles,id=831213165105643520)
-    pawn_role = discord.utils.get(ctx.guild.roles,id=831213206155952179)
+    rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
+    bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
+    knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
+    pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
     sendchannel = client.get_channel(831211215878488078)
     if rook_role in member.roles:
         await member.remove_roles(rook_role, reason=reason)
@@ -478,8 +481,11 @@ async def on_message(message):
         await message.channel.send(displayToDo())
 
     elif msg.startswith('.8ball'):
-        options = ['As I see it, yes.', 'Don’t count on it.','It is certain.','Most likely.','My reply is no.','My sources say no.','Outlook not so good.','Outlook good.','Signs point to yes.','Very doubtful.','Without a doubt.','Yes.', 'Nah', "You're dumb for thinking that",'Yes – definitely.']
-        rand = random.randint(0,len(options))
+        options = ['As I see it, yes.', 'Don’t count on it.', 'It is certain.', 'Most likely.', 'My reply is no.',
+                   'My sources say no.', 'Outlook not so good.', 'Outlook good.', 'Signs point to yes.',
+                   'Very doubtful.', 'Without a doubt.', 'Yes.', 'Nah', "You're dumb for thinking that",
+                   'Yes – definitely.']
+        rand = random.randint(0, len(options))
         await message.channel.send(options[rand])
 
     elif msg.startswith('.add'):
@@ -494,7 +500,7 @@ async def on_message(message):
         index = msg[8:]
         index = index.strip()
         if index.isdigit():
-            await message.channel.send(removeToDo(int(index))+ '\n\n' + displayToDo())
+            await message.channel.send(removeToDo(int(index)) + '\n\n' + displayToDo())
         else:
             await message.channel.send('Invalid index. Use a number next time.')
 
@@ -502,7 +508,7 @@ async def on_message(message):
         await message.channel.send('F*ck him. I am obviously superior.')
 
     elif msg.startswith('.debatetopic'):
-        rand = random.randint(1,len(debateTopics))
+        rand = random.randint(1, len(debateTopics))
         await message.channel.send(debateTopics[rand])
 
     elif msg == '.quote':
@@ -662,10 +668,10 @@ async def on_message(message):
         await message.channel.send('*Certified language game moment*')
 
     elif msg.startswith('.endme'):
-        await message.channel.send("*bang bang*")
+        await message.channel.send("**bang bang**")
 
     elif msg.startswith(".end "):
-        await message.channel.send("*look towards " + msg[5:] + "* . *bang bang*")
+        await message.channel.send("*look towards " + msg[5:] + "* . **bang bang**")
 
     # elif msg.startswith('.georg'):
     #     await message.channel.send('Nice corpse you got there. Mind if I stop the hearse at my place for 2 minutes?')
@@ -683,8 +689,8 @@ async def on_message(message):
     elif msg.startswith('.define'):
         search = msg[8:]
         result = getDefinition(search)
-        if len(result)> 1:
-            embedVar = discord.Embed(title=result[0],color=0x000000)
+        if len(result) > 1:
+            embedVar = discord.Embed(title=result[0], color=0x000000)
             for i in result[1]:
                 embedVar.add_field(name=i[0], value=i[1], inline=False)
             await message.channel.send(embed=embedVar)
@@ -698,8 +704,9 @@ async def on_message(message):
     elif msg.startswith('.fact'):
         await message.channel.send("I can confirm that this is perhaps the only objective truth in this universe.")
 
-    elif msg.startswith('.about'):
-        await message.channel.send("Common to many science fiction stories, it outlines a scenario in which a mad scientist, machine, or other entity might remove a person's brain from the body, suspend it in a vat of life-sustaining liquid, and connect its neurons by wires to a supercomputer which would provide it with electrical impulses identical to those the brain normally receives. According to such stories, the computer would then be simulating reality (including appropriate responses to the brain's own output) and the 'disembodied' brain would continue to have perfectly normal conscious experiences, such as those of a person with an embodied brain, without these being related to objects or events in the real world.")
+    elif msg.startswith('.about') or msg.startswith('.thevat'):
+        await message.channel.send(
+            "Common to many science fiction stories, it outlines a scenario in which a mad scientist, machine, or other entity might remove a person's brain from the body, suspend it in a vat of life-sustaining liquid, and connect its neurons by wires to a supercomputer which would provide it with electrical impulses identical to those the brain normally receives. According to such stories, the computer would then be simulating reality (including appropriate responses to the brain's own output) and the 'disembodied' brain would continue to have perfectly normal conscious experiences, such as those of a person with an embodied brain, without these being related to objects or events in the real world.")
 
     elif msg.startswith(".help"):
         rules = client.get_channel(831215204280958986)
@@ -723,6 +730,7 @@ async def on_message(message):
             word = people_list[rand]
             guessedletters = ''
             await message.channel.send(hangman(word, guessedletters))
+            await message.channel.send("Use .guess to play.")
 
     elif msg.startswith('.hangman places'):
         if game_in_progress:
@@ -733,6 +741,7 @@ async def on_message(message):
             word = place_list[rand]
             guessedletters = ''
             await message.channel.send(hangman(word, guessedletters))
+            await message.channel.send("Use .guess to play.")
 
     elif msg.startswith('.hangman easy'):
         if game_in_progress:
@@ -743,6 +752,7 @@ async def on_message(message):
             word = easy_list[rand]
             guessedletters = ''
             await message.channel.send(hangman(word, guessedletters))
+            await message.channel.send("Use .guess to play.")
 
     elif msg.startswith('.hangman hard'):
         if game_in_progress:
@@ -753,6 +763,7 @@ async def on_message(message):
             word = hard_list[rand]
             guessedletters = ''
             await message.channel.send(hangman(word, guessedletters))
+            await message.channel.send("Use .guess to play.")
 
     elif msg.startswith('.guess'):
         guess = msg[7:]
@@ -801,7 +812,8 @@ easy_list = ['wolf', 'deer', 'dangerous', ' fire station', 'surgeon', 'building'
 hard_list = ['anomaly', 'equivocal', 'precipitate', 'assuage', 'erudite', 'opaque', 'prodigal', 'enigma', 'fervid',
              'placate',
              'desiccate', 'audacious', 'gullible', 'laudable', 'adulterate', 'jazz music', 'capricious', 'homogenous',
-             'loquacious', 'misanthrope', 'corroborate', 'paradox', 'philanthropic', 'epistemology', 'replicate', 'jupiter',
+             'loquacious', 'misanthrope', 'corroborate', 'paradox', 'philanthropic', 'epistemology', 'replicate',
+             'jupiter',
              'alpha centauri']
 
 
@@ -889,18 +901,18 @@ def hangman(word, guessedletters):
 
     if errors == 6:
         game_in_progress = False
-        return (hangmanpics[errors] + "\n" + ' It was ' + word + '\n' + text + "\n\n YOU LOSE!")
+        return hangmanpics[errors] + "\n" + ' It was ' + word + '\n' + text + "\n\n YOU LOSE!"
     elif not ' - ' in printletter:
         game_in_progress = False
-        return (hangmanpics[errors] + "\n" + text + "\n\n YOU WIN!!!")
+        return hangmanpics[errors] + "\n" + text + "\n\n YOU WIN!!!"
     else:
-        return (hangmanpics[errors] + "\n" + guessedletters + '\n' + text)
+        return hangmanpics[errors] + "\n" + guessedletters + '\n' + text
 
 
 debateTopics = {
-    1 : 'Should abortion be legal?',
+    1: 'Should abortion be legal?',
     2: 'All people should have the right to own guns.',
-    3:'Human cloning should be legalized.',
+    3: 'Human cloning should be legalized.',
     4: 'Does life require a purpose and a goal?',
     5: 'Do acts of kindness have a motive?',
     6: 'Is having a big ego a negative trait of positive trait?',
@@ -1049,7 +1061,6 @@ debateTopics = {
     149: 'How can we differentiate between a valid use of "Cancel Culture" vs an instance of mob delirium?',
     150: 'Will the advent of "Designer Babies" via genetic modifications be ethical?'
 }
-
 
 # data['TOKEN']
 client.run(bot_token)
