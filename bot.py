@@ -12,6 +12,9 @@ import asyncio
 import typing
 
 # get bot token and openai apikey
+from debateTopics import debateTopics
+from hangman import hangman
+
 load_dotenv()
 openai.api_key = os.getenv('APIKEY')
 bot_token = os.getenv('TOKEN')
@@ -455,7 +458,6 @@ async def on_message(message):
     global word
     global guessedletters
     global game_in_progress
-    global debateTopics
 
     if msg.startswith('.echo'):
         sendchannel = client.get_channel(int(msg[6:24]))
@@ -729,7 +731,8 @@ async def on_message(message):
             rand = random.randint(0, len(people_list))
             word = people_list[rand]
             guessedletters = ''
-            await message.channel.send(hangman(word, guessedletters))
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await message.channel.send(hangmanResult)
             await message.channel.send("Use .guess to play.")
 
     elif msg.startswith('.hangman places'):
@@ -740,7 +743,8 @@ async def on_message(message):
             rand = random.randint(0, len(place_list))
             word = place_list[rand]
             guessedletters = ''
-            await message.channel.send(hangman(word, guessedletters))
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await message.channel.send(hangmanResult)
             await message.channel.send("Use .guess to play.")
 
     elif msg.startswith('.hangman easy'):
@@ -751,7 +755,8 @@ async def on_message(message):
             rand = random.randint(0, len(easy_list))
             word = easy_list[rand]
             guessedletters = ''
-            await message.channel.send(hangman(word, guessedletters))
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await message.channel.send(hangmanResult)
             await message.channel.send("Use .guess to play.")
 
     elif msg.startswith('.hangman hard'):
@@ -762,7 +767,8 @@ async def on_message(message):
             rand = random.randint(0, len(hard_list))
             word = hard_list[rand]
             guessedletters = ''
-            await message.channel.send(hangman(word, guessedletters))
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await message.channel.send(hangmanResult)
             await message.channel.send("Use .guess to play.")
 
     elif msg.startswith('.guess'):
@@ -770,14 +776,16 @@ async def on_message(message):
         guess = guess.strip()
         guess = guess.lower()
         if guess == word:
-            await message.channel.send(hangman(word, guess))
+            (hangmanResult, game_in_progress) = hangman(word, word, game_in_progress)
+            await message.channel.send(hangmanResult)
         elif len(guess) > 1:
             await message.channel.send("Only one letter per guess")
         elif guess in guessedletters:
             await message.channel.send("This letter has already been guessed.")
         else:
             guessedletters = guessedletters + guess
-            returntext = hangman(word, guessedletters)
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            returntext = hangmanResult
             if 'WIN' in returntext or "LOSE" in returntext:
                 guessedletters = ''
                 word = ''
@@ -815,252 +823,6 @@ hard_list = ['anomaly', 'equivocal', 'precipitate', 'assuage', 'erudite', 'opaqu
              'loquacious', 'misanthrope', 'corroborate', 'paradox', 'philanthropic', 'epistemology', 'replicate',
              'jupiter',
              'alpha centauri']
-
-
-def hangman(word, guessedletters):
-    global game_in_progress
-    hangmanpics = ['''
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========''']
-    printletter = []
-    for i in range(len(word)):
-        if word[i] != " ":
-            printletter.append(' - ')
-        else:
-            printletter.append("  ")
-    if guessedletters == '':
-        text = ''
-        # text = ''.join(printletter)
-        for i in printletter:
-            text = text + i
-        return (hangmanpics[0] + '\n' + text)
-    wordlist = split(word)
-    guesslist = split(guessedletters)
-    matchcount = 0
-    matchfound = False
-    foundcount = 0
-    for i in guesslist:
-        for j in range(len(word)):
-            if i == word[j]:
-                printletter[j] = i
-                matchcount += 1
-                matchfound = True
-        if matchfound == True:
-            foundcount += 1
-        matchfound = False
-
-    text = ''.join(printletter)
-    errors = len(guesslist) - foundcount
-
-    if errors == 6:
-        game_in_progress = False
-        return hangmanpics[errors] + "\n" + ' It was ' + word + '\n' + text + "\n\n YOU LOSE!"
-    elif not ' - ' in printletter:
-        game_in_progress = False
-        return hangmanpics[errors] + "\n" + text + "\n\n YOU WIN!!!"
-    else:
-        return hangmanpics[errors] + "\n" + guessedletters + '\n' + text
-
-
-debateTopics = {
-    1: 'Should abortion be legal?',
-    2: 'All people should have the right to own guns.',
-    3: 'Human cloning should be legalized.',
-    4: 'Does life require a purpose and a goal?',
-    5: 'Do acts of kindness have a motive?',
-    6: 'Is having a big ego a negative trait of positive trait?',
-    7: 'Are humans obligated to better themselves and will that make them happier?',
-    8: 'Have we become less happy in this age of technology?',
-    9: 'Is love simply physical desire or something more?',
-    10: 'Does evil come from within, and if so why?',
-    11: 'Can achieving nothing make a person happy?',
-    12: 'If everyone spoke their mind would this world be a better place?',
-    13: 'Is there a perfect life?',
-    14: 'Does money truly buy happiness?',
-    15: 'Are highly intelligent people less happy than individuals with average intelligence?',
-    16: 'Do knowledge and understanding make you content and happy as a person?',
-    17: 'Does an ideal government exist?',
-    18: 'Are there limitations on free speech?',
-    19: 'Does free will exist, or is every action predetermined?',
-    20: 'What is human consciousness?',
-    21: 'Do atheists make their own gods?',
-    22: 'Can artificial intelligence be creative?',
-    23: 'Can religious beliefs affect scientific thinking?',
-    24: 'Will a world without reliance on modern technology make any progress?',
-    25: 'Does belief make God exist?',
-    26: 'Will robots take over the world in the future?',
-    27: 'Are beliefs and superstitions the same?',
-    28: 'How does one find purpose in life?',
-    29: 'Will racism cease to exist?',
-    30: 'Will the world be a better place if caste and religion cease to exist?',
-    31: 'Is humanity doomed to head in a destructive direction?',
-    32: 'Should full access to the internet be a fundamental right?',
-    33: 'Is true beauty subjective or objective?',
-    34: 'What is the extent of freedom human beings should have?',
-    35: 'Will technological advances wipe out humanity?',
-    36: 'Does understanding philosophy lead to progress?',
-    37: 'Will concepts and theories in regard to religion becoming obsolete come true?',
-    38: 'If death is inevitable, why bother doing anything?',
-    39: 'Is there such a thing as a good death?',
-    40: 'How do you properly say goodbye to someone that has died?',
-    41: 'How can you convince a non-believer that God exists?',
-    42: 'All drugs should be legalized.',
-    43: 'All people should have Universal Basic Income.',
-    44: 'Every citizen should be mandated to perform national public service.',
-    45: 'Standardized testing in education should be abolished.',
-    46: 'Sexual education should be mandatory in schools.',
-    47: 'Healthcare should be universal.',
-    48: 'All people should be vegetarians.',
-    49: 'Euthanasia should be legal.',
-    50: 'Smoking should be banned in all public places.',
-    51: 'Obesity should be labeled a disease.',
-    52: 'The sale of human organs should be legalized.',
-    53: 'Social media has improved human communication.',
-    54: 'The development of artificial intelligence will help humanity.',
-    55: 'The universal basic income should be everyone’s right.',
-    56: 'Death penalty has no place in the modern world.',
-    57: 'Animals should enjoy the same rights as humans.',
-    58: ' Where is the line between art and not art?',
-    59: 'What should be the goal of humanity?',
-    60: 'What does it mean to live a good life?',
-    61: 'Is it possible to live a normal life and not ever tell a lie?',
-    62: 'Is the meaning of life the same for animals and humans? ',
-    63: 'If someone you loved was killed in front of you, but someone created a copy of them that was perfect right down to the atomic level, would they be the same person and would you love them just as much?',
-    64: 'If you could become immortal on the condition you would NEVER be able to die or kill yourself, would you choose immortality?',
-    65: 'If a child somehow survived and grew up in the wilderness without any human contact, how “human” would they be without the influence of society and culture?',
-    66: 'How would humanity change if all humans’ life expectancy was significantly increased (let’s say to around 500 years)?',
-    67: 'What do you think would be humanity’s reaction to the discovery of extraterrestrial life?',
-    68: 'Will religion ever become obsolete?',
-    69: 'If you could teach everyone in the world one concept, what concept would have the biggest positive impact on humanity?',
-    70: 'Is suffering a necessary part of the human condition? What would people who never suffered be like?',
-    71: 'What benefits does art provide society? Does art hurt society in any way?',
-    72: 'How likely do you think it will be that humans will last another 1,000 years without killing ourselves off?',
-    73: 'If freedom is simply being able to do what you want, are animals freer than humans?',
-    74: 'Would you want to know you are going to die before hand or die suddenly without warning?',
-    75: 'Does the study of philosophy ever lead to answers or simply more questions?',
-    76: 'Is it better for a person to have a broad knowledge base or a deep knowledge base?',
-    77: 'Is it more important to help yourself, help your family, help your society, or help the world?',
-    78: 'What life-altering things should every human ideally get to experience at least once in their lives?',
-    79: 'Is it better to be a big fish in a small pond or a small fish in a big pond?',
-    80: 'Some people believe that if life has no purpose, then there is no reason for living. While others think that if life has no purpose, that frees a person to find/create and follow their own personal purpose. Which is a more valid point of view or are they both equally valid?',
-    81: 'Does knowledge have intrinsic value or does it need to have a practical use to have value?',
-    82: 'Where do you think is the most worthwhile place to find meaning in life? Work, family, hobby, religion, philosophy, helping others, all the small miracles, or something else entirely?',
-    83: 'Is a life that focuses on avoiding pain and seeking out pleasure a good and worthwhile life? Why or why not?',
-    84: 'Is math something that humans created or something we discovered? Is looking at reality mathematically an accurate representation of how things work?',
-    85: 'Is it possible for a human to fathom the true depths of reality and existence?',
-    86: 'What is the best path to find truth; science, math, art, philosophy, or something else?',
-    87: 'As more and more is being discovered about quantum physics, we become less and less able to comprehend the nature of reality. Is this something temporary and our minds will adapt and begin to understand this new reality or is it possible that the human mind will soon reach its limits of comprehension? If it’s only temporary, is there is a limit to what the human mind can comprehend? If we are reaching our limits, how do we continue to study our reality?',
-    88: 'Is there inherent order in nature or is it all chaos and chance?',
-    89: 'What in life is truly objective and not subjective?',
-    90: 'Is happiness just chemicals flowing through your brain or something more?',
-    91: 'If every neuron in a human was accurately simulated in a computer, would it result in human consciousness?',
-    92: 'Is it possible that some animals are self-aware and think about their ability to think?',
-    93: 'How do you define consciousness?',
-    94: 'Is it possible to prove that other people besides yourself have consciousness?',
-    95: 'How conscious do you think animals are?',
-    96: 'Assuming evolution is correct, do you think that if humans went extinct another species as intelligent as humans would evolve? If life exists long enough on a planet, is intelligence and consciousness inevitable?',
-    97: 'Would it be more frightening to discover that humans are the most advanced species in the universe or that we are far from being the most advanced species in the universe?',
-    98: 'Why do humans have such a strong urge to distract ourselves from the real world?',
-    99: 'Is the concept of “you” continuous or does past “you” continually fade into present and future “you”? In other words, what part of “you” sticks around over time considering that the atoms that make up your body are constantly being replaced and your memories are always changing?',
-    100: ' Is it possible that someone’s genes might affect their political leanings? If no, why not? If so, what would be the ramifications?',
-    101: 'Would selectively breeding an animal such as a dog based on intelligence, increase its intelligence over time? If so, how intelligent could dogs become? If not, how does intelligence emerge in a species?',
-    102: 'If there existed a perfect clone of you, would it also be you? Would it act in exactly the same manner as you (like a mirror) or would it act differently? If it acted differently then would it still be you? At what point would it not be you?',
-    103: ' Are intelligence and happiness tied together in any way? If you are highly intelligent, is it more likely that you’ll be more, or less happy?',
-    104: 'When, if ever, is taking a human life justified?',
-    105: 'Without religion would people become more, less, or be equally morally corrupt?',
-    106: 'If humanity was put on trial by an advanced race of aliens, how would you defend humanity and argue for its continued existence?',
-    107: 'What rights does every human have? Do those rights change based on age?',
-    108: 'Do animals have rights and do those rights extend to all animals or do the rights change based on the complexity of the animal?',
-    109: 'Is justice a human construct or is it independent of humans?',
-    110: 'Why do people expect a universe full of randomness to be fair?',
-    111: 'With no laws or rules to influence your behavior, how do you think you would behave?',
-    112: 'What’s the difference between justice and revenge?',
-    113: 'If it was discovered that personality traits were partly genetic and could be removed with gene therapy, would it be ethical to edit out negative character traits that harm others like extreme aggression, compulsive lying, or cruelty?',
-    114: 'If you could press a button and receive a million dollars, but one stranger would die, would you press the button? And if so, how many times?',
-    115: 'At what point is overthrowing a government ethical, considering all the violence a revolution usually entails?',
-    116: 'Can morality ever be objective or is it always subjective? If it can be objective, in what instances? If it’s always subjective, how do we decide whose concept of morality is correct?',
-    117: 'Are intentions or outcomes more important when judging whether actions are moral?',
-    118: 'Should there be limitations on the right to free speech?',
-    119: 'Should euthanasia be legal? Why or why not?',
-    120: 'If scientists could accurately predict who was more likely to commit crimes, what should society do with that information?',
-    121: 'If you can save another’s life and don’t because doing so would break the law, are you ethically justified in your decision?',
-    122: 'Are all individuals morally obligated to save another person’s life if they are able? What if that person lives in another country?',
-    123: 'Should we terraform planets if it means that we may be destroying undiscovered microscopic alien life?',
-    124: 'Does anonymity encourage people to misbehave or does it reveal how people would choose to act all the time if they could?',
-    125: 'If doing something good for others makes us feel good, can there ever be such a thing as pure altruism?',
-    126: 'Do all people have equal value regardless of their actions or is a person’s value based on their actions?',
-    127: 'How much effort should an individual put into not offending others?',
-    128: 'Would a government run with algorithms, A.I., and statistics be better or worse than the government we have now?',
-    129: 'Would the world be a better or worse place if everyone looked the same?',
-    130: 'Do people in wealthier countries have a moral obligation to help those in poorer countries?',
-    131: 'What should the role of a government be, what boundaries and limitations should it have?',
-    132: 'Do you think there will ever be a global government? If a world government did come to power, assuming it wasn’t particularly cruel or evil, would it be a good or bad thing?',
-    133: 'What would happen to a society in which no one had to work, and everyone was provided enough food/water/shelter/healthcare for free?',
-    134: 'Has social media been a net positive or a net negative for our society? Why?',
-    135: 'Is it right or wrong that everyone seems to be accustomed to the fact that all of humanity and most of the life on Earth could be wiped out at the whim of a handful of people?',
-    136: 'At what point is a technologically enhanced human not a human anymore?',
-    137: 'Is true artificial intelligence possible with our current technology and methods of programming?',
-    138: 'What scientific breakthrough would have the biggest effect on humanity?',
-    139: 'Will we keep leaping to even greater technological and scientific breakthroughs that radically change society, or will the rate of progress slow and humanity’s progress be limited to incremental improvements?',
-    140: 'If a robust and cheap genetic engineering industry existed, would you have your genes edited? If so, what genetic changes would you choose to make? If not, why not?',
-    141: 'Assume that in the future there will be huge leaps in human augmentation. Given a scale from completely human to completely machine, how far would you choose to augment yourself with robotics? What parts would you augment and why?',
-    142: 'If the transporters in Star Trek existed and you used it, your particles would be disassembled and then reassembled, do you die every single time? Are you ever alive at two places at once? Are you ever completely dead?',
-    143: 'Should full access to the internet be a fundamental human right?',
-    144: 'Has the invention of the atomic bomb made the world a more peaceful place?',
-    145: 'If emotions are the product of biochemical reactions, then in the future we will be theoretically able to control them. If we could control emotions through technology, should we?',
-    146: 'Is there a limit to what humans can create through technology and science?',
-    147: 'Is cancel culture a good thing?',
-    148: 'Is cancel culture a bad thing?',
-    149: 'How can we differentiate between a valid use of "Cancel Culture" vs an instance of mob delirium?',
-    150: 'Will the advent of "Designer Babies" via genetic modifications be ethical?'
-}
 
 # data['TOKEN']
 client.run(bot_token)
