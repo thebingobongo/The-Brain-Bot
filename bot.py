@@ -267,7 +267,7 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
             originalrole[member] = knight_role
         elif pawn_role in member.roles:
             member_role.append(pawn_role)
-            originalrole[member] = pawn_role2
+            originalrole[member] = pawn_role
             await member.remove_roles(pawn_role, reason=reason)
 
         await member.add_roles(muted_role, reason=reason)
