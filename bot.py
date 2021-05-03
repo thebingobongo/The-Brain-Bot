@@ -698,10 +698,10 @@ async def on_message(message):
             await message.channel.send(embed=embedVar)
         else:
             await message.channel.send(result[0])
-    # elif msg.startswith('.test'):
-    #     embedVar = discord.Embed(title="Title",  color=0x00ff00)
-    #     embedVar.add_field(name="Field1", value="hi", inline=False)
-    #     await message.channel.send(embed=embedVar)
+    elif msg.startswith('.test'):
+        embedVar = discord.Embed(title="Title",  color=0x00ff00)
+        embedVar.add_field(name="Field1", value="hi", inline=False)
+        await message.channel.send(embed=embedVar)
 
     elif msg.startswith('.fact'):
         await message.channel.send("I can confirm that this is perhaps the only objective truth in this universe.")
