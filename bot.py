@@ -668,7 +668,7 @@ async def on_message(message):
         else:
             await message.channel.send(result[0])
     elif msg.startswith('.test'):
-        embedVar = discord.Embed(title="Title",  color=0x00ff00)
+        embedVar = discord.Embed(title="testing",  color=0x00ff00)
         embedVar.add_field(name="Field1", value="hi", inline=False)
         await message.channel.send(embed=embedVar)
 
