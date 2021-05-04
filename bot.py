@@ -429,7 +429,7 @@ async def approve(ctx, member: discord.Member):
     pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
     sendchannel = client.get_channel(831211215878488078)
     embedVar = discord.Embed(title="A new member has been approved!", color=0x00ff00)
-    embedVar.add_field(name="{0.mention} is a Pawn now! Everyone welcome them!".format(member), inline=False)
+    embedVar.add_field(name="{0.mention} is a Pawn now!".format(member), value=" Everyone welcome them! ", inline=False)
     await member.add_roles(pawn_role)
     await sendchannel.send(embed=embedVar)
 
