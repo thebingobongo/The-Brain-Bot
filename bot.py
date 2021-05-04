@@ -429,7 +429,7 @@ async def approve(ctx, member: discord.Member):
     pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
     sendchannel = client.get_channel(831211215878488078)
     await member.add_roles(pawn_role)
-    await sendchannel.send(" A new member has been approved!\n {0.mention} is a Pawn now! Everyone welcome them! "".format(member))
+    await sendchannel.send(" A new member has been approved!\n {0.mention} is a Pawn now! Everyone welcome them! ".format(member))
 
 
 @client.event
