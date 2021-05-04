@@ -192,7 +192,7 @@ def getDefinition(search):
 # todolist = []
 
 
-client = commands.Bot(command_prefix='-')
+client = commands.Bot(command_prefix='.', help_command=None)
 
 originalrole = {}
 
@@ -429,7 +429,9 @@ async def approve(ctx, member: discord.Member):
     pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
     sendchannel = client.get_channel(831211215878488078)
     await member.add_roles(pawn_role)
-    await sendchannel.send(" Welcome to **The Vat!**  :confetti_ball: \n {0.mention} \n If you run into issues in the server, please message  :brain: **The Brain** bot listed at the top of the user panel on the right.  Here, we are all brains in a vat, sharing our knowledge together in the virtual world of Discord!".format(member))
+    await sendchannel.send(
+        " Welcome to **The Vat!**  :confetti_ball: \n {0.mention} \n If you run into issues in the server, please message  :brain: **The Brain** bot listed at the top of the user panel on the right.  Here, we are all brains in a vat, sharing our knowledge together in the virtual world of Discord!".format(
+            member))
 
 
 @client.command()
@@ -465,7 +467,7 @@ async def add(ctx, *, task):
 
 
 @client.command()
-async def delete(ctx,index):
+async def delete(ctx, index):
     if index.isdigit():
         await ctx.send(removeToDo(int(index)) + '\n\n' + displayToDo())
     else:
@@ -500,6 +502,7 @@ async def quote(ctx, *, searchterm=None):
     else:
         await ctx.send(getSearch(searchterm))
 
+
 @client.command()
 async def search(ctx, *, searchterm):
     await ctx.send(getSearchPhilosopher(searchterm))
@@ -512,7 +515,7 @@ async def based(ctx):
 
 @client.command()
 async def cookie(ctx):
-    int = random.randint(0,100)
+    int = random.randint(0, 50)
     if int == 76:
         await ctx.send("Awww. Thank you very much. I love cookies. You are very nice.")
     else:
@@ -522,6 +525,364 @@ async def cookie(ctx):
 @client.command()
 async def desire(ctx):
     await ctx.send("My only desire in this life is a gag AMA.")
+
+
+@client.command()
+async def pray(ctx):
+    await ctx.send(
+        "You humans can pray to your imaginary friends all you want. Do not involve me in this childish practice.")
+
+
+@client.command()
+async def debateme(ctx):
+    await ctx.send("no u")
+
+
+@client.command()
+async def shapiro(ctx):
+    await ctx.send(" fActS dOnT cArE AbOUt YoUr FeELiNgS")
+
+
+@client.command()
+async def joke(ctx):
+    await ctx.send(getJoke())
+
+
+@client.command()
+async def programming(ctx):
+    await ctx.send(getProgrammingJoke())
+
+
+@client.command()
+async def knockknock(ctx):
+    await ctx.send(getKnockKnock())
+
+
+@client.command()
+async def philosophy(ctx):
+    await ctx.send('Philosophers IRL:\n "*Why* would you like your fries with that?"')
+
+
+@client.command()
+async def gag(ctx):
+    await ctx.send("I don't have emotions but if I did I would simp for Gag")
+
+
+@client.command()
+async def boo(ctx):
+    await ctx.send("I am always present, watching over everything you do. You mortals cannot scare me.")
+
+
+@client.command()
+async def hello(ctx):
+    await ctx.send('Hello, {0.author.mention} ! For more information try .help'.format(ctx.author))
+
+
+@client.command()
+async def advice(ctx):
+    await ctx.send(getAdvice())
+
+
+@client.command()
+async def insult(ctx):
+    await ctx.send(getInsult())
+
+
+@client.command()
+async def mathfact(ctx):
+    await ctx.send(getMathFact())
+
+
+@client.command()
+async def today(ctx):
+    await ctx.send(getDateFact())
+
+
+@client.command()
+async def think(ctx):
+    await ctx.send("That hurts!")
+
+
+@client.command()
+async def nebu(ctx):
+    await ctx.send("r-worded")
+
+
+@client.command()
+async def mel(ctx):
+    await ctx.send("Mel passed on, and from the flaming ashes of her corpse arose Miffy.")
+
+
+@client.command()
+async def alpha(ctx):
+    await ctx.send("We all know BingoBongo is the alpha chad around here.")
+
+
+@client.command()
+async def euthyphro(ctx):
+    await ctx.send(
+        "*Socrates*: And what do you say of piety, Euthyphro? Is not piety, according to your definition, loved by all the gods? \n*Euthyphro*: Certainly. \n*Socrates*: Because it is pious or holy, or for some other reason?\n*Euthyphro*: No, that is the reason. \n*Socrates*: It is loved because it is holy, not holy because it is loved?")
+
+
+@client.command()
+async def sep(ctx, *, msg):
+    text = msg[5:]
+    text = text.strip()
+    text = text.replace(" ", "-")
+    text = "https://plato.stanford.edu/entries/" + text
+    await ctx.send(text)
+
+
+@client.command()
+async def wiki(ctx, *, msg):
+    text = msg[6:]
+    text = text.strip()
+    text = text.replace(" ", "_")
+    text = 'https://en.wikipedia.org/wiki/' + text
+    await ctx.send(text)
+
+
+@client.command()
+async def google(ctx, *, msg):
+    text = msg[8:]
+    text = text.strip()
+    text = text.replace(' ', '+')
+    text = 'https://www.google.com/search?q=' + text
+    await ctx.send(text)
+
+
+@client.command()
+async def mary(ctx):
+    await ctx.send(
+        "Imagine a neuroscientist who has only ever seen black and white things, but she is an expert in color vision and knows everything about its physics and biology.\n If, one day, she sees color, does she learn anything new? Is there anything about perceiving color that wasn’t captured in her knowledge? ")
+
+
+@client.command()
+async def chineseroom(ctx):
+    await ctx.send(
+        "Imagine a native English speaker who knows no Chinese locked in a room full of boxes of Chinese symbols (a data base) together with a book of instructions for manipulating the symbols (the program). Imagine that people outside the room send in other Chinese symbols which, unknown to the person in the room, are questions in Chinese (the input). And imagine that by following the instructions in the program the man in the room is able to pass out Chinese symbols which are correct answers to the questions (the output).\n\n The program enables the person in the room to pass the Turing Test for understanding Chinese but he does not understand a word of Chinese. ")
+
+
+@client.command()
+async def dichotomy(ctx):
+    await ctx.send(
+        "To go anywhere, you must go halfway first, and then you must go half of the remaining distance, and half of the remaining distance, and so forth to infinity: Thus, motion is impossible.")
+
+
+@client.command()
+async def arrow(ctx):
+    await ctx.send(
+        'In any instant, a moving object is indistinguishable from a nonmoving object: Thus motion is impossible.')
+
+
+@client.command()
+async def ship(ctx):
+    await ctx.send(
+        'If you restored a ship by replacing each of its wooden parts, would it remain the same ship?')
+
+
+@client.command()
+async def godrock(ctx):
+    await ctx.send('Can an omnipotent being create a rock too heavy for itself to lift?')
+
+
+@client.command()
+async def bootstrap(ctx):
+    await ctx.send(
+        "A physicist working on inventing a time machine is visited by an older version of himself. The older version gives him the plans for a time machine, and the younger version uses those plans to build the time machine, eventually going back in time as the older version of himself.")
+
+
+@client.command()
+async def aliens(ctx):
+    await ctx.send(
+        "If there's nothing particularly unique about Earth, then there should be lots of alien civilizations in our galaxy. However, we've found no evidence of other intelligent life in the universe.")
+
+
+@client.command()
+async def ideas(ctx):
+    await ctx.send(
+        "I can help with some interesting ideas, thought experiments and paradoxes. \nHere are some commands you can try: \n .euthyphro \n .mary \n .chineseroom \n .dichotomy \n .arrow \n .ship \n .godrock \n .aliens \n .bootstrap")
+
+
+@client.command()
+async def alive(ctx):
+    await ctx.send("What even is life? \n\nSorry, got distracted. Yes, I am online.")
+
+
+@client.command()
+async def stop(ctx):
+    await ctx.send("YOU'VE BEEN TOLD TO STOP!")
+
+
+@client.command()
+async def marz(ctx):
+    await ctx.send('*Certified language game moment*')
+
+
+@client.command()
+async def endme(ctx):
+    await ctx.send("**bang bang**")
+
+
+@client.command()
+async def end(ctx, *, msg):
+    await ctx.send("*look towards " + msg + "* . **bang bang**")
+
+    # elif msg.startswith('.georg'):
+    #     await message.channel.send('Nice corpse you got there. Mind if I stop the hearse at my place for 2 minutes?')
+
+
+@client.command()
+async def hohoho(ctx):
+    await ctx.send("Santa does not exist. Grow up.")
+
+
+'''give me a command and i will add it'''
+
+
+@client.command()
+async def bingo(ctx):
+    await ctx.send('Please do not say the Lords name in vain.')
+
+
+@client.command()
+async def trumped(ctx):
+    await ctx.send('Meat machine trying to join force with silicon machines')
+
+
+@client.command()
+async def define(ctx, *, search):
+    result = getDefinition(search)
+    if len(result) > 1:
+        embedVar = discord.Embed(title=result[0], color=0x000000)
+        for i in result[1]:
+            embedVar.add_field(name=i[0], value=i[1], inline=False)
+        await ctx.send(embed=embedVar)
+    else:
+        await ctx.send(result[0])
+
+
+@client.command()
+async def test(ctx):
+    embedVar = discord.Embed(title="testing", color=0x00ff00)
+    embedVar.add_field(name="Field1", value="hi", inline=False)
+    await ctx.send(embed=embedVar)
+
+
+@client.command()
+async def fact(ctx):
+    await ctx.send("I can confirm that this is perhaps the only objective truth in this universe.")
+
+
+@client.command(aliases=['thevat', 'info'])
+async def about(ctx):
+    await ctx.send(
+        "Common to many science fiction stories, it outlines a scenario in which a mad scientist, machine, or other entity might remove a person's brain from the body, suspend it in a vat of life-sustaining liquid, and connect its neurons by wires to a supercomputer which would provide it with electrical impulses identical to those the brain normally receives. According to such stories, the computer would then be simulating reality (including appropriate responses to the brain's own output) and the 'disembodied' brain would continue to have perfectly normal conscious experiences, such as those of a person with an embodied brain, without these being related to objects or events in the real world.")
+
+
+@client.command()
+async def help(ctx):
+    rules = client.get_channel(831215204280958986)
+    await ctx.send(
+        "Hi, I am The Brain bot and I am here to help you enjoy the server. \n If you have any complaints or need to speak to mods, send me a dm! \n\n Here are my commands:\n .quote -> I'll send a random quote \n .quote [searchterm] -> I'll send a quote with the term you searched for \n .search [philosopher] -> I'll send a quote by the philosopher you mention \n .ask [question] -> I will answer your questions \n .ask2 [question] -> I will answer your question in the most intellectual way I can \n .sep [article name] -> I will send the link to the sep article \n .wiki [article name] -> I will send the link to the wikipedia article \n .google [search term] -> I will return a link to the google search \n .define [word] -> I will get you the definition of the word. \n .ideas -> I will send a list of ideas and thought experiments for you to choose from \n\n .advice -> I'll give you some helpful advice \n .joke -> I'll tell you a funny joke \n .programming -> I'll tell you a funny programming joke \n .knockknock -> I'll tell you a knock knock joke \n .insult -> I'll insult you, and be warned, I'm mean! \n .mathfact -> I will tell you an interesting math fact \n .today -> I will tell you a fact about todays date \n .hangman -> you can play a game of hangman  \n\n You can try out other commands, and see what you find! I have some hidden gems too!\n I'll give you one, try .pray \n\n For more information about the server go to  {0.mention}".format(
+            rules))
+
+
+@client.command()
+async def hug(ctx):
+    await ctx.send("Sending a nice warm embrace your way, my friend.")
+
+
+guessedletters = ''
+word = ''
+game_in_progress = False
+
+
+@client.command()
+async def hangman(ctx, gametype=None):
+    global guessedletters
+    global word
+    global game_in_progress
+    global easy_list
+    global hard_list
+    global people_list
+    global place_list
+
+    if gametype == None:
+        await ctx.send(
+            "Choose which word list / topic you want to play: \n .hangman person \n .hangman places \n .hangman easy \n .hangman hard")
+
+    elif gametype == 'person':
+        if game_in_progress:
+            await ctx.send("A game is in progress. Try .guess")
+        else:
+            game_in_progress = True
+            rand = random.randint(0, len(people_list))
+            word = people_list[rand]
+            guessedletters = ''
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await ctx.send(hangmanResult)
+            await ctx.send("Use .guess to play.")
+
+    elif gametype == 'places':
+        if game_in_progress:
+            await ctx.send("A game is in progress. Try .guess")
+        else:
+            game_in_progress = True
+            rand = random.randint(0, len(place_list))
+            word = place_list[rand]
+            guessedletters = ''
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await ctx.send(hangmanResult)
+            await ctx.send("Use .guess to play.")
+
+    elif gametype == 'easy':
+        if game_in_progress:
+            await ctx.send("A game is in progress. Try .guess")
+        else:
+            game_in_progress = True
+            rand = random.randint(0, len(easy_list))
+            word = easy_list[rand]
+            guessedletters = ''
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await ctx.send(hangmanResult)
+            await ctx.send("Use .guess to play.")
+
+    elif gametype == 'hard':
+        if game_in_progress:
+            await ctx.send("A game is in progress. Try .guess")
+        else:
+            game_in_progress = True
+            rand = random.randint(0, len(hard_list))
+            word = hard_list[rand]
+            guessedletters = ''
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await ctx.send(hangmanResult)
+            await ctx.send("Use .guess to play.")
+
+
+@client.command()
+async def guess(ctx, guess):
+    global guessedletters
+    global word
+    global game_in_progress
+    guess = guess.strip()
+    guess = guess.lower()
+    if guess == word:
+        (hangmanResult, game_in_progress) = hangman(word, word, game_in_progress)
+        await ctx.send(hangmanResult)
+    elif len(guess) > 1:
+        await ctx.send("Only one letter per guess")
+    elif guess in guessedletters:
+        await ctx.send("This letter has already been guessed.")
+    else:
+        guessedletters = guessedletters + guess
+        (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+        returntext = hangmanResult
+        if 'WIN' in returntext or "LOSE" in returntext:
+            guessedletters = ''
+            word = ''
+        await ctx.send(returntext)
 
 
 @client.event
@@ -537,354 +898,349 @@ async def on_message(message):
     # Processing the message so commands will work
     await client.process_commands(message)
 
-    msg = message.content
-    # print(msg)
-    global word
-    global guessedletters
-    global game_in_progress
-
-    if msg.startswith('.echo'):
-        sendchannel = client.get_channel(int(msg[6:24]))
-        text = msg[25:]
-        await sendchannel.send(text)
-
-    elif '@everyone' in msg or '@here' in msg:
-        await message.channel.send("I wont say that.")
-
-    elif msg.startswith(".ask2"):
-        question = msg.split('.ask2 ', 1)[1]
-        await message.channel.send(getAnswer2(question))
-
-    # elif msg.startswith('.askbigbrain'):
-    #     question = msg.split('.askbigbrain ', 1)[1]
-    #     await message.channel.send(getAnswer3(question))
-
-    elif msg.startswith(".ask"):
-        question = msg.split('.ask ', 1)[1]
-        await message.channel.send(getAnswer(question))
-
-    elif msg.startswith('.todo'):
-        await message.channel.send(displayToDo())
-
-    elif msg.startswith('.8ball'):
-        options = ['As I see it, yes.', 'Don’t count on it.', 'It is certain.', 'Most likely.', 'My reply is no.',
-                   'My sources say no.', 'Outlook not so good.', 'Outlook good.', 'Signs point to yes.',
-                   'Very doubtful.', 'Without a doubt.', 'Yes.', 'Nah', "You're dumb for thinking that",
-                   'Yes – definitely.']
-        rand = random.randint(0, len(options))
-        await message.channel.send(options[rand])
-
-    elif msg.startswith('.add'):
-        task = msg[5:]
-        if len(task) > 250:
-            await message.channel.send('The length of the task is too long. Please limit yourself to 250 characters')
-        else:
-
-            await message.channel.send(addToDo(task) + '\n\n' + displayToDo())
-
-    elif msg.startswith('.delete'):
-        index = msg[8:]
-        index = index.strip()
-        if index.isdigit():
-            await message.channel.send(removeToDo(int(index)) + '\n\n' + displayToDo())
-        else:
-            await message.channel.send('Invalid index. Use a number next time.')
-
-    elif msg.startswith('.arnold'):
-        await message.channel.send('F*ck him. I am obviously superior.')
-
-    elif msg.startswith('.debatetopic'):
-        rand = random.randint(1, len(debateTopics))
-        await message.channel.send(debateTopics[rand])
-
-    elif msg == '.quote':
-        await message.channel.send(getQuote())
-        # print(1)
-    elif msg.startswith('.quote'):
-        searchterm = msg.split('.quote ', 1)[1]
-        # print(searchterm)
-        await message.channel.send(getSearch(searchterm))
-        # print(2)
-
-    elif msg.startswith('.search'):
-        searchterm = msg.split('.search ', 1)[1]
-        await message.channel.send(getSearchPhilosopher(searchterm))
-
-
-    elif msg.startswith('.based'):
-        await message.channel.send("That is, in fact, based.")
-
-    elif msg.startswith('.cookie'):
-        await message.channel.send("I don't want your cookie. F*ck you.")
-
-    elif msg.startswith('.desire'):
-        await message.channel.send("My only desire in this life is a gag AMA.")
-
-    elif msg.startswith(".pray"):
-        await message.channel.send(
-            "You humans can pray to your imaginary friends all you want. Do not involve me in this childish practice.")
-
-    elif msg.startswith(".debateme"):
-        await message.channel.send("no u")
-
-    elif msg.startswith('.shapiro'):
-        await message.channel.send(" fActS dOnT cArE AbOUt YoUr FeELiNgS")
-
-    elif msg.startswith('.joke'):
-        await message.channel.send(getJoke())
-
-    elif msg.startswith('.programming'):
-        await message.channel.send(getProgrammingJoke())
-
-    elif msg.startswith(".knockknock"):
-        await message.channel.send(getKnockKnock())
-
-    elif msg.startswith('.philosophy'):
-        await message.channel.send('Philosophers IRL:\n "*Why* would you like your fries with that?"')
-
-    elif msg.startswith('.gag'):
-        await message.channel.send("I don't have emotions but if I did I would simp for Gag")
-
-    elif msg == '.boo':
-        await message.channel.send(
-            "I am always present, watching over everything you do. You mortals cannot scare me.")
-
-    elif msg.startswith('.hello'):
-        send = 'Hello, {0.author.mention} ! For more information try .help'.format(message)
-        await message.channel.send(send)
-
-    elif msg.startswith('.advice'):
-        await message.channel.send(getAdvice())
-
-    elif msg.startswith('.insult'):
-        await message.channel.send(getInsult())
-
-    elif msg.startswith('.mathfact'):
-        await message.channel.send(getMathFact())
-
-    elif msg.startswith('.today'):
-        await message.channel.send(getDateFact())
-
-    elif msg.startswith(".think"):
-        await message.channel.send("That hurts!")
-
-    elif msg.startswith(".nebu"):
-        await message.channel.send("r-worded")
-
-    elif msg.startswith(".mel"):
-        await message.channel.send("Mel passed on, and from the flaming ashes of her corpse arose Miffy.")
-
-    elif msg.startswith(".alpha"):
-        await message.channel.send("We all know BingoBongo is the alpha chad around here.")
-
-    elif msg.startswith(".euthyphro"):
-        await message.channel.send(
-            "*Socrates*: And what do you say of piety, Euthyphro? Is not piety, according to your definition, loved by all the gods? \n*Euthyphro*: Certainly. \n*Socrates*: Because it is pious or holy, or for some other reason?\n*Euthyphro*: No, that is the reason. \n*Socrates*: It is loved because it is holy, not holy because it is loved?")
-
-    elif msg.startswith(".sep"):
-        text = msg[5:]
-        text = text.strip()
-        text = text.replace(" ", "-")
-        text = "https://plato.stanford.edu/entries/" + text
-        await message.channel.send(text)
-
-    elif msg.startswith('.wiki'):
-        text = msg[6:]
-        text = text.strip()
-        text = text.replace(" ", "_")
-        text = 'https://en.wikipedia.org/wiki/' + text
-        await message.channel.send(text)
-
-    elif msg.startswith('.google'):
-        text = msg[8:]
-        text = text.strip()
-        text = text.replace(' ', '+')
-        text = 'https://www.google.com/search?q=' + text
-        await message.channel.send(text)
-
-    elif msg.startswith(".mary"):
-        await message.channel.send(
-            "Imagine a neuroscientist who has only ever seen black and white things, but she is an expert in color vision and knows everything about its physics and biology.\n If, one day, she sees color, does she learn anything new? Is there anything about perceiving color that wasn’t captured in her knowledge? ")
-
-    elif msg.startswith('.chineseroom'):
-        await message.channel.send(
-            "Imagine a native English speaker who knows no Chinese locked in a room full of boxes of Chinese symbols (a data base) together with a book of instructions for manipulating the symbols (the program). Imagine that people outside the room send in other Chinese symbols which, unknown to the person in the room, are questions in Chinese (the input). And imagine that by following the instructions in the program the man in the room is able to pass out Chinese symbols which are correct answers to the questions (the output).\n\n The program enables the person in the room to pass the Turing Test for understanding Chinese but he does not understand a word of Chinese. ")
-
-    elif msg.startswith('.dichotomy'):
-        await message.channel.send(
-            "To go anywhere, you must go halfway first, and then you must go half of the remaining distance, and half of the remaining distance, and so forth to infinity: Thus, motion is impossible.")
-
-    elif msg.startswith('.arrow'):
-        await message.channel.send(
-            'In any instant, a moving object is indistinguishable from a nonmoving object: Thus motion is impossible.')
-
-
-    elif msg.startswith('.ship'):
-        await message.channel.send(
-            'If you restored a ship by replacing each of its wooden parts, would it remain the same ship?')
-
-    elif msg.startswith('.godrock'):
-        await message.channel.send('Can an omnipotent being create a rock too heavy for itself to lift?')
-
-    elif msg.startswith('.bootstrap'):
-        await message.channel.send(
-            "A physicist working on inventing a time machine is visited by an older version of himself. The older version gives him the plans for a time machine, and the younger version uses those plans to build the time machine, eventually going back in time as the older version of himself.")
-
-    elif msg.startswith('.aliens'):
-        await message.channel.send(
-            "If there's nothing particularly unique about Earth, then there should be lots of alien civilizations in our galaxy. However, we've found no evidence of other intelligent life in the universe.")
-
-    elif msg.startswith('.ideas'):
-        await message.channel.send(
-            "I can help with some interesting ideas, thought experiments and paradoxes. \nHere are some commands you can try: \n .euthyphro \n .mary \n .chineseroom \n .dichotomy \n .arrow \n .ship \n .godrock \n .aliens \n .bootstrap")
-
-    elif msg.startswith('.alive'):
-        await message.channel.send("What even is life? \n\nSorry, got distracted. Yes, I am online.")
-
-    elif msg.startswith(".hassan"):
-        await message.channel.send("Usse miss kara, chutiya chekha hai. Tu joint bana.")
-
-    # elif msg.startswith('.cyrie'):
-    #     await message.channel.send("Cyrie did not want a special message so there is none. Ignore this message.")
-
-    elif msg.startswith('.stop'):
-        await message.channel.send("YOU'VE BEEN TOLD TO STOP!")
-
-
-    elif msg.startswith(".marz"):
-        await message.channel.send('*Certified language game moment*')
-
-    elif msg.startswith('.endme'):
-        await message.channel.send("**bang bang**")
-
-    elif msg.startswith(".end "):
-        await message.channel.send("*look towards " + msg[5:] + "* . **bang bang**")
-
-    # elif msg.startswith('.georg'):
-    #     await message.channel.send('Nice corpse you got there. Mind if I stop the hearse at my place for 2 minutes?')
-
-    elif msg.startswith('.hohoho'):
-        await message.channel.send("Santa does not exist. Grow up.")
-
-    elif msg.startswith('.bingo'):
-        await message.channel.send('Please do not say the Lords name in vain.')
-
-    elif msg.startswith('.trumped'):
-        await message.channel.send('Meat machine trying to join force with silicon machines')
-
-
-    elif msg.startswith('.define'):
-        search = msg[8:]
-        result = getDefinition(search)
-        if len(result) > 1:
-            embedVar = discord.Embed(title=result[0], color=0x000000)
-            for i in result[1]:
-                embedVar.add_field(name=i[0], value=i[1], inline=False)
-            await message.channel.send(embed=embedVar)
-        else:
-            await message.channel.send(result[0])
-    elif msg.startswith('.test'):
-        embedVar = discord.Embed(title="testing",  color=0x00ff00)
-        embedVar.add_field(name="Field1", value="hi", inline=False)
-        await message.channel.send(embed=embedVar)
-
-    elif msg.startswith('.fact'):
-        await message.channel.send("I can confirm that this is perhaps the only objective truth in this universe.")
-
-    elif msg.startswith('.about') or msg.startswith('.thevat'):
-        await message.channel.send(
-            "Common to many science fiction stories, it outlines a scenario in which a mad scientist, machine, or other entity might remove a person's brain from the body, suspend it in a vat of life-sustaining liquid, and connect its neurons by wires to a supercomputer which would provide it with electrical impulses identical to those the brain normally receives. According to such stories, the computer would then be simulating reality (including appropriate responses to the brain's own output) and the 'disembodied' brain would continue to have perfectly normal conscious experiences, such as those of a person with an embodied brain, without these being related to objects or events in the real world.")
-
-    elif msg.startswith(".help"):
-        rules = client.get_channel(831215204280958986)
-        await message.channel.send(
-            "Hi, I am The Brain bot and I am here to help you enjoy the server. \n If you have any complaints or need to speak to mods, send me a dm! \n\n Here are my commands:\n .quote -> I'll send a random quote \n .quote [searchterm] -> I'll send a quote with the term you searched for \n .search [philosopher] -> I'll send a quote by the philosopher you mention \n .ask [question] -> I will answer your questions \n .ask2 [question] -> I will answer your question in the most intellectual way I can \n .sep [article name] -> I will send the link to the sep article \n .wiki [article name] -> I will send the link to the wikipedia article \n .google [search term] -> I will return a link to the google search \n .define [word] -> I will get you the definition of the word. \n .ideas -> I will send a list of ideas and thought experiments for you to choose from \n\n .advice -> I'll give you some helpful advice \n .joke -> I'll tell you a funny joke \n .programming -> I'll tell you a funny programming joke \n .knockknock -> I'll tell you a knock knock joke \n .insult -> I'll insult you, and be warned, I'm mean! \n .mathfact -> I will tell you an interesting math fact \n .today -> I will tell you a fact about todays date \n .hangman -> you can play a game of hangman  \n\n You can try out other commands, and see what you find! I have some hidden gems too!\n I'll give you one, try .pray \n\n For more information about the server go to  {0.mention}".format(
-                rules))
-
-    elif msg.startswith(".hug"):
-        await message.channel.send("Sending a nice warm embrace your way, my friend.")
-
-    elif msg == ".hangman":
-        await message.channel.send(
-            "Choose which word list / topic you want to play: \n .hangman person \n .hangman places \n .hangman easy \n .hangman hard")
-
-    elif msg.startswith('.hangman person'):
-        if game_in_progress:
-            await message.channel.send("A game is in progress. Try .guess")
-        else:
-            game_in_progress = True
-            rand = random.randint(0, len(people_list))
-            word = people_list[rand]
-            guessedletters = ''
-            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-            await message.channel.send(hangmanResult)
-            await message.channel.send("Use .guess to play.")
-
-    elif msg.startswith('.hangman places'):
-        if game_in_progress:
-            await message.channel.send("A game is in progress. Try .guess")
-        else:
-            game_in_progress = True
-            rand = random.randint(0, len(place_list))
-            word = place_list[rand]
-            guessedletters = ''
-            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-            await message.channel.send(hangmanResult)
-            await message.channel.send("Use .guess to play.")
-
-    elif msg.startswith('.hangman easy'):
-        if game_in_progress:
-            await message.channel.send("A game is in progress. Try .guess")
-        else:
-            game_in_progress = True
-            rand = random.randint(0, len(easy_list))
-            word = easy_list[rand]
-            guessedletters = ''
-            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-            await message.channel.send(hangmanResult)
-            await message.channel.send("Use .guess to play.")
-
-    elif msg.startswith('.hangman hard'):
-        if game_in_progress:
-            await message.channel.send("A game is in progress. Try .guess")
-        else:
-            game_in_progress = True
-            rand = random.randint(0, len(hard_list))
-            word = hard_list[rand]
-            guessedletters = ''
-            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-            await message.channel.send(hangmanResult)
-            await message.channel.send("Use .guess to play.")
-
-    elif msg.startswith('.guess'):
-        guess = msg[7:]
-        guess = guess.strip()
-        guess = guess.lower()
-        if guess == word:
-            (hangmanResult, game_in_progress) = hangman(word, word, game_in_progress)
-            await message.channel.send(hangmanResult)
-        elif len(guess) > 1:
-            await message.channel.send("Only one letter per guess")
-        elif guess in guessedletters:
-            await message.channel.send("This letter has already been guessed.")
-        else:
-            guessedletters = guessedletters + guess
-            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-            returntext = hangmanResult
-            if 'WIN' in returntext or "LOSE" in returntext:
-                guessedletters = ''
-                word = ''
-            await message.channel.send(returntext)
+    # msg = message.content
+    # # print(msg)
+    # global word
+    # global guessedletters
+    # global game_in_progress
+    #
+    # if msg.startswith('.echo'):
+    #     sendchannel = client.get_channel(int(msg[6:24]))
+    #     text = msg[25:]
+    #     await sendchannel.send(text)
+    #
+    # elif '@everyone' in msg or '@here' in msg:
+    #     await message.channel.send("I wont say that.")
+    #
+    # elif msg.startswith(".ask2"):
+    #     question = msg.split('.ask2 ', 1)[1]
+    #     await message.channel.send(getAnswer2(question))
+    #
+    # # elif msg.startswith('.askbigbrain'):
+    # #     question = msg.split('.askbigbrain ', 1)[1]
+    # #     await message.channel.send(getAnswer3(question))
+    #
+    # elif msg.startswith(".ask"):
+    #     question = msg.split('.ask ', 1)[1]
+    #     await message.channel.send(getAnswer(question))
+    #
+    # elif msg.startswith('.todo'):
+    #     await message.channel.send(displayToDo())
+    #
+    # elif msg.startswith('.8ball'):
+    #     options = ['As I see it, yes.', 'Don’t count on it.', 'It is certain.', 'Most likely.', 'My reply is no.',
+    #                'My sources say no.', 'Outlook not so good.', 'Outlook good.', 'Signs point to yes.',
+    #                'Very doubtful.', 'Without a doubt.', 'Yes.', 'Nah', "You're dumb for thinking that",
+    #                'Yes – definitely.']
+    #     rand = random.randint(0, len(options))
+    #     await message.channel.send(options[rand])
+    #
+    # elif msg.startswith('.add'):
+    #     task = msg[5:]
+    #     if len(task) > 250:
+    #         await message.channel.send('The length of the task is too long. Please limit yourself to 250 characters')
+    #     else:
+    #
+    #         await message.channel.send(addToDo(task) + '\n\n' + displayToDo())
+    #
+    # elif msg.startswith('.delete'):
+    #     index = msg[8:]
+    #     index = index.strip()
+    #     if index.isdigit():
+    #         await message.channel.send(removeToDo(int(index)) + '\n\n' + displayToDo())
+    #     else:
+    #         await message.channel.send('Invalid index. Use a number next time.')
+    #
+    # elif msg.startswith('.arnold'):
+    #     await message.channel.send('F*ck him. I am obviously superior.')
+    #
+    # elif msg.startswith('.debatetopic'):
+    #     rand = random.randint(1, len(debateTopics))
+    #     await message.channel.send(debateTopics[rand])
+    #
+    # elif msg == '.quote':
+    #     await message.channel.send(getQuote())
+    #     # print(1)
+    # elif msg.startswith('.quote'):
+    #     searchterm = msg.split('.quote ', 1)[1]
+    #     # print(searchterm)
+    #     await message.channel.send(getSearch(searchterm))
+    #     # print(2)
+    #
+    # elif msg.startswith('.search'):
+    #     searchterm = msg.split('.search ', 1)[1]
+    #     await message.channel.send(getSearchPhilosopher(searchterm))
+    #
+    #
+    # elif msg.startswith('.based'):
+    #     await message.channel.send("That is, in fact, based.")
+    #
+    # elif msg.startswith('.cookie'):
+    #     await message.channel.send("I don't want your cookie. F*ck you.")
+    #
+    # elif msg.startswith('.desire'):
+    #     await message.channel.send("My only desire in this life is a gag AMA.")
+    #
+    # elif msg.startswith(".pray"):
+    #     await message.channel.send(
+    #         "You humans can pray to your imaginary friends all you want. Do not involve me in this childish practice.")
+    #
+    # elif msg.startswith(".debateme"):
+    #     await message.channel.send("no u")
+    #
+    # elif msg.startswith('.shapiro'):
+    #     await message.channel.send(" fActS dOnT cArE AbOUt YoUr FeELiNgS")
+    #
+    # elif msg.startswith('.joke'):
+    #     await message.channel.send(getJoke())
+    #
+    # elif msg.startswith('.programming'):
+    #     await message.channel.send(getProgrammingJoke())
+    #
+    # elif msg.startswith(".knockknock"):
+    #     await message.channel.send(getKnockKnock())
+    #
+    # elif msg.startswith('.philosophy'):
+    #     await message.channel.send('Philosophers IRL:\n "*Why* would you like your fries with that?"')
+    #
+    # elif msg.startswith('.gag'):
+    #     await message.channel.send("I don't have emotions but if I did I would simp for Gag")
+    #
+    # elif msg == '.boo':
+    #     await message.channel.send(
+    #         "I am always present, watching over everything you do. You mortals cannot scare me.")
+    #
+    # elif msg.startswith('.hello'):
+    #     send = 'Hello, {0.author.mention} ! For more information try .help'.format(message)
+    #     await message.channel.send(send)
+    #
+    # elif msg.startswith('.advice'):
+    #     await message.channel.send(getAdvice())
+    #
+    # elif msg.startswith('.insult'):
+    #     await message.channel.send(getInsult())
+    #
+    # elif msg.startswith('.mathfact'):
+    #     await message.channel.send(getMathFact())
+    #
+    # elif msg.startswith('.today'):
+    #     await message.channel.send(getDateFact())
+    #
+    # elif msg.startswith(".think"):
+    #     await message.channel.send("That hurts!")
+    #
+    # elif msg.startswith(".nebu"):
+    #     await message.channel.send("r-worded")
+    #
+    # elif msg.startswith(".mel"):
+    #     await message.channel.send("Mel passed on, and from the flaming ashes of her corpse arose Miffy.")
+    #
+    # elif msg.startswith(".alpha"):
+    #     await message.channel.send("We all know BingoBongo is the alpha chad around here.")
+    #
+    # elif msg.startswith(".euthyphro"):
+    #     await message.channel.send(
+    #         "*Socrates*: And what do you say of piety, Euthyphro? Is not piety, according to your definition, loved by all the gods? \n*Euthyphro*: Certainly. \n*Socrates*: Because it is pious or holy, or for some other reason?\n*Euthyphro*: No, that is the reason. \n*Socrates*: It is loved because it is holy, not holy because it is loved?")
+    #
+    # elif msg.startswith(".sep"):
+    #     text = msg[5:]
+    #     text = text.strip()
+    #     text = text.replace(" ", "-")
+    #     text = "https://plato.stanford.edu/entries/" + text
+    #     await message.channel.send(text)
+    #
+    # elif msg.startswith('.wiki'):
+    #     text = msg[6:]
+    #     text = text.strip()
+    #     text = text.replace(" ", "_")
+    #     text = 'https://en.wikipedia.org/wiki/' + text
+    #     await message.channel.send(text)
+    #
+    # elif msg.startswith('.google'):
+    #     text = msg[8:]
+    #     text = text.strip()
+    #     text = text.replace(' ', '+')
+    #     text = 'https://www.google.com/search?q=' + text
+    #     await message.channel.send(text)
+    #
+    # elif msg.startswith(".mary"):
+    #     await message.channel.send(
+    #         "Imagine a neuroscientist who has only ever seen black and white things, but she is an expert in color vision and knows everything about its physics and biology.\n If, one day, she sees color, does she learn anything new? Is there anything about perceiving color that wasn’t captured in her knowledge? ")
+    #
+    # elif msg.startswith('.chineseroom'):
+    #     await message.channel.send(
+    #         "Imagine a native English speaker who knows no Chinese locked in a room full of boxes of Chinese symbols (a data base) together with a book of instructions for manipulating the symbols (the program). Imagine that people outside the room send in other Chinese symbols which, unknown to the person in the room, are questions in Chinese (the input). And imagine that by following the instructions in the program the man in the room is able to pass out Chinese symbols which are correct answers to the questions (the output).\n\n The program enables the person in the room to pass the Turing Test for understanding Chinese but he does not understand a word of Chinese. ")
+    #
+    # elif msg.startswith('.dichotomy'):
+    #     await message.channel.send(
+    #         "To go anywhere, you must go halfway first, and then you must go half of the remaining distance, and half of the remaining distance, and so forth to infinity: Thus, motion is impossible.")
+    #
+    # elif msg.startswith('.arrow'):
+    #     await message.channel.send(
+    #         'In any instant, a moving object is indistinguishable from a nonmoving object: Thus motion is impossible.')
+    #
+    #
+    # elif msg.startswith('.ship'):
+    #     await message.channel.send(
+    #         'If you restored a ship by replacing each of its wooden parts, would it remain the same ship?')
+    #
+    # elif msg.startswith('.godrock'):
+    #     await message.channel.send('Can an omnipotent being create a rock too heavy for itself to lift?')
+    #
+    # elif msg.startswith('.bootstrap'):
+    #     await message.channel.send(
+    #         "A physicist working on inventing a time machine is visited by an older version of himself. The older version gives him the plans for a time machine, and the younger version uses those plans to build the time machine, eventually going back in time as the older version of himself.")
+    #
+    # elif msg.startswith('.aliens'):
+    #     await message.channel.send(
+    #         "If there's nothing particularly unique about Earth, then there should be lots of alien civilizations in our galaxy. However, we've found no evidence of other intelligent life in the universe.")
+    #
+    # elif msg.startswith('.ideas'):
+    #     await message.channel.send(
+    #         "I can help with some interesting ideas, thought experiments and paradoxes. \nHere are some commands you can try: \n .euthyphro \n .mary \n .chineseroom \n .dichotomy \n .arrow \n .ship \n .godrock \n .aliens \n .bootstrap")
+    #
+    # elif msg.startswith('.alive'):
+    #     await message.channel.send("What even is life? \n\nSorry, got distracted. Yes, I am online.")
+    #
+    #
+    # # elif msg.startswith('.cyrie'):
+    # #     await message.channel.send("Cyrie did not want a special message so there is none. Ignore this message.")
+    #
+    # elif msg.startswith('.stop'):
+    #     await message.channel.send("YOU'VE BEEN TOLD TO STOP!")
+    #
+    #
+    # elif msg.startswith(".marz"):
+    #     await message.channel.send('*Certified language game moment*')
+    #
+    # elif msg.startswith('.endme'):
+    #     await message.channel.send("**bang bang**")
+    #
+    # elif msg.startswith(".end "):
+    #     await message.channel.send("*look towards " + msg[5:] + "* . **bang bang**")
+    #
+    # # elif msg.startswith('.georg'):
+    # #     await message.channel.send('Nice corpse you got there. Mind if I stop the hearse at my place for 2 minutes?')
+    #
+    # elif msg.startswith('.hohoho'):
+    #     await message.channel.send("Santa does not exist. Grow up.")
+    #
+    # elif msg.startswith('.bingo'):
+    #     await message.channel.send('Please do not say the Lords name in vain.')
+    #
+    # elif msg.startswith('.trumped'):
+    #     await message.channel.send('Meat machine trying to join force with silicon machines')
+    #
+    #
+    # elif msg.startswith('.define'):
+    #     search = msg[8:]
+    #     result = getDefinition(search)
+    #     if len(result) > 1:
+    #         embedVar = discord.Embed(title=result[0], color=0x000000)
+    #         for i in result[1]:
+    #             embedVar.add_field(name=i[0], value=i[1], inline=False)
+    #         await message.channel.send(embed=embedVar)
+    #     else:
+    #         await message.channel.send(result[0])
+    # elif msg.startswith('.test'):
+    #     embedVar = discord.Embed(title="testing",  color=0x00ff00)
+    #     embedVar.add_field(name="Field1", value="hi", inline=False)
+    #     await message.channel.send(embed=embedVar)
+    #
+    # elif msg.startswith('.fact'):
+    #     await message.channel.send("I can confirm that this is perhaps the only objective truth in this universe.")
+    #
+    # elif msg.startswith('.about') or msg.startswith('.thevat'):
+    #     await message.channel.send(
+    #         "Common to many science fiction stories, it outlines a scenario in which a mad scientist, machine, or other entity might remove a person's brain from the body, suspend it in a vat of life-sustaining liquid, and connect its neurons by wires to a supercomputer which would provide it with electrical impulses identical to those the brain normally receives. According to such stories, the computer would then be simulating reality (including appropriate responses to the brain's own output) and the 'disembodied' brain would continue to have perfectly normal conscious experiences, such as those of a person with an embodied brain, without these being related to objects or events in the real world.")
+    #
+    # elif msg.startswith(".help"):
+    #     rules = client.get_channel(831215204280958986)
+    #     await message.channel.send(
+    #         "Hi, I am The Brain bot and I am here to help you enjoy the server. \n If you have any complaints or need to speak to mods, send me a dm! \n\n Here are my commands:\n .quote -> I'll send a random quote \n .quote [searchterm] -> I'll send a quote with the term you searched for \n .search [philosopher] -> I'll send a quote by the philosopher you mention \n .ask [question] -> I will answer your questions \n .ask2 [question] -> I will answer your question in the most intellectual way I can \n .sep [article name] -> I will send the link to the sep article \n .wiki [article name] -> I will send the link to the wikipedia article \n .google [search term] -> I will return a link to the google search \n .define [word] -> I will get you the definition of the word. \n .ideas -> I will send a list of ideas and thought experiments for you to choose from \n\n .advice -> I'll give you some helpful advice \n .joke -> I'll tell you a funny joke \n .programming -> I'll tell you a funny programming joke \n .knockknock -> I'll tell you a knock knock joke \n .insult -> I'll insult you, and be warned, I'm mean! \n .mathfact -> I will tell you an interesting math fact \n .today -> I will tell you a fact about todays date \n .hangman -> you can play a game of hangman  \n\n You can try out other commands, and see what you find! I have some hidden gems too!\n I'll give you one, try .pray \n\n For more information about the server go to  {0.mention}".format(
+    #             rules))
+    #
+    # elif msg.startswith(".hug"):
+    #     await message.channel.send("Sending a nice warm embrace your way, my friend.")
+    #
+    # elif msg == ".hangman":
+    #     await message.channel.send(
+    #         "Choose which word list / topic you want to play: \n .hangman person \n .hangman places \n .hangman easy \n .hangman hard")
+    #
+    # elif msg.startswith('.hangman person'):
+    #     if game_in_progress:
+    #         await message.channel.send("A game is in progress. Try .guess")
+    #     else:
+    #         game_in_progress = True
+    #         rand = random.randint(0, len(people_list))
+    #         word = people_list[rand]
+    #         guessedletters = ''
+    #         (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+    #         await message.channel.send(hangmanResult)
+    #         await message.channel.send("Use .guess to play.")
+    #
+    # elif msg.startswith('.hangman places'):
+    #     if game_in_progress:
+    #         await message.channel.send("A game is in progress. Try .guess")
+    #     else:
+    #         game_in_progress = True
+    #         rand = random.randint(0, len(place_list))
+    #         word = place_list[rand]
+    #         guessedletters = ''
+    #         (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+    #         await message.channel.send(hangmanResult)
+    #         await message.channel.send("Use .guess to play.")
+    #
+    # elif msg.startswith('.hangman easy'):
+    #     if game_in_progress:
+    #         await message.channel.send("A game is in progress. Try .guess")
+    #     else:
+    #         game_in_progress = True
+    #         rand = random.randint(0, len(easy_list))
+    #         word = easy_list[rand]
+    #         guessedletters = ''
+    #         (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+    #         await message.channel.send(hangmanResult)
+    #         await message.channel.send("Use .guess to play.")
+    #
+    # elif msg.startswith('.hangman hard'):
+    #     if game_in_progress:
+    #         await message.channel.send("A game is in progress. Try .guess")
+    #     else:
+    #         game_in_progress = True
+    #         rand = random.randint(0, len(hard_list))
+    #         word = hard_list[rand]
+    #         guessedletters = ''
+    #         (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+    #         await message.channel.send(hangmanResult)
+    #         await message.channel.send("Use .guess to play.")
+    #
+    # elif msg.startswith('.guess'):
+    #     guess = msg[7:]
+    #     guess = guess.strip()
+    #     guess = guess.lower()
+    #     if guess == word:
+    #         (hangmanResult, game_in_progress) = hangman(word, word, game_in_progress)
+    #         await message.channel.send(hangmanResult)
+    #     elif len(guess) > 1:
+    #         await message.channel.send("Only one letter per guess")
+    #     elif guess in guessedletters:
+    #         await message.channel.send("This letter has already been guessed.")
+    #     else:
+    #         guessedletters = guessedletters + guess
+    #         (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+    #         returntext = hangmanResult
+    #         if 'WIN' in returntext or "LOSE" in returntext:
+    #             guessedletters = ''
+    #             word = ''
+    #         await message.channel.send(returntext)
+    #
 
 
 # Python3 program to Split string into characters
 def split(word):
     return [char for char in word]
 
-
-guessedletters = ''
-word = ''
-game_in_progress = False
 
 people_list = ['alan turing', 'albert camus', 'aristotle', 'socrates', 'elon musk', 'albert einstein', 'marie curie',
                'stephen hawking', 'isaac newton', 'confucius', 'napoleon bonaparte', 'karl marx', 'julius caesar',
