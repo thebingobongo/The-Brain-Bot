@@ -429,7 +429,99 @@ async def approve(ctx, member: discord.Member):
     pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
     sendchannel = client.get_channel(831211215878488078)
     await member.add_roles(pawn_role)
-    await sendchannel.send(" Welcome to **The Vat!**  :confetti_ball: \n {0.mention} \n If you run into issues in the server, please message  :TheBrain: **The Brain** bot listed at the top of the user panel on the right.  Here, we are all brains in a vat, sharing our knowledge together in the virtual world of Discord!".format(member))
+    await sendchannel.send(" Welcome to **The Vat!**  :confetti_ball: \n {0.mention} \n If you run into issues in the server, please message  :brain: **The Brain** bot listed at the top of the user panel on the right.  Here, we are all brains in a vat, sharing our knowledge together in the virtual world of Discord!".format(member))
+
+
+@client.command()
+async def echo(ctx, channelID, *, msg):
+    sendchannel = client.get_channel(channelID)
+    sendchannel = client.get_channel(int(msg[6:24]))
+    text = msg[25:]
+    await sendchannel.send(text)
+
+
+@client.command()
+async def ask2(ctx, *, question):
+    await ctx.send(getAnswer2(question))
+
+
+@client.command()
+async def ask(ctx, *, question):
+    await ctx.send(getAnswer(question))
+
+
+@client.command()
+async def todo(ctx):
+    await ctx.send(displayToDo())
+
+
+@client.command()
+async def add(ctx, *, task):
+    if len(task) > 250:
+        await ctx.send('The length of the task is too long. Please limit yourself to 250 characters')
+    else:
+
+        await ctx.send(addToDo(task) + '\n\n' + displayToDo())
+
+
+@client.command()
+async def delete(ctx,index):
+    if index.isdigit():
+        await ctx.send(removeToDo(int(index)) + '\n\n' + displayToDo())
+    else:
+        await ctx.send('Invalid index. Use a number next time.')
+
+
+@client.command(aliases=['8ball'])
+async def eightball(ctx):
+    options = ['As I see it, yes.', 'Don’t count on it.', 'It is certain.', 'Most likely.', 'My reply is no.',
+               'My sources say no.', 'Outlook not so good.', 'Outlook good.', 'Signs point to yes.',
+               'Very doubtful.', 'Without a doubt.', 'Yes.', 'Nah', "You're dumb for thinking that",
+               'Yes – definitely.']
+    rand = random.randint(0, len(options))
+    await ctx.send(options[rand])
+
+
+@client.command()
+async def arnold(ctx):
+    await ctx.send('F*ck him. I am obviously superior.')
+
+
+@client.command()
+async def debatetopic(ctx):
+    rand = random.randint(1, len(debateTopics))
+    await ctx.send(debateTopics[rand])
+
+
+@client.command()
+async def quote(ctx, *, searchterm=None):
+    if searchterm == None:
+        await ctx.send(getQuote())
+    else:
+        await ctx.send(getSearch(searchterm))
+
+@client.command()
+async def search(ctx, *, searchterm):
+    await ctx.send(getSearchPhilosopher(searchterm))
+
+
+@client.command()
+async def based(ctx):
+    await ctx.send("That is, in fact, based.")
+
+
+@client.command()
+async def cookie(ctx):
+    int = random.randint(0,100)
+    if int == 76:
+        await ctx.send("Awww. Thank you very much. I love cookies. You are very nice.")
+    else:
+        await ctx.send("I don't want your cookie. F*ck you.")
+
+
+@client.command()
+async def desire(ctx):
+    await ctx.send("My only desire in this life is a gag AMA.")
 
 
 @client.event
@@ -548,7 +640,7 @@ async def on_message(message):
         await message.channel.send(getKnockKnock())
 
     elif msg.startswith('.philosophy'):
-        await message.channel.send('Philosophers IRL:\n "Why would you like your fries with that?"')
+        await message.channel.send('Philosophers IRL:\n "*Why* would you like your fries with that?"')
 
     elif msg.startswith('.gag'):
         await message.channel.send("I don't have emotions but if I did I would simp for Gag")
