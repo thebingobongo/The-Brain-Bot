@@ -11,10 +11,10 @@ import pickle
 import asyncio
 import typing
 
-# get bot token and openai apikey
 from debateTopics import debateTopics
 from hangman import hangman
 
+# get bot token and openai apikey
 load_dotenv()
 openai.api_key = os.getenv('APIKEY')
 bot_token = os.getenv('TOKEN')
@@ -421,7 +421,6 @@ async def demote(ctx, member: discord.Member, *, reason='Demotion'):
     bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
     knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
     pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
-    sendchannel = client.get_channel(831211215878488078)
     if rook_role in member.roles:
         await member.remove_roles(rook_role, reason=reason)
         await member.add_roles(bishop_role, reason=reason)
@@ -438,6 +437,17 @@ async def demote(ctx, member: discord.Member, *, reason='Demotion'):
         await ctx.send("{0.mention} is a Pawn. Cannot be further demoted.".format(member))
     else:
         await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
+
+
+@client.command()
+@commands.has_role(831214459682029588)
+async def approve(ctx, member: discord.Member):
+    pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
+    sendchannel = client.get_channel(831211215878488078)
+    await member.add_roles(pawn_role)
+    embedVar = discord.Embed(title="A new member has been approved!", color=0x00ff00)
+    embedVar.add_field(name="{0.mention} is a Pawn now! Everyone welcome them!".format(member), inline=False)
+    await sendchannel.send(embed=embedVar)
 
 
 @client.event
@@ -633,6 +643,7 @@ async def on_message(message):
     elif msg.startswith('.arrow'):
         await message.channel.send(
             'In any instant, a moving object is indistinguishable from a nonmoving object: Thus motion is impossible.')
+
 
     elif msg.startswith('.ship'):
         await message.channel.send(
