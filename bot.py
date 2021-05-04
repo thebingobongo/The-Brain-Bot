@@ -7,12 +7,12 @@ import openai
 from dotenv import load_dotenv
 import os
 from datetime import date
-import pickle
 import asyncio
 import typing
 
 from debateTopics import debateTopics
 from hangman import hangman
+from todo import displayToDo, removeToDo, addToDo
 
 # get bot token and openai apikey
 load_dotenv()
@@ -190,37 +190,6 @@ def getDefinition(search):
 
 
 # todolist = []
-with open('todo.pkl', 'rb') as f:
-    todolist = pickle.load(f)
-
-
-def displayToDo():
-    global todolist
-    with open('todo.pkl', 'rb') as f:
-        todolist = pickle.load(f)
-    returntext = '**To Do list:**\n'
-    for i in range(len(todolist)):
-        returntext = returntext + (str(i + 1) + '. ' + todolist[i] + '\n')
-
-    returntext = returntext + '\n To remove a task: .delete [task number] \n To add a new task: .add [task]'
-    return returntext
-
-
-def removeToDo(index):
-    if index > len(todolist):
-        return 'Index does not exist, try again.'
-    else:
-        todolist.pop(index - 1)
-        with open('todo.pkl', 'wb') as f:
-            pickle.dump(todolist, f)
-        return ' Task at index ' + str(index) + ' has been successfully removed.'
-
-
-def addToDo(task):
-    todolist.append(task)
-    with open('todo.pkl', 'wb') as f:
-        pickle.dump(todolist, f)
-    return "Task has been successfully added!"
 
 
 client = commands.Bot(command_prefix='-')
@@ -709,10 +678,10 @@ async def on_message(message):
             await message.channel.send(embed=embedVar)
         else:
             await message.channel.send(result[0])
-    # elif msg.startswith('.test'):
-    #     embedVar = discord.Embed(title="Title",  color=0x00ff00)
-    #     embedVar.add_field(name="Field1", value="hi", inline=False)
-    #     await message.channel.send(embed=embedVar)
+    elif msg.startswith('.test'):
+        embedVar = discord.Embed(title="testing",  color=0x00ff00)
+        embedVar.add_field(name="Field1", value="hi", inline=False)
+        await message.channel.send(embed=embedVar)
 
     elif msg.startswith('.fact'):
         await message.channel.send("I can confirm that this is perhaps the only objective truth in this universe.")
