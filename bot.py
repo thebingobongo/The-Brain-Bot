@@ -435,11 +435,9 @@ async def approve(ctx, member: discord.Member):
 
 
 @client.command()
-async def echo(ctx, channelID, *, msg):
+async def echo(ctx, channelID: int, *, txt):
     sendchannel = client.get_channel(channelID)
-    sendchannel = client.get_channel(int(msg[6:24]))
-    text = msg[25:]
-    await sendchannel.send(text)
+    await sendchannel.send(txt)
 
 
 @client.command()
@@ -516,7 +514,7 @@ async def based(ctx):
 @client.command()
 async def cookie(ctx):
     int = random.randint(0, 50)
-    if int == 76:
+    if int == 26:
         await ctx.send("Awww. Thank you very much. I love cookies. You are very nice.")
     else:
         await ctx.send("I don't want your cookie. F*ck you.")
@@ -575,7 +573,7 @@ async def boo(ctx):
 
 @client.command()
 async def hello(ctx):
-    await ctx.send('Hello, {0.author.mention} ! For more information try .help'.format(ctx.author))
+    await ctx.send('Hello, {0.mention} ! For more information try .help'.format(ctx.author))
 
 
 @client.command()
@@ -625,8 +623,7 @@ async def euthyphro(ctx):
 
 
 @client.command()
-async def sep(ctx, *, msg):
-    text = msg[5:]
+async def sep(ctx, *, text):
     text = text.strip()
     text = text.replace(" ", "-")
     text = "https://plato.stanford.edu/entries/" + text
@@ -634,8 +631,7 @@ async def sep(ctx, *, msg):
 
 
 @client.command()
-async def wiki(ctx, *, msg):
-    text = msg[6:]
+async def wiki(ctx, *, text):
     text = text.strip()
     text = text.replace(" ", "_")
     text = 'https://en.wikipedia.org/wiki/' + text
@@ -643,8 +639,7 @@ async def wiki(ctx, *, msg):
 
 
 @client.command()
-async def google(ctx, *, msg):
-    text = msg[8:]
+async def google(ctx, *, text):
     text = text.strip()
     text = text.replace(' ', '+')
     text = 'https://www.google.com/search?q=' + text
@@ -797,92 +792,14 @@ guessedletters = ''
 word = ''
 game_in_progress = False
 
-
-@client.command()
-async def hangman(ctx, gametype=None):
-    global guessedletters
-    global word
-    global game_in_progress
-    global easy_list
-    global hard_list
-    global people_list
-    global place_list
-
-    if gametype == None:
-        await ctx.send(
-            "Choose which word list / topic you want to play: \n .hangman person \n .hangman places \n .hangman easy \n .hangman hard")
-
-    elif gametype == 'person':
-        if game_in_progress:
-            await ctx.send("A game is in progress. Try .guess")
-        else:
-            game_in_progress = True
-            rand = random.randint(0, len(people_list))
-            word = people_list[rand]
-            guessedletters = ''
-            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-            await ctx.send(hangmanResult)
-            await ctx.send("Use .guess to play.")
-
-    elif gametype == 'places':
-        if game_in_progress:
-            await ctx.send("A game is in progress. Try .guess")
-        else:
-            game_in_progress = True
-            rand = random.randint(0, len(place_list))
-            word = place_list[rand]
-            guessedletters = ''
-            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-            await ctx.send(hangmanResult)
-            await ctx.send("Use .guess to play.")
-
-    elif gametype == 'easy':
-        if game_in_progress:
-            await ctx.send("A game is in progress. Try .guess")
-        else:
-            game_in_progress = True
-            rand = random.randint(0, len(easy_list))
-            word = easy_list[rand]
-            guessedletters = ''
-            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-            await ctx.send(hangmanResult)
-            await ctx.send("Use .guess to play.")
-
-    elif gametype == 'hard':
-        if game_in_progress:
-            await ctx.send("A game is in progress. Try .guess")
-        else:
-            game_in_progress = True
-            rand = random.randint(0, len(hard_list))
-            word = hard_list[rand]
-            guessedletters = ''
-            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-            await ctx.send(hangmanResult)
-            await ctx.send("Use .guess to play.")
+from discord.ext.commands import CommandNotFound
 
 
-@client.command()
-async def guess(ctx, guess):
-    global guessedletters
-    global word
-    global game_in_progress
-    guess = guess.strip()
-    guess = guess.lower()
-    if guess == word:
-        (hangmanResult, game_in_progress) = hangman(word, word, game_in_progress)
-        await ctx.send(hangmanResult)
-    elif len(guess) > 1:
-        await ctx.send("Only one letter per guess")
-    elif guess in guessedletters:
-        await ctx.send("This letter has already been guessed.")
-    else:
-        guessedletters = guessedletters + guess
-        (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-        returntext = hangmanResult
-        if 'WIN' in returntext or "LOSE" in returntext:
-            guessedletters = ''
-            word = ''
-        await ctx.send(returntext)
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, CommandNotFound):
+        return
+    raise error
 
 
 @client.event
@@ -898,11 +815,11 @@ async def on_message(message):
     # Processing the message so commands will work
     await client.process_commands(message)
 
-    # msg = message.content
-    # # print(msg)
-    # global word
-    # global guessedletters
-    # global game_in_progress
+    msg = message.content
+    # print(msg)
+    global word
+    global guessedletters
+    global game_in_progress
     #
     # if msg.startswith('.echo'):
     #     sendchannel = client.get_channel(int(msg[6:24]))
@@ -1162,78 +1079,82 @@ async def on_message(message):
     #
     # elif msg.startswith(".hug"):
     #     await message.channel.send("Sending a nice warm embrace your way, my friend.")
-    #
-    # elif msg == ".hangman":
-    #     await message.channel.send(
-    #         "Choose which word list / topic you want to play: \n .hangman person \n .hangman places \n .hangman easy \n .hangman hard")
-    #
-    # elif msg.startswith('.hangman person'):
-    #     if game_in_progress:
-    #         await message.channel.send("A game is in progress. Try .guess")
-    #     else:
-    #         game_in_progress = True
-    #         rand = random.randint(0, len(people_list))
-    #         word = people_list[rand]
-    #         guessedletters = ''
-    #         (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-    #         await message.channel.send(hangmanResult)
-    #         await message.channel.send("Use .guess to play.")
-    #
-    # elif msg.startswith('.hangman places'):
-    #     if game_in_progress:
-    #         await message.channel.send("A game is in progress. Try .guess")
-    #     else:
-    #         game_in_progress = True
-    #         rand = random.randint(0, len(place_list))
-    #         word = place_list[rand]
-    #         guessedletters = ''
-    #         (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-    #         await message.channel.send(hangmanResult)
-    #         await message.channel.send("Use .guess to play.")
-    #
-    # elif msg.startswith('.hangman easy'):
-    #     if game_in_progress:
-    #         await message.channel.send("A game is in progress. Try .guess")
-    #     else:
-    #         game_in_progress = True
-    #         rand = random.randint(0, len(easy_list))
-    #         word = easy_list[rand]
-    #         guessedletters = ''
-    #         (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-    #         await message.channel.send(hangmanResult)
-    #         await message.channel.send("Use .guess to play.")
-    #
-    # elif msg.startswith('.hangman hard'):
-    #     if game_in_progress:
-    #         await message.channel.send("A game is in progress. Try .guess")
-    #     else:
-    #         game_in_progress = True
-    #         rand = random.randint(0, len(hard_list))
-    #         word = hard_list[rand]
-    #         guessedletters = ''
-    #         (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-    #         await message.channel.send(hangmanResult)
-    #         await message.channel.send("Use .guess to play.")
-    #
-    # elif msg.startswith('.guess'):
-    #     guess = msg[7:]
-    #     guess = guess.strip()
-    #     guess = guess.lower()
-    #     if guess == word:
-    #         (hangmanResult, game_in_progress) = hangman(word, word, game_in_progress)
-    #         await message.channel.send(hangmanResult)
-    #     elif len(guess) > 1:
-    #         await message.channel.send("Only one letter per guess")
-    #     elif guess in guessedletters:
-    #         await message.channel.send("This letter has already been guessed.")
-    #     else:
-    #         guessedletters = guessedletters + guess
-    #         (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
-    #         returntext = hangmanResult
-    #         if 'WIN' in returntext or "LOSE" in returntext:
-    #             guessedletters = ''
-    #             word = ''
-    #         await message.channel.send(returntext)
+    global people_list
+    global easy_list
+    global hard_list
+    global place_list
+
+    if msg == ".hangman":
+        await message.channel.send(
+            "Choose which word list / topic you want to play: \n .hangman person \n .hangman places \n .hangman easy \n .hangman hard")
+
+    elif msg.startswith('.hangman person'):
+        if game_in_progress:
+            await message.channel.send("A game is in progress. Try .guess")
+        else:
+            game_in_progress = True
+            rand = random.randint(0, len(people_list))
+            word = people_list[rand]
+            guessedletters = ''
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await message.channel.send(hangmanResult)
+            await message.channel.send("Use .guess to play.")
+
+    elif msg.startswith('.hangman places'):
+        if game_in_progress:
+            await message.channel.send("A game is in progress. Try .guess")
+        else:
+            game_in_progress = True
+            rand = random.randint(0, len(place_list))
+            word = place_list[rand]
+            guessedletters = ''
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await message.channel.send(hangmanResult)
+            await message.channel.send("Use .guess to play.")
+
+    elif msg.startswith('.hangman easy'):
+        if game_in_progress:
+            await message.channel.send("A game is in progress. Try .guess")
+        else:
+            game_in_progress = True
+            rand = random.randint(0, len(easy_list))
+            word = easy_list[rand]
+            guessedletters = ''
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await message.channel.send(hangmanResult)
+            await message.channel.send("Use .guess to play.")
+
+    elif msg.startswith('.hangman hard'):
+        if game_in_progress:
+            await message.channel.send("A game is in progress. Try .guess")
+        else:
+            game_in_progress = True
+            rand = random.randint(0, len(hard_list))
+            word = hard_list[rand]
+            guessedletters = ''
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            await message.channel.send(hangmanResult)
+            await message.channel.send("Use .guess to play.")
+
+    elif msg.startswith('.guess'):
+        guess = msg[7:]
+        guess = guess.strip()
+        guess = guess.lower()
+        if guess == word:
+            (hangmanResult, game_in_progress) = hangman(word, word, game_in_progress)
+            await message.channel.send(hangmanResult)
+        elif len(guess) > 1:
+            await message.channel.send("Only one letter per guess")
+        elif guess in guessedletters:
+            await message.channel.send("This letter has already been guessed.")
+        else:
+            guessedletters = guessedletters + guess
+            (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
+            returntext = hangmanResult
+            if 'WIN' in returntext or "LOSE" in returntext:
+                guessedletters = ''
+                word = ''
+            await message.channel.send(returntext)
     #
 
 
