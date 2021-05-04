@@ -343,6 +343,9 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
 @client.command()
 @commands.has_role(831214459682029588)
 async def kick(ctx, member: discord.Member, *, reason=None):
+    if not member:
+        await ctx.send("You need to name someone to kick.")
+        return
     await member.kick(reason=reason)
     await ctx.send("{0.mention} has been kicked by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
@@ -350,6 +353,9 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 @client.command()
 @commands.has_role(831214459682029588)
 async def ban(ctx, member: discord.Member, *, reason=None):
+    if not member:
+        await ctx.send("You need to name someone to ban.")
+        return
     await member.ban(reason=reason)
     await ctx.send("{0.mention} has been banned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
@@ -357,6 +363,9 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 @client.command()
 @commands.has_role(831214459682029588)
 async def promote(ctx, member: discord.Member, *, reason='Promotion'):
+    if not member:
+        await ctx.send("You need to name someone to promote.")
+        return
     rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
     bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
     knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
@@ -386,6 +395,9 @@ async def promote(ctx, member: discord.Member, *, reason='Promotion'):
 @client.command()
 @commands.has_role(831214459682029588)
 async def demote(ctx, member: discord.Member, *, reason='Demotion'):
+    if not member:
+        await ctx.send("You need to name someone to demote.")
+        return
     rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
     bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
     knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
@@ -411,11 +423,14 @@ async def demote(ctx, member: discord.Member, *, reason='Demotion'):
 @client.command()
 @commands.has_role(831214459682029588)
 async def approve(ctx, member: discord.Member):
+    if not member:
+        await ctx.send("You need to name someone to approve.")
+        return
     pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
     sendchannel = client.get_channel(831211215878488078)
-    await member.add_roles(pawn_role)
     embedVar = discord.Embed(title="A new member has been approved!", color=0x00ff00)
     embedVar.add_field(name="{0.mention} is a Pawn now! Everyone welcome them!".format(member), inline=False)
+    await member.add_roles(pawn_role)
     await sendchannel.send(embed=embedVar)
 
 
