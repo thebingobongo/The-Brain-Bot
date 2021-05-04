@@ -148,5 +148,6 @@ debateTopics = {
     147: 'Is cancel culture a good thing?',
     148: 'Is cancel culture a bad thing?',
     149: 'How can we differentiate between a valid use of "Cancel Culture" vs an instance of mob delirium?',
-    150: 'Will the advent of "Designer Babies" via genetic modifications be ethical?'
+    150: 'Will the advent of "Designer Babies" via genetic modifications be ethical?',
+    151: 'Is technology advancing humanity or enslaving it?'
 }
