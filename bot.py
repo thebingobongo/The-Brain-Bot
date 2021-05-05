@@ -835,10 +835,23 @@ async def on_message(message):
         # Getting the channel
         sendchannel = client.get_channel(831214657439924284)
         await sendchannel.send(f"{message.author} sent:\n```{message.content}```")
+
+    msg = message.content
+
+    filteredwords = [
+        'nigger','nigga','faggot', 'testbingobongo', 'niggers', 'fag', 'fagging', 'faggitt', 'faggot',
+         'faggs', 'fagot', 'fagots', 'fags', 'n1gga', 'n1gger', 'nigg3r', 'nigg4h', 'nigga', 'niggah', 'niggas',
+         'niggaz', 'nigger', 'niggers', 'retard', 'assnigger', 'douche-fag', 'fagbag', 'fagfucker', 'faggit',
+         'faggotcock', 'fagtard', 'mc faggot','mcfaggot', 'mcfagget', 'negro', 'nigaboo', 'niglet', 'sand nigger',
+         'sandnigger', 'darkie']
+    if any(word in msg for word in filteredwords):
+        await message.delete()
+        sendchannel = client.get_channel(831214657439924284)
+        await sendchannel.send(f"{message.author} sent:\n```{message.content}``` \n in {message.channel}")
     # Processing the message so commands will work
     await client.process_commands(message)
 
-    msg = message.content
+
     # print(msg)
     global word
     global guessedletters
