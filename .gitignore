@@ -114,3 +114,11 @@ dmypy.json
 .pyre/
 token.json
 query.txt
+.idea/dictionaries/pcMasterRace.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/The-Brain-Bot.iml
+.idea/vcs.xml
+.vscode/settings.json
+requirements.txt
