@@ -21,6 +21,7 @@ def add_user(user_information=None):
 def update_user(user_information=None):
     db = database.connect()
     db.update(user_information["user_id"], user_information)
+    # this is a test
 
 def delete_user(user_id=None):
     db = database.connect()
