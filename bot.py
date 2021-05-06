@@ -835,6 +835,9 @@ async def on_message(message):
         # Getting the channel
         sendchannel = client.get_channel(831214657439924284)
         await sendchannel.send(f"{message.author} sent:\n```{message.content}```")
+        embedVar = discord.Embed(title="Ticket created", color=0x00ff00)
+        embedVar.add_field(name="Mods will get back to you as soon as possible.", value="Please refrain from sending too many messages here.", inline=False)
+        await message.channel.send(embed=embedVar)
 
     msg = message.content
 
