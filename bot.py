@@ -858,7 +858,7 @@ async def on_message(message):
                      'nigaboo', 'niglet', 'sand nigger', 'sandnigger', 'darkie', 'sand nigga', 'niggerfucker',
                      'pissnigger', 'pissnigga', 'lolli', 'loli', 'porch monkey', 'porchmonkey',
                      'porch-monkey', 'bluegum', 'boonga', 'cabbage eater', 'ching-chong', 'dog-eater', 'dog eater',
-                     'cat-eater', 'cat eater', 'Ching Chong', 'Chink', 'Cholo', 'Chinky', 'coon', 'jigaboo', 'jiggaboo',
+                     'cat-eater', 'cat eater', 'Ching Chong', 'Chink', 'Cholo', 'Chinky', 'jigaboo', 'jiggaboo',
                      'gin jockey', 'goyim', 'goyum', 'gringo', 'mutt', 'honky', 'honkey', 'honkie', 'Kike',
                      'injun', '1njun', 'jewboy', 'kyke', 'mayo monkey', 'mayonnaise monkey', 'pickaninny', 'polack',
                      'polak', 'polack', 'prarie nigger', 'prarie nigga', 'tacohead', 'thicklips', 'thicklips',
