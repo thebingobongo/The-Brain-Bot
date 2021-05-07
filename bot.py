@@ -346,6 +346,10 @@ async def kick(ctx, member: discord.Member, *, reason=None):
     if not member:
         await ctx.send("You need to name someone to kick.")
         return
+    staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
+    if staff_role in member.roles:
+        await ctx.send("Cannot kick staff. Please contact a Mod III")
+        return
     await member.kick(reason=reason)
     await ctx.send("{0.mention} has been kicked by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
@@ -355,6 +359,10 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 async def ban(ctx, member: discord.Member, *, reason=None):
     if not member:
         await ctx.send("You need to name someone to ban.")
+        return
+    staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
+    if staff_role in member.roles:
+        await ctx.send("Cannot ban staff. Please contact a Mod III")
         return
     await member.ban(reason=reason)
     await ctx.send("{0.mention} has been banned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
@@ -436,7 +444,7 @@ async def approve(ctx, member: discord.Member):
 
 @client.command()
 @commands.has_role(831214459682029588)
-async def underage(ctx, member:discord.Member):
+async def underage(ctx, member: discord.Member):
     if not member:
         await ctx.send("You need to name someone to approve.")
         return
@@ -447,6 +455,7 @@ async def underage(ctx, member:discord.Member):
     await textchannel.set_permissions(member, view_channel=False)
     await voicechannel.set_permissions(member, view_channel=False)
     await ctx.send("Underage Tag has been added!")
+
 
 @client.command()
 async def echo(ctx, channelID: int, *, txt):
@@ -836,24 +845,31 @@ async def on_message(message):
         sendchannel = client.get_channel(831214657439924284)
         await sendchannel.send(f"{message.author} sent:\n```{message.content}```")
         embedVar = discord.Embed(title="Ticket created", color=0x00ff00)
-        embedVar.add_field(name="Mods will get back to you as soon as possible.", value="Please refrain from sending too many messages here.", inline=False)
+        embedVar.add_field(name="Mods will get back to you as soon as possible.",
+                           value="Please refrain from sending too many messages here.", inline=False)
         await message.channel.send(embed=embedVar)
 
     msg = message.content
 
-    filteredwords = [
-        'nigger','nigga','faggot', 'testbingobongo', 'niggers', 'fag', 'fagging', 'faggitt', 'faggot',
-         'faggs', 'fagot', 'fagots', 'fags', 'n1gga', 'n1gger', 'nigg3r', 'nigg4h', 'nigga', 'niggah', 'niggas',
-         'niggaz', 'nigger', 'niggers', 'retard', 'assnigger', 'douche-fag', 'fagbag', 'fagfucker', 'faggit',
-         'faggotcock', 'fagtard', 'mc faggot','mcfaggot', 'mcfagget', 'negro', 'nigaboo', 'niglet', 'sand nigger',
-         'sandnigger', 'darkie']
+    filteredwords = ['nigger', 'nigga', 'faggot', 'testbingobongo', 'niggers', 'fag', 'fagging', 'faggitt', 'faggot',
+                     'faggs', 'fagot', 'fagots', 'fags', 'dyke', 'n1gga', 'n1gger', 'nigg3r', 'nigg4h', 'nigga',
+                     'niggah', 'niggas', 'niggaz', 'nigger', 'niggers', 'retard', 'assnigger', 'douche-fag', 'fagbag',
+                     'fagfucker', 'faggit', 'faggotcock', 'fagtard', 'mc faggot', 'mcfaggot', 'mcfagget', 'negro',
+                     'nigaboo', 'niglet', 'sand nigger', 'sandnigger', 'darkie', 'sand nigga', 'niggerfucker',
+                     'pissnigger', 'pissnigga', 'lolli', 'loli', 'cum', 'c u m', 'porch monkey', 'porchmonkey',
+                     'porch-monkey', 'bluegum', 'boonga', 'cabbage eater', 'ching-chong', 'dog-eater', 'dog eater',
+                     'cat-eater', 'cat eater', 'Ching Chong', 'Chink', 'Cholo', 'Chinky', 'coon', 'jigaboo', 'jiggaboo',
+                     'gin jockey', 'goy', 'goyim', 'goyum', 'gringo', 'mutt', 'honky', 'honkey', 'honkie', 'Kike',
+                     'injun', '1njun', 'jap', 'jewboy', 'kyke', 'mayo monkey', 'mayonnaise monkey', 'pickaninny', 'polack',
+                     'polak', 'polack', 'prarie nigger', 'prarie nigga', 'tacohead', 'thicklips', 'thicklips',
+                     'thick lips', 'ting tong', 'towel head', 'twink', 'uncle tom', 'uncle-tom', 'Wigger', 'wigga',
+                     'zipperhead', 'zippahead', 'zipper-head', 'zippa-head']
     if any(word in msg for word in filteredwords):
         await message.delete()
         sendchannel = client.get_channel(831214657439924284)
         await sendchannel.send(f"{message.author} sent:\n```{message.content}``` \n in {message.channel}")
     # Processing the message so commands will work
     await client.process_commands(message)
-
 
     # print(msg)
     global word
