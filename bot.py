@@ -658,7 +658,7 @@ async def euthyphro(ctx):
 async def sep(ctx, *, text):
     text = text.strip()
     text = text.replace(" ", "-")
-    text = "https://plato.stanford.edu/entries/" + text
+    text = " https://plato.stanford.edu/search/searcher.py?query=" + text
     await ctx.send(text)
 
 
@@ -666,7 +666,7 @@ async def sep(ctx, *, text):
 async def wiki(ctx, *, text):
     text = text.strip()
     text = text.replace(" ", "_")
-    text = 'https://en.wikipedia.org/wiki/' + text
+    text = 'https://en.wikipedia.org/w/index.php?search=' + text
     await ctx.send(text)
 
 
