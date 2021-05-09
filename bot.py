@@ -104,12 +104,13 @@ def getInsult():
     response = requests.get('https://evilinsult.com/generate_insult.php?lang=en&type=json')
     insult = json.loads(response.text)
     text = insult['insult']
-    if 'testicles' in text or 'Suck' in text or 'chromosomes' in text or 'orangutans' in text or 'abortion' in text or \
+    while 'testicles' in text or 'Suck' in text or 'chromosomes' in text or 'orangutans' in text or 'abortion' in text or \
             'Tampon' in text or 'reindeer!' in text or 'motherfucker.&quot;\r\n--&gt;' in text or 'jerk off' in text \
             or "amp&" in text or 'booble' in text or 'walt' in text or 'dick,' in text or 'twatface' in text:
-        return 'Something went wrong. You suck. Try again.'
-    else:
-        return text
+        response = requests.get('https://evilinsult.com/generate_insult.php?lang=en&type=json')
+        insult = json.loads(response.text)
+        text = insult['insult']
+    return text
 
 
 def getQuote():
