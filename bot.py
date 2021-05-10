@@ -467,19 +467,21 @@ async def echo(ctx, channelID: int, *, txt):
 @client.command()
 async def ask2(ctx, *, question: str):
     #if '@everyone' in question or '@here' in question or '@Member':
-    if '@' in question:
+    answer = getAnswer2(question)
+    if '@' in question or '@' in answer:
         await ctx.send("No.")
         return
-    await ctx.send(getAnswer2(question))
+    await ctx.send(answer)
 
 
 @client.command()
 async def ask(ctx, *, question):
     #if '@everyone' in question or '@here' in question:
-    if '@' in question:
+    answer = getAnswer(question)
+    if '@' in question or '@' in answer:
         await ctx.send("No.")
         return
-    await ctx.send(getAnswer(question))
+    await ctx.send(answer)
 
 
 @client.command()
