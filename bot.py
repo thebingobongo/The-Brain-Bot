@@ -275,22 +275,22 @@ async def unmute(ctx, member: discord.Member, *, reason=None):
         "{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
 
-@client.command()
+@client.command(aliases=['unpunish', 'unpanopticon'])
 @commands.has_role(831214459682029588)
 async def undungeon(ctx, member: discord.Member, *, reason=None):
     global originalrole
     dungeon_role = discord.utils.get(ctx.guild.roles, name="Punished")
     if not member:
-        await ctx.send("You need to name someone to undungeon.")
+        await ctx.send("You need to name someone to unpunish.")
         return
     member_role = originalrole[member]
     await member.remove_roles(dungeon_role, reason=reason)
     await member.add_roles(member_role, reason='unmuted')
     await ctx.send(
-        "{0.mention} has been undungeoned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+        "{0.mention} has been unpunished by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
 
-@client.command()
+@client.command(aliases=['punish', 'prison', 'panopticon'])
 @commands.has_role(831214459682029588)
 async def dungeon(ctx, members: commands.Greedy[discord.Member],
                   dungeon_minutes: typing.Optional[int] = 0,
@@ -306,7 +306,7 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
     member_role = []
 
     if not members:
-        await ctx.send("You need to name someone to dungeon.")
+        await ctx.send("You need to name someone to punish.")
         return
 
     dungeon_role = discord.utils.get(ctx.guild.roles, name="Punished")
@@ -330,7 +330,7 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
             await member.remove_roles(pawn_role, reason=reason)
         await member.add_roles(dungeon_role, reason=reason)
         await ctx.send(
-            "{0.mention} has been dungeoned by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author,
+            "{0.mention} has been punished by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author,
                                                                                                reason, dungeon_minutes))
 
     if dungeon_minutes > 0:
@@ -876,10 +876,17 @@ async def on_message(message):
                      'polak', 'polack', 'prarie nigger', 'prarie nigga', 'tacohead', 'thicklips', 'thicklips',
                      'thick lips', 'ting tong', 'towel head', 'twink', 'uncle tom', 'uncle-tom', 'Wigger', 'wigga',
                      'zipperhead', 'zippahead', 'zipper-head', 'zippa-head']
-    if any(word in msg for word in filteredwords):
-        await message.delete()
-        sendchannel = client.get_channel(831214657439924284)
-        await sendchannel.send(f"{message.author} sent:\n```{message.content}``` \n in {message.channel}")
+
+    msgwords = msg.split()
+    for msgword in msgwords:
+        for filter in filteredwords:
+            # print(f'{msgword} {filter}')
+            if msgword.lower() == filter.lower():
+                await message.delete()
+                sendchannel = client.get_channel(831214657439924284)
+                await sendchannel.send(f"{message.author} sent:\n```{message.content}``` \n {msgword} \n in {message.channel}")
+    #if any(word in msg for word in filteredwords):
+
     # Processing the message so commands will work
     await client.process_commands(message)
 
