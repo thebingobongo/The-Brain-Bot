@@ -659,16 +659,22 @@ async def euthyphro(ctx):
 async def sep(ctx, *, text):
     text = text.strip()
     text = text.replace(" ", "-")
-    text = " https://plato.stanford.edu/search/searcher.py?query=" + text
-    await ctx.send(text)
+    link = 'https://plato.stanford.edu/entries/' + text
+    response = requests.get(link)
+    if response.status_code == 404:
+        link = " https://plato.stanford.edu/search/searcher.py?query=" + text
+    await ctx.send(link)
 
 
 @client.command()
 async def wiki(ctx, *, text):
     text = text.strip()
     text = text.replace(" ", "_")
-    text = 'https://en.wikipedia.org/w/index.php?search=' + text
-    await ctx.send(text)
+    link = 'https://en.wikipedia.org/wiki/' + text
+    response = requests.get(link)
+    if response.status_code == 404:
+        link = 'https://en.wikipedia.org/w/index.php?search=' + text
+    await ctx.send(link)
 
 
 @client.command()
@@ -859,7 +865,8 @@ async def on_message(message):
                      'nigaboo', 'niglet', 'sand nigger', 'sandnigger', 'darkie', 'sand nigga', 'niggerfucker',
                      'pissnigger', 'pissnigga', 'lolli', 'loli', 'porch monkey', 'porchmonkey',
                      'porch-monkey', 'bluegum', 'boonga', 'cabbage eater', 'ching-chong', 'dog-eater', 'dog eater',
-                     'cat-eater', 'cat eater', 'Ching Chong', 'Chink', 'Cholo', 'Chinky', 'jigaboo', 'jiggaboo',
+                     'cat-eater', 'cat eater', 'Ching Chong', 'ching chong', 'chink', 'cholo', 'chinky',
+                     'Chink', 'Cholo', 'Chinky', 'jigaboo', 'jiggaboo',
                      'gin jockey', 'goyim', 'goyum', 'gringo', 'mutt', 'honky', 'honkey', 'honkie', 'Kike',
                      'injun', '1njun', 'jewboy', 'kyke', 'mayo monkey', 'mayonnaise monkey', 'pickaninny', 'polack',
                      'polak', 'polack', 'prarie nigger', 'prarie nigga', 'tacohead', 'thicklips', 'thicklips',
@@ -966,8 +973,7 @@ people_list = ['alan turing', 'albert camus', 'aristotle', 'socrates', 'elon mus
                'galileo galilei', 'bingo bongo', 'leonardo da vinci']
 
 place_list = ['paris', 'toronto', 'canada', 'america', 'france', 'europe', 'england', 'new york', 'los angeles',
-              'las vegas'
-              'kansas', 'london', 'boston', 'pakistan', 'germany', 'new jersey', 'russia', 'china', 'india', 'poland',
+              'las vegas','kansas', 'london', 'boston', 'pakistan', 'germany', 'new jersey', 'russia', 'china', 'india', 'poland',
               'mexico', 'ottawa', 'berlin', 'alaska', 'serbia', 'japan', 'africa', 'australia', 'asia']
 
 easy_list = ['wolf', 'deer', 'dangerous', ' fire station', 'surgeon', 'building', 'astrophysics', 'phiilosophy',
