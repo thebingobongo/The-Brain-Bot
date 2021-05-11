@@ -638,9 +638,9 @@ async def think(ctx):
     await ctx.send("That hurts!")
 
 
-@client.command()
-async def nebu(ctx):
-    await ctx.send("r-worded")
+# @client.command()
+# async def nebu(ctx):
+#     await ctx.send("r-worded")
 
 
 @client.command()
