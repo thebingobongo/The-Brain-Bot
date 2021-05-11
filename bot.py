@@ -854,9 +854,9 @@ async def on_message(message):
     if isinstance(message.channel, discord.DMChannel):
         # Getting the channel
         sendchannel = client.get_channel(831214657439924284)
-        await sendchannel.send(f"{message.author} sent:\n```{message.content}```")
+        await sendchannel.send(f"{message.author} sent the bot:\n```{message.content}```\n\n")
         embedVar = discord.Embed(title="Ticket created", color=0x00ff00)
-        embedVar.add_field(name="Mods will get back to you as soon as possible.",
+        embedVar.add_field(name="Mods will solve the issue as soon as possible. Thanks.",
                            value="Please refrain from sending too many messages here.", inline=False)
         await message.channel.send(embed=embedVar)
 
@@ -884,7 +884,7 @@ async def on_message(message):
             if msgword.lower() == filter.lower():
                 await message.delete()
                 sendchannel = client.get_channel(831214657439924284)
-                await sendchannel.send(f"{message.author} sent:\n```{message.content}``` \n {msgword} \n in {message.channel}")
+                await sendchannel.send(f"{message.author} said:\n```{message.content}``` \n **{msgword}** \n in {message.channel}")
     #if any(word in msg for word in filteredwords):
 
     # Processing the message so commands will work
