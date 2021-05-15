@@ -831,18 +831,24 @@ async def hug(ctx):
     await ctx.send("Sending a nice warm embrace your way, my friend.")
 
 
-guessedletters = ''
-word = ''
-game_in_progress = False
+
+@client.command()
+@commands.has_role(831214459682029588)
+async def clear(ctx, amount = 5):
+    await ctx.channel.purge(limit=amount)
+
 
 from discord.ext.commands import CommandNotFound
-
-
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, CommandNotFound):
         return
     raise error
+
+
+guessedletters = ''
+word = ''
+game_in_progress = False
 
 
 @client.event
