@@ -438,6 +438,7 @@ async def approve(ctx, member: discord.Member):
     pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
     sendchannel = client.get_channel(831211215878488078)
     await member.add_roles(pawn_role)
+    await ctx.send("User has been approved.")
     await sendchannel.send(
         " Welcome to **The Vat!**  :confetti_ball: \n {0.mention} \n If you run into issues in the server, please message  :brain: **The Brain** bot listed at the top of the user panel on the right.  Here, we are all brains in a vat, sharing our knowledge together in the virtual world of Discord!".format(
             member))
