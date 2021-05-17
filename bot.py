@@ -429,6 +429,131 @@ async def demote(ctx, member: discord.Member, *, reason='Demotion'):
         await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
 
 
+
+@client.command(aliases=['gbr','brainrole'])
+@commands.has_role(831214459682029588)
+async def givebrainrole(ctx, member: discord.Member, *, role_id=None):
+    if not member:
+        await ctx.send("You need to name someone to demote.")
+        return
+    if role_id == None:
+        await ctx.send("Please specify which brain role you want to give to this user.")
+        await ctx.send('''
+                    1. Biology 
+            2. Business 
+            3. Computer Science 
+            4. Chemistry 
+            5. Chef 
+            6. Chess God 
+            7. Debate Club 
+            8. Economics 
+            9. Engineering 
+            10. Healthcare 
+            11. History 
+            12. History of Phil. 
+            13. International Relations 
+            14. Language 
+            15. Metaethics 
+            16. Maths 
+            17. Metaphysics 
+            18. Philosophy 
+            19. Phil. of Mind 
+            20. Physics 
+            21. Political Science 
+            22. Psychology 
+            23. Religion 
+            24. Literature
+        ''')
+        return
+    else:
+        role_id = int(role_id)
+        if role_id == 1:
+            role = 'Biology'
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=843667880519663686))
+        elif role_id == 2:
+            role = "Business"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835050210111651850))
+        elif role_id == 3:
+            role = "Computer Science"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835273070817181757))
+        elif role_id == 4:
+            role = "Chemistry"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=838589075128451102))
+        elif role_id == 5:
+            role = "Chef"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=843668667785936906))
+        elif role_id == 6:
+            role = "Chess God"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=836440277680914443))
+        elif role_id == 7:
+            role = "Debate Club"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835049191876198431))
+        elif role_id == 8:
+            role = "Economics"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=838589029694963723))
+        elif role_id == 9:
+            role = "Engineering"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=843314823810777108))
+        elif role_id == 10:
+            role = "Healthcare"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835412225669464074))
+        elif role_id == 11:
+            role = "History"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835272854601203712))
+        elif role_id == 12:
+            role = "History of Phil."
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835276025410879529))
+        elif role_id == 13:
+            role = "International Relations"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=839976074175709275))
+        elif role_id == 14:
+            role = "Language"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835274951505477684))
+        elif role_id == 15:
+            role = "Metaethics"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835049730001600542))
+        elif role_id == 16:
+            role = "Maths"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=836802292346781717))
+        elif role_id == 17:
+            role = "Metaphysics"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835275452796239932))
+        elif role_id == 18:
+            role = "Philosophy"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=843668608898301973))
+        elif role_id == 19:
+            role = "Phil. of Mind"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835275301025742909))
+        elif role_id == 20:
+            role = "Physics"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=836802289371971647))
+        elif role_id == 21:
+            role = "Political Science"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=838588978788958288))
+        elif role_id == 22:
+            role = "Psychology"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835050296837275658))
+        elif role_id == 23:
+            role = "Religion"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=835275048041447504))
+        elif role_id == 24:
+            role = "Literature"
+            await member.add_roles(discord.utils.get(ctx.guild.roles, id=843673099807621155))
+
+        await ctx.send(
+            "{0.mention} has been awarded the brain role for {1} by {2.mention}".format(member, role, ctx.author))
+        logs = client.get_channel(831214657439924284)
+        await logs.send("{0.mention} has been awarded the brain role for {1} by {2.mention}".format(member, role, ctx.author))
+
+
+
+
+@client.command()
+@commands.has_any_role(835623182484373535, 835400292979179530)
+async def clear(ctx, amount = 5):
+    await ctx.channel.purge(limit=amount)
+
+
 @client.command()
 @commands.has_role(831214459682029588)
 async def approve(ctx, member: discord.Member):
@@ -832,11 +957,6 @@ async def hug(ctx):
     await ctx.send("Sending a nice warm embrace your way, my friend.")
 
 
-
-@client.command()
-@commands.has_role(831214459682029588)
-async def clear(ctx, amount = 5):
-    await ctx.channel.purge(limit=amount)
 
 
 from discord.ext.commands import CommandNotFound
