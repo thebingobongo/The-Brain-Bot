@@ -248,7 +248,10 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
         await ctx.send(
             "{0.mention} has been muted by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason,
                                                                                            mute_minutes))
-
+    logs = client.get_channel(831214657439924284)
+    await logs.send(
+        "{0.mention} has been muted by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason,
+                                                                                       mute_minutes))
     if mute_minutes > 0:
         await asyncio.sleep(mute_minutes * 60)
         count = 0
@@ -257,6 +260,9 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
             await member.edit(mute=False)
             await member.add_roles(member_role[count], reason=reason)
             count += 1
+
+
+
 
 
 @client.command()
@@ -273,6 +279,8 @@ async def unmute(ctx, member: discord.Member, *, reason=None):
     await member.edit(mute=False)
     await ctx.send(
         "{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+    logs = client.get_channel(831214657439924284)
+    await logs.send("{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason)))
 
 
 @client.command(aliases=['unpunish', 'unpanopticon'])
@@ -288,6 +296,8 @@ async def undungeon(ctx, member: discord.Member, *, reason=None):
     await member.add_roles(member_role, reason='unmuted')
     await ctx.send(
         "{0.mention} has been unpunished by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+    logs = client.get_channel(831214657439924284)
+    await logs.send("{0.mention} has been unpunished by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
 
 @client.command(aliases=['punish', 'prison', 'panopticon'])
@@ -332,13 +342,17 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
         await ctx.send(
             "{0.mention} has been punished by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author,
                                                                                                reason, dungeon_minutes))
-
+    logs = client.get_channel(831214657439924284)
+    await logs.send("{0.mention} has been punished by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author,
+                                                                                               reason, dungeon_minutes))
     if dungeon_minutes > 0:
         await asyncio.sleep(dungeon_minutes * 60)
         count = 0
         for member in members:
             await member.remove_roles(dungeon_role, reason="time's up ")
             await member.add_roles(member_role[count], reason=reason)
+
+
 
 
 @client.command()
@@ -351,8 +365,11 @@ async def kick(ctx, member: discord.Member, *, reason=None):
     if staff_role in member.roles:
         await ctx.send("Cannot kick staff. Please contact a Mod III")
         return
-    await member.kick(reason=reason)
     await ctx.send("{0.mention} has been kicked by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+    logs = client.get_channel(831214657439924284)
+    await logs.send("{0.mention} has been kicked by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+    await member.kick(reason=reason)
+
 
 
 @client.command()
@@ -367,6 +384,8 @@ async def ban(ctx, member: discord.Member, *, reason=None):
         return
     await member.ban(reason=reason)
     await ctx.send("{0.mention} has been banned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+    logs = client.get_channel(831214657439924284)
+    await logs.send("{0.mention} has been banned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
 
 @client.command()
