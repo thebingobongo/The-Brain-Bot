@@ -280,10 +280,10 @@ async def unmute(ctx, member: discord.Member, *, reason=None):
     await ctx.send(
         "{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason))
     logs = client.get_channel(831214657439924284)
-    await logs.send("{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason)))
+    await logs.send("{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
 
-@client.command(aliases=['unpunish', 'unpanopticon'])
+@client.command(aliases=['unpunish', 'unpanopticon', 'unprison'])
 @commands.has_role(831214459682029588)
 async def undungeon(ctx, member: discord.Member, *, reason=None):
     global originalrole
