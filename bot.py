@@ -789,6 +789,9 @@ async def euthyphro(ctx):
 async def sep(ctx, *, text):
     text = text.strip()
     text = text.replace(" ", "-")
+    if '@' in text:
+        await ctx.send("No.")
+        return
     link = 'https://plato.stanford.edu/entries/' + text
     response = requests.get(link)
     if response.status_code == 404:
@@ -800,6 +803,9 @@ async def sep(ctx, *, text):
 async def wiki(ctx, *, text):
     text = text.strip()
     text = text.replace(" ", "_")
+    if '@' in text:
+        await ctx.send("No.")
+        return
     link = 'https://en.wikipedia.org/wiki/' + text
     response = requests.get(link)
     if response.status_code == 404:
@@ -811,6 +817,9 @@ async def wiki(ctx, *, text):
 async def google(ctx, *, text):
     text = text.strip()
     text = text.replace(' ', '+')
+    if '@' in text:
+        await ctx.send("No.")
+        return
     text = 'https://www.google.com/search?q=' + text
     await ctx.send(text)
 
