@@ -570,7 +570,9 @@ async def givebrainrole(ctx, member: discord.Member, *, role_id=None):
 @client.command()
 @commands.has_any_role(835623182484373535, 835400292979179530)
 async def clear(ctx, amount = 5):
-    await ctx.channel.purge(limit=amount)
+    panopticon = client.get_channel(835630845996826676)
+    await panopticon.purge(limit=amount)
+
 
 
 @client.command()
