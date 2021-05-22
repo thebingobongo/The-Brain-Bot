@@ -1009,11 +1009,14 @@ async def on_message(message):
     if isinstance(message.channel, discord.DMChannel):
         # Getting the channel
         sendchannel = client.get_channel(831214657439924284)
-        await sendchannel.send(f"{message.author} sent the bot:\n```{message.content}```\n\n")
-        embedVar = discord.Embed(title="Ticket created", color=0x00ff00)
-        embedVar.add_field(name="Mods will solve the issue as soon as possible. Thanks.",
+        embedVar = discord.Embed(title="BOT RECIEVED DM", color=0x00ff00)
+        embedVar.add_field(name=f"{message.author} sent the bot:",
+                           value=f"{message.content}", inline=False)
+        await sendchannel.send(embed=embedVar)
+        embedVar1 = discord.Embed(title="Ticket created", color=0x00ff00)
+        embedVar1.add_field(name="Mods will solve the issue as soon as possible. Thanks.",
                            value="Please refrain from sending too many messages here.", inline=False)
-        await message.channel.send(embed=embedVar)
+        await message.channel.send(embed=embedVar1)
 
     msg = message.content
 
@@ -1039,8 +1042,10 @@ async def on_message(message):
             if msgword.lower() == filter.lower():
                 await message.delete()
                 sendchannel = client.get_channel(831214657439924284)
-                await sendchannel.send(f"{message.author} said:\n```{message.content}``` \n **{msgword}** \n in {message.channel}")
-    #if any(word in msg for word in filteredwords):
+                embedVar2 = discord.Embed(title="Filtered Message:", color=0xff0000)
+                embedVar2.add_field(name=f"{message.author} said in {message.channel}:",
+                           value=f"{message.content} \n \n Word = **{msgword}**", inline=False)
+                await sendchannel.send(embed=embedVar2)
 
     # Processing the message so commands will work
     await client.process_commands(message)
