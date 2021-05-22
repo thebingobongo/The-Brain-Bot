@@ -579,13 +579,13 @@ async def clear(ctx, amount = 5):
 # async def cleartest(ctx, amount = 5):
 #     await ctx.send("<@&835273070817181757>")
 
-@client.command(aliases=['gameping','pg'])
+@client.command(aliases=['gameping','pg', 'pinggames'])
 @commands.has_any_role(831214459682029588, 831227767671619636)
 async def pinggame(ctx):
     await ctx.send(f"Hey <@&843707687643643924>, {ctx.author.mention} invites you all to come play a game with him!")
 
 
-@client.command(aliases=['vcping','pingvoice'])
+@client.command(aliases=['vcping','pingvoice', 'pingvoicechat', 'voiceping', 'voicechatping'])
 @commands.has_any_role(831214459682029588, 831227767671619636)
 async def pingvc(ctx):
     await ctx.send(f"Hey <@&843707891265306624>, {ctx.author.mention} thinks there is an interesting discussion that you would like to hear!!")
@@ -663,7 +663,7 @@ async def add(ctx, *, task):
         await ctx.send(addToDo(task) + '\n\n' + displayToDo())
 
 
-@client.command()
+@client.command(aliases=['del'])
 @commands.has_role(831214459682029588)
 async def delete(ctx, index):
     if index.isdigit():
