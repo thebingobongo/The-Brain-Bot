@@ -243,15 +243,20 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
             originalrole[member] = pawn_role
             await member.remove_roles(pawn_role, reason=reason)
 
+        if mute_minutes == 0:
+            time = "indefinitely."
+        else:
+            time = f"for {mute_minutes} minutes"
+
         await member.add_roles(muted_role, reason=reason)
         await member.edit(mute=True)
         await ctx.send(
-            "{0.mention} has been muted by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason,
-                                                                                           mute_minutes))
+            "{0.mention} has been muted by {1.mention} for *{2}* {3}".format(member, ctx.author, reason,
+                                                                                           time))
     logs = client.get_channel(831214657439924284)
     await logs.send(
-        "{0.mention} has been muted by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author, reason,
-                                                                                       mute_minutes))
+        "{0.mention} has been muted by {1.mention} for *{2}* {3}".format(member, ctx.author, reason,
+                                                                                       time))
     if mute_minutes > 0:
         await asyncio.sleep(mute_minutes * 60)
         count = 0
@@ -338,13 +343,19 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
             member_role.append(pawn_role)
             originalrole[member] = pawn_role
             await member.remove_roles(pawn_role, reason=reason)
+
+        if dungeon_minutes == 0:
+            time = "indefinitely."
+        else:
+            time = f"for {dungeon_minutes} minutes."
+
         await member.add_roles(dungeon_role, reason=reason)
         await ctx.send(
-            "{0.mention} has been punished by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author,
-                                                                                               reason, dungeon_minutes))
+            "{0.mention} has been punished by {1.mention} for *{2}* {3}".format(member, ctx.author,
+                                                                                               reason, time))
     logs = client.get_channel(831214657439924284)
-    await logs.send("{0.mention} has been punished by {1.mention} for *{2}* for *{3}* minutes".format(member, ctx.author,
-                                                                                               reason, dungeon_minutes))
+    await logs.send("{0.mention} has been punished by {1.mention} for *{2}* {3}}".format(member, ctx.author,
+                                                                                               reason, time))
     if dungeon_minutes > 0:
         await asyncio.sleep(dungeon_minutes * 60)
         count = 0
