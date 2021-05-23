@@ -16,6 +16,7 @@ def displayToDo():
 
 
 def removeToDo(index):
+    global todolist
     if index > len(todolist):
         return 'Index does not exist, try again.'
     else:
@@ -26,6 +27,7 @@ def removeToDo(index):
 
 
 def addToDo(task):
+    global todolist
     todolist.append(task)
     with open('todo.pkl', 'wb') as f:
         pickle.dump(todolist, f)

@@ -812,11 +812,6 @@ async def think(ctx):
     await ctx.send("That hurts!")
 
 
-# @client.command()
-# async def nebu(ctx):
-#     await ctx.send("r-worded")
-
-
 @client.command()
 async def mel(ctx):
     await ctx.send("Mel passed on, and from the flaming ashes of her corpse arose Miffy.")
@@ -824,7 +819,7 @@ async def mel(ctx):
 
 @client.command()
 async def alpha(ctx):
-    await ctx.send("We all know BingoBongo is the alpha chad around here.")
+    await ctx.send("We all know BingoBongo is the alpha around here.")
 
 
 @client.command()
