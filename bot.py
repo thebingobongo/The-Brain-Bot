@@ -602,6 +602,16 @@ async def pingvc(ctx):
     await ctx.send(f"Hey <@&843707891265306624>, {ctx.author.mention} thinks there is an interesting discussion that you would like to hear!!")
 
 
+
+@client.command(aliases=['pl'])
+async def poll(ctx,*,msg):
+    embed = discord.Embed(title=msg,color=ctx.author.color)
+    message = await ctx.send(embed=embed)
+    await message.add_reaction("<:upvote:837763222513778759>")
+    await message.add_reaction("<:downvote:837763222886547486>")
+
+
+
 @client.command()
 @commands.has_role(831214459682029588)
 async def approve(ctx, member: discord.Member):
