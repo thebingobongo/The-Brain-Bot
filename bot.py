@@ -1099,6 +1099,13 @@ async def on_message(message):
                            value=f"{message.content} \n \n Word = **{msgword}**", inline=False)
                 await sendchannel.send(embed=embedVar2)
 
+
+    if "bingo" in msg or "bingobongo" in msg:
+        await message.add_reaction("<:bingo:838288733748461588>")
+    if "gag" in msg:
+        await message.add_reaction("<:gag:837859560566816788>")
+
+
     # Processing the message so commands will work
     await client.process_commands(message)
 
