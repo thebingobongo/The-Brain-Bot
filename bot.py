@@ -1016,7 +1016,25 @@ from discord.ext.commands import CommandNotFound
 async def on_command_error(ctx, error):
     if isinstance(error, CommandNotFound):
         return
-    raise error
+    elif isinstance(error,commands.MissingPermissions):
+        await ctx.send("You do not have the permissions to use that command.")
+    elif isinstance(error,commands.MissingRequiredArgument):
+        await ctx.send("You are missing a required argument, please try again.")
+    elif isinstance(error,commands.MemberNotFound):
+        await ctx.send("Member was not found, please try again.")
+    elif isinstance(error,commands.ChannelNotFound):
+        await ctx.send("The channel could not be found or does not exist, please try again.")
+    elif isinstance(error,commands.BadArgument):
+        await ctx.send("One of the arguments failed. Please try again.\n P.S. If a member is a required argument, you must **mention** them with @.")
+    elif isinstance(error,commands.TooManyArguments):
+        await ctx.send("You have added too many arguments, please try again.")
+    elif isinstance(error,commands.CommandInvokeError):
+        if "(error code: 40032)" in str(error.original):
+            await ctx.send("User was not connected to voice.")
+        else:
+            await ctx.send(f"Command raised an exception: {error.original}")
+    else:
+        raise error
 
 
 guessedletters = ''
