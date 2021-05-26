@@ -602,6 +602,14 @@ async def pingvc(ctx):
     await ctx.send(f"Hey <@&843707891265306624>, {ctx.author.mention} thinks there is an interesting discussion that you would like to hear!!")
 
 
+@client.command(aliases=['movieping','pingM', 'pingmovie', 'moviesvoice'])
+@commands.has_any_role(831214459682029588, 831227767671619636)
+async def pingmovies(ctx,*, movie=None):
+    if movie == None:
+        await ctx.send(f"Hey <@&846967076634624010>, {ctx.author.mention} invites you to come watch a movie with them!")
+    else:
+        await ctx.send(f"Hey <@&846967076634624010>, {ctx.author.mention} invites you to come watch {movie} with them!")
+
 
 @client.command(aliases=['pl'])
 async def poll(ctx,*,msg):
