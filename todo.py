@@ -1,4 +1,5 @@
 import pickle
+import discord
 
 with open('todo.pkl', 'rb') as f:
     todolist = pickle.load(f)
@@ -7,12 +8,15 @@ def displayToDo():
     global todolist
     with open('todo.pkl', 'rb') as f:
         todolist = pickle.load(f)
-    returntext = '**To Do list:**\n'
+    #returntext = '**To Do list:**\n'
+    returnembed = discord.Embed(title="To Do List")
     for i in range(len(todolist)):
-        returntext = returntext + (str(i + 1) + '. ' + todolist[i] + '\n')
+        returntext = (str(i + 1) + '. ' + todolist[i])
+        returnembed.add_field(name=returntext, value="** **",inline=False)
 
-    returntext = returntext + '\n To remove a task: .delete [task number] \n To add a new task: .add [task]'
-    return returntext
+    #returntext = returntext + '\n To remove a task: .delete [task number] \n To add a new task: .add [task]'
+    returnembed.set_footer(text="To remove a task: .delete [task number] \n To add a new task: .add [task]")
+    return returnembed
 
 
 def removeToDo(index):

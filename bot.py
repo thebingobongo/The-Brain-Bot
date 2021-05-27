@@ -679,7 +679,7 @@ async def ask(ctx, *, question):
 @client.command()
 @commands.has_role(831214459682029588)
 async def todo(ctx):
-    await ctx.send(displayToDo())
+    await ctx.send(embed=displayToDo())
 
 
 @client.command()
@@ -689,14 +689,16 @@ async def add(ctx, *, task):
         await ctx.send('The length of the task is too long. Please limit yourself to 250 characters')
     else:
 
-        await ctx.send(addToDo(task) + '\n\n' + displayToDo())
+        await ctx.send(addToDo(task))
+        await ctx.send(embed=displayToDo())
 
 
 @client.command(aliases=['del'])
 @commands.has_role(831214459682029588)
 async def delete(ctx, index):
     if index.isdigit():
-        await ctx.send(removeToDo(int(index)) + '\n\n' + displayToDo())
+        await ctx.send(removeToDo(int(index)))
+        await ctx.send(embed=displayToDo())
     else:
         await ctx.send('Invalid index. Use a number next time.')
 
@@ -709,6 +711,17 @@ async def eightball(ctx):
                'Yes – definitely.']
     rand = random.randint(0, len(options))
     await ctx.send(options[rand])
+
+# import time
+# @client.command()
+# @commands.has_role(831214459682029588)
+# async def doomsday(ctx,ntime):
+#     await ctx.send(f"**Doomsday initiated for {time} seconds.\n Commencing Doomsday")
+#     ntime = int(ntime)
+#     for i in range(ntime):
+#         await ctx.send(f"T - {ntime-i}")
+#         time.sleep(1)
+#     await ctx.send("Sike motherfuckers. Get a life.")
 
 
 @client.command()
@@ -1015,11 +1028,69 @@ async def about(ctx):
 
 
 @client.command()
-async def help(ctx):
-    rules = client.get_channel(831215204280958986)
-    await ctx.send(
-        "Hi, I am The Brain bot and I am here to help you enjoy the server. \n If you have any complaints or need to speak to mods, send me a dm! \n\n Here are my commands:\n .quote -> I'll send a random quote \n .quote [searchterm] -> I'll send a quote with the term you searched for \n .search [philosopher] -> I'll send a quote by the philosopher you mention \n .ask [question] -> I will answer your questions \n .ask2 [question] -> I will answer your question in the most intellectual way I can \n .sep [article name] -> I will send the link to the sep article \n .wiki [article name] -> I will send the link to the wikipedia article \n .google [search term] -> I will return a link to the google search \n .define [word] -> I will get you the definition of the word. \n .ideas -> I will send a list of ideas and thought experiments for you to choose from \n\n .advice -> I'll give you some helpful advice \n .joke -> I'll tell you a funny joke \n .programming -> I'll tell you a funny programming joke \n .knockknock -> I'll tell you a knock knock joke \n .insult -> I'll insult you, and be warned, I'm mean! \n .mathfact -> I will tell you an interesting math fact \n .today -> I will tell you a fact about todays date \n .hangman -> you can play a game of hangman  \n\n You can try out other commands, and see what you find! I have some hidden gems too!\n I'll give you one, try .pray \n\n For more information about the server go to  {0.mention}".format(
-            rules))
+async def help(ctx,* ,type=None):
+    if type == None:
+        embedVar = discord.Embed(title="I'm here to help", color=0x00ff00)
+        embedVar.add_field(name="Hi, I am The Brain bot and I am here to help you enjoy the server.",
+                           value="If you have any complaints or need to speak to mods, send me a dm!\n To learn more about any category, type .help [category name]",inline=False)
+        embedVar.add_field(name="Moderation",
+                           value="For moderators", inline=False)
+        embedVar.add_field(name="Message",
+                           value="For the chat bot commands", inline=False)
+        embedVar.add_field(name="Utility",
+                           value="For the utility commands", inline=False)
+        embedVar.add_field(name="Rook",
+                           value="For the commands only rook and up can use", inline=False)
+
+    elif type.lower() == "moderation":
+        embedVar = discord.Embed(title="Moderation commands:",color=0x00ff00)
+        embedVar.add_field(name=".approve [@user]",value="This approves a user in the verification page.")
+        embedVar.add_field(name='.underage [@user]',value="This gives the user the underage tag.")
+        embedVar.add_field(name=".todo",value="Displays the staff todo list.")
+        embedVar.add_field(name=".mute [@user] [time] [reason]",value="This will mute the user for the specified time, and if time isn't specified, indefinitely.")
+        embedVar.add_field(name=".unmute [@user] [reason]",value="This will unmute the user.")
+        embedVar.add_field(name=".kick [@user]",value="Will kick the user from the server.")
+        embedVar.add_field(name=".panopticon or .prison [@user] [time] [reason]", value="This will send the user to the panopticon for the specified time, and if time isn't specified, indefinitely.")
+        embedVar.add_field(name=".unprison or .unpanopticon [@user]",value="Will free the user.")
+        embedVar.add_field(name=".ban [@user]",value="Will ban the user from the server.")
+
+    elif type.lower() == "message":
+        embedVar = discord.Embed(title="Message commands:", color=0x00ff00)
+        embedVar.add_field(name=".ask [question]",value="I will answer your question.")
+        embedVar.add_field(name=".ask2 [question]",value="I will answer your question in a more intellectual way.")
+        embedVar.add_field(name=".search [philosopher]",value="I will send a random quote by your chosen philosopher from my database.")
+        embedVar.add_field(name=".quote [optional search term]",value="I will send a quote from my database with your search term, otherwise, I'll just send a random quote.")
+        embedVar.add_field(name=".ideas",value="I will send a list of ideas and thought experiments for you to choose from ")
+        embedVar.add_field(name=".advice",value="I will offer some random advice.")
+        embedVar.add_field(name=".joke",value="I will send you a joke!")
+        embedVar.add_field(name=".knockknock",value="I will send you a knock knock joke")
+        embedVar.add_field(name=".programming",value="I will send you a programming joke.")
+        embedVar.add_field(name=".insult",value="I will insult you. Be careful, I can be mean!")
+        embedVar.add_field(name=".today",value="I will tell you a random fact about todays date in history.")
+        embedVar.add_field(name=".mathfact",value="I will send a math fact for the nerds among you!")
+
+    elif type.lower() == "utillity" or type.lower() == "utility":
+        embedVar = discord.Embed(title="Utility commands:", color=0x00ff00)
+        embedVar.add_field(name=".sep [article name]",value="I will send a link to the sep article.")
+        embedVar.add_field(name=".wiki [article name]",value="I will send a link to the wikipedia article.")
+        embedVar.add_field(name=".google [search]", value="I will send a link to the google search.")
+        embedVar.add_field(name=".define [word]",value="I will define that word!")
+        embedVar.add_field(name=".poll [poll question]",value="I will create a poll for you.")
+        embedVar.add_field(name=".hangman",value="I will start a game of hangman")
+
+    elif type.lower() == "rook":
+        embedVar = discord.Embed(title="Rook commands:", color=0x00ff00)
+        embedVar.add_field(name=".pingvc",value="I will ping all members with the Ping for VC role.",inline=False)
+        embedVar.add_field(name=".pinggame",value="I will ping all members with the Ping for Games role.",inline=False)
+        embedVar.add_field(name=".pingmovie [optional movie name]",value="I will ping members with the Ping for Movies role.",inline=False)
+
+    embedVar.set_footer(text="For more info check the Rules and Info channel. \n If you encouter any issues, DM me or any of the mods!")
+    await ctx.send(embed=embedVar)
+
+    # rules = client.get_channel(831215204280958986)
+    # await ctx.send(
+    #     "Hi, I am The Brain bot and I am here to help you enjoy the server. \n If you have any complaints or need to speak to mods, send me a dm! \n\n Here are my commands:\n .quote -> I'll send a random quote \n .quote [searchterm] -> I'll send a quote with the term you searched for \n .search [philosopher] -> I'll send a quote by the philosopher you mention \n .ask [question] -> I will answer your questions \n .ask2 [question] -> I will answer your question in the most intellectual way I can \n .sep [article name] -> I will send the link to the sep article \n .wiki [article name] -> I will send the link to the wikipedia article \n .google [search term] -> I will return a link to the google search \n .define [word] -> I will get you the definition of the word. \n .ideas -> I will send a list of ideas and thought experiments for you to choose from \n\n .advice -> I'll give you some helpful advice \n .joke -> I'll tell you a funny joke \n .programming -> I'll tell you a funny programming joke \n .knockknock -> I'll tell you a knock knock joke \n .insult -> I'll insult you, and be warned, I'm mean! \n .mathfact -> I will tell you an interesting math fact \n .today -> I will tell you a fact about todays date \n .hangman -> you can play a game of hangman  \n\n You can try out other commands, and see what you find! I have some hidden gems too!\n I'll give you one, try .pray \n\n For more information about the server go to  {0.mention}".format(
+    #         rules))
 
 
 @client.command()
