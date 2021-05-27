@@ -9,7 +9,7 @@ def displayToDo():
     with open('todo.pkl', 'rb') as f:
         todolist = pickle.load(f)
     #returntext = '**To Do list:**\n'
-    returnembed = discord.Embed(title="To Do List")
+    returnembed = discord.Embed(title="To Do List",color=0x12ffdb)
     for i in range(len(todolist)):
         returntext = (str(i + 1) + '. ' + todolist[i])
         returnembed.add_field(name=returntext, value="** **",inline=False)
