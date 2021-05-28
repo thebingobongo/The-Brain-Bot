@@ -83,21 +83,24 @@ def getJoke():
     response = requests.get('https://official-joke-api.appspot.com/random_joke')
     joke = json.loads(response.text)
     text = joke['setup'] + " \n " + joke['punchline']
-    return text
+    embed = discord.Embed(title=text, color=0x00ffff)
+    return embed
 
 
 def getProgrammingJoke():
     response = requests.get('https://official-joke-api.appspot.com/jokes/programming/random')
     joke = json.loads(response.text)
     text = joke[0]['setup'] + " \n " + joke[0]['punchline']
-    return text
+    embed = discord.Embed(title=text, color=0x00ffff)
+    return embed
 
 
 def getKnockKnock():
     response = requests.get('https://official-joke-api.appspot.com/jokes/knock-knock/random')
     joke = json.loads(response.text)
     text = joke[0]['setup'] + " \n " + joke[0]['punchline']
-    return text
+    embed = discord.Embed(title=text, color=0x00ffff)
+    return embed
 
 
 def getInsult():
@@ -110,7 +113,8 @@ def getInsult():
         response = requests.get('https://evilinsult.com/generate_insult.php?lang=en&type=json')
         insult = json.loads(response.text)
         text = insult['insult']
-    return text
+    embed = discord.Embed(title=text, color=0x00ffff)
+    return embed
 
 
 def getQuote():
@@ -127,7 +131,8 @@ def getAdvice():
     response = requests.get('https://api.adviceslip.com/advice')
     advice = json.loads(response.text)
     text = advice['slip']['advice']
-    return text
+    embed = discord.Embed(title=text, color=0x00ffff)
+    return embed
 
 
 def getSearch(searchterm):
@@ -163,7 +168,8 @@ def getSearchPhilosopher(philosopher):
 
 def getMathFact():
     response = requests.get('http://numbersapi.com/random/math')
-    return response.text
+    embed = discord.Embed(title=text, color=0x00ffff)
+    return embed
 
 
 def getDateFact():
@@ -171,7 +177,8 @@ def getDateFact():
     day = today.day
     month = today.month
     response = requests.get('http://numbersapi.com/' + str(month) + '/' + str(day) + '/date')
-    return response.text
+    embed = discord.Embed(title=respoonse.text, color=0x00ffff)
+    return embed
 
 
 def getDefinition(search):
@@ -620,7 +627,7 @@ async def poll(ctx,*,msg):
 
 
 
-@client.command()
+@client.command(aliases=['verify'])
 @commands.has_role(831214459682029588)
 async def approve(ctx, member: discord.Member):
     if not member:
@@ -785,17 +792,17 @@ async def shapiro(ctx):
 
 @client.command()
 async def joke(ctx):
-    await ctx.send(getJoke())
+    await ctx.send(embed=getJoke())
 
 
 @client.command()
 async def programming(ctx):
-    await ctx.send(getProgrammingJoke())
+    await ctx.send(embed=getProgrammingJoke())
 
 
 @client.command()
 async def knockknock(ctx):
-    await ctx.send(getKnockKnock())
+    await ctx.send(embed=getKnockKnock())
 
 
 @client.command()
@@ -820,22 +827,22 @@ async def hello(ctx):
 
 @client.command()
 async def advice(ctx):
-    await ctx.send(getAdvice())
+    await ctx.send(embed=getAdvice())
 
 
 @client.command()
 async def insult(ctx):
-    await ctx.send(getInsult())
+    await ctx.send(embed=getInsult())
 
 
 @client.command()
 async def mathfact(ctx):
-    await ctx.send(getMathFact())
+    await ctx.send(embed=getMathFact())
 
 
 @client.command()
 async def today(ctx):
-    await ctx.send(getDateFact())
+    await ctx.send(embed=getDateFact())
 
 
 @client.command()
