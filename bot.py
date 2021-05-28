@@ -299,7 +299,8 @@ async def unmute(ctx, member: discord.Member, *, reason=None):
     member_role = originalrole[member]
     await member.remove_roles(muted_role, reason=reason)
     await member.add_roles(member_role, reason='unmuted')
-    await member.edit(mute=False)
+    if voice_state is not None:
+        await member.edit(mute=False)
     await ctx.send(
         "{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason))
     logs = client.get_channel(831214657439924284)
