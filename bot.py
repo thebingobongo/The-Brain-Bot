@@ -854,12 +854,6 @@ async def alpha(ctx):
 
 
 @client.command()
-async def euthyphro(ctx):
-    await ctx.send(
-        "*Socrates*: And what do you say of piety, Euthyphro? Is not piety, according to your definition, loved by all the gods? \n*Euthyphro*: Certainly. \n*Socrates*: Because it is pious or holy, or for some other reason?\n*Euthyphro*: No, that is the reason. \n*Socrates*: It is loved because it is holy, not holy because it is loved?")
-
-
-@client.command()
 async def sep(ctx, *, text):
     text = text.strip()
     text = text.replace(" ", "-")
@@ -900,56 +894,94 @@ async def google(ctx, *, text):
 
 @client.command()
 async def mary(ctx):
-    await ctx.send(
-        "Imagine a neuroscientist who has only ever seen black and white things, but she is an expert in color vision and knows everything about its physics and biology.\n If, one day, she sees color, does she learn anything new? Is there anything about perceiving color that wasn’t captured in her knowledge? ")
-
+    embedVar=discord.Embed(title="Marys Room",color=0x00ffff)
+    embedVar.add_field(value="Imagine a neuroscientist who has only ever seen black and white things, but she is an expert in color vision and knows everything about its physics and biology.\n If, one day, she sees color, does she learn anything new? Is there anything about perceiving color that wasn’t captured in her knowledge?",name="** **")
+    embedVar.set_footer(text=".ideas for more")
+    await ctx.send(embed=embedVar)
 
 @client.command()
 async def chineseroom(ctx):
-    await ctx.send(
-        "Imagine a native English speaker who knows no Chinese locked in a room full of boxes of Chinese symbols (a data base) together with a book of instructions for manipulating the symbols (the program). Imagine that people outside the room send in other Chinese symbols which, unknown to the person in the room, are questions in Chinese (the input). And imagine that by following the instructions in the program the man in the room is able to pass out Chinese symbols which are correct answers to the questions (the output).\n\n The program enables the person in the room to pass the Turing Test for understanding Chinese but he does not understand a word of Chinese. ")
-
+    embedVar=discord.Embed(title="The Chinese Room",color=0x00ffff)
+    embedVar.add_field(value="Imagine a native English speaker who knows no Chinese locked in a room full of boxes of Chinese symbols (a data base) together with a book of instructions for manipulating the symbols (the program). Imagine that people outside the room send in other Chinese symbols which, unknown to the person in the room, are questions in Chinese (the input). And imagine that by following the instructions in the program the man in the room is able to pass out Chinese symbols which are correct answers to the questions (the output).\n\n The program enables the person in the room to pass the Turing Test for understanding Chinese but he does not understand a word of Chinese. ",name="** **")
+    embedVar.set_footer(text=".ideas for more")
+    await ctx.send(embed=embedVar)
+#color=0x00ffff
 
 @client.command()
 async def dichotomy(ctx):
-    await ctx.send(
-        "To go anywhere, you must go halfway first, and then you must go half of the remaining distance, and half of the remaining distance, and so forth to infinity: Thus, motion is impossible.")
-
+    embedVar=discord.Embed(title="Zeno's Dichotomy",color=0x00ffff)
+    embedVar.add_field(name="To go anywhere, you must go halfway first, and then you must go half of the remaining distance, and half of the remaining distance, and so forth to infinity: Thus, motion is impossible.",value="** **")
+    embedVar.set_footer(text=".ideas for more")
+    await ctx.send(embed=embedVar)
 
 @client.command()
 async def arrow(ctx):
-    await ctx.send(
-        'In any instant, a moving object is indistinguishable from a nonmoving object: Thus motion is impossible.')
+    embedVar=discord.Embed(title="The Fletchers Paradox",color=0x00ffff)
+    embedVar.add_field(name='In any instant, a moving object is indistinguishable from a nonmoving object: Thus motion is impossible.',value="** **")
+    embedVar.set_footer(text=".ideas for more")
+    await ctx.send(embed=embedVar)
 
 
 @client.command()
 async def ship(ctx):
-    await ctx.send(
-        'If you restored a ship by replacing each of its wooden parts, would it remain the same ship?')
+    embed=discord.Embed(title="The ship of Theseus",color=0x00ffff)
+    embed.add_field(name='If you restored a ship by replacing each of its wooden parts, would it remain the same ship?',value="** **")
+    embed.set_footer(text=".ideas for more")
+    await ctx.send(embed=embed)
 
 
 @client.command()
+async def euthyphro(ctx):
+    embed = discord.Embed(title="Euthypros Dilemma",color=0x00ffff)
+    embed.add_field(value="*Socrates*: And what do you say of piety, Euthyphro? Is not piety, according to your definition, loved by all the gods? \n*Euthyphro*: Certainly. \n*Socrates*: Because it is pious or holy, or for some other reason?\n*Euthyphro*: No, that is the reason. \n*Socrates*: It is loved because it is holy, not holy because it is loved?",
+        name="** **")
+    embed.set_footer(text=".ideas for more")
+    await ctx.send(embed=embed)
+
+@client.command()
 async def godrock(ctx):
-    await ctx.send('Can an omnipotent being create a rock too heavy for itself to lift?')
+    embed = discord.Embed(
+        title="The God Rock Paradox",
+        color=0x00ffff)
+    embed.add_field(name='Can an omnipotent being create a rock too heavy for itself to lift?',value="** **")
+    embed.set_footer(text=".ideas for more")
+    await ctx.send(embed=embed)
 
 
 @client.command()
 async def bootstrap(ctx):
-    await ctx.send(
-        "A physicist working on inventing a time machine is visited by an older version of himself. The older version gives him the plans for a time machine, and the younger version uses those plans to build the time machine, eventually going back in time as the older version of himself.")
-
+    embed = discord.Embed(
+        title= "The Boot Strap Paradox",color=0x00ffff)
+    embed.add_field(value="A physicist working on inventing a time machine is visited by an older version of himself. The older version gives him the plans for a time machine, and the younger version uses those plans to build the time machine, eventually going back in time as the older version of himself.",
+        name="** **")
+    embed.set_footer(text=".ideas for more")
+    await ctx.send(embed=embed)
 
 @client.command()
 async def aliens(ctx):
-    await ctx.send(
-        "If there's nothing particularly unique about Earth, then there should be lots of alien civilizations in our galaxy. However, we've found no evidence of other intelligent life in the universe.")
+    embed = discord.Embed(
+        title="The Alien Paradox",color=0x00ffff)
+    embed.add_field(name="If there's nothing particularly unique about Earth, then there should be lots of alien civilizations in our galaxy. However, we've found no evidence of other intelligent life in the universe.",
+        value="** **")
+    embed.set_footer(text=".ideas for more")
+    await ctx.send(embed=embed)
 
 
-@client.command()
+
+@client.command(aliases=["thoughtexperiments",'te','paradoxes'])
 async def ideas(ctx):
-    await ctx.send(
-        "I can help with some interesting ideas, thought experiments and paradoxes. \nHere are some commands you can try: \n .euthyphro \n .mary \n .chineseroom \n .dichotomy \n .arrow \n .ship \n .godrock \n .aliens \n .bootstrap")
 
+    embedVar = discord.Embed(title="I can help you with some interesting ideas, thought experiments and paradoxes!\n here are some commands you can try",color=0x00ffff)
+    embedVar.add_field(name=".euthyphro",value="** **",inline=True)
+    embedVar.add_field(name=".mary", value="** **",inline=True)
+    embedVar.add_field(name=".chineseroom", value="** **",inline=True)
+    embedVar.add_field(name=".dichotomy", value="** **",inline=True)
+    embedVar.add_field(name=".arrow", value="** **",inline=True)
+    embedVar.add_field(name=".ship", value="** **",inline=True)
+    embedVar.add_field(name=".godrock", value="** **",inline=True)
+    embedVar.add_field(name=".aliens", value="** **",inline=True)
+    embedVar.add_field(name=".bootstrap", value="** **",inline=True)
+    await ctx.send(embed=embedVar)
 
 @client.command()
 async def alive(ctx):
