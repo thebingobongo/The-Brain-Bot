@@ -264,7 +264,10 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
             time = f"for {mute_minutes} minutes"
 
         await member.add_roles(muted_role, reason=reason)
-        await member.edit(mute=True)
+        voice_state = ctx.author.voice
+
+        if voice_state is not None:
+            await member.edit(mute=True)
         await ctx.send(
             "{0.mention} has been muted by {1.mention} for *{2}* {3}".format(member, ctx.author, reason,
                                                                                            time))
