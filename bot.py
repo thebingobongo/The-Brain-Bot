@@ -121,10 +121,11 @@ def getQuote():
     id = random.randint(1, 583)
     response = requests.get('https://philosophyapi.herokuapp.com/api/ideas/' + str(id))
     json_data = json.loads(response.text)
-    # print(json_data)
     quote = '"' + json_data['quote'] + '" \n                           -' + json_data['author']
-    # print(quote)
-    return quote
+    while len(quote)>=256:
+        quote = '"' + json_data['quote'] + '" \n                           -' + json_data['author']
+    embed = discord.Embed(title=quote, color=0x00ffff)
+    return embed
 
 
 def getAdvice():
@@ -143,13 +144,19 @@ def getSearch(searchterm):
         quotelist = json_data['results']
         if len(quotelist) == 1:
             quote = '"' + quotelist[0]['quote'] + '" \n                           -' + quotelist[0]['author']
+            while len(quote) >= 256:
+                quote = '"' + quotelist[0]['quote'] + '" \n                           -' + quotelist[0]['author']
         else:
             rand = random.randint(0, len(quotelist) - 1)
             quote = '"' + quotelist[rand]['quote'] + '" \n                           -' + quotelist[rand]['author']
+            while len(quote) >= 256:
+                rand = random.randint(0, len(quotelist) - 1)
+                quote = '"' + quotelist[rand]['quote'] + '" \n                           -' + quotelist[rand]['author']
     else:
         quote = "Couldn't find a quote with that search. Try another search term."
     # print(quote)
-    return quote
+    embed = discord.Embed(title=quote, color=0x00ffff)
+    return embed
 
 
 def getSearchPhilosopher(philosopher):
@@ -163,7 +170,8 @@ def getSearchPhilosopher(philosopher):
     else:
         quote = "Search Term not found. Try a different philosopher."
 
-    return quote
+    embed = discord.Embed(title=quote, color=0x00ffff)
+    return embed
 
 
 def getMathFact():
@@ -745,14 +753,14 @@ async def debatetopic(ctx):
 @client.command()
 async def quote(ctx, *, searchterm=None):
     if searchterm == None:
-        await ctx.send(getQuote())
+        await ctx.send(embed=getQuote())
     else:
-        await ctx.send(getSearch(searchterm))
+        await ctx.send(embed=getSearch(searchterm))
 
 
 @client.command()
 async def search(ctx, *, searchterm):
-    await ctx.send(getSearchPhilosopher(searchterm))
+    await ctx.send(embed=getSearchPhilosopher(searchterm))
 
 
 @client.command()
