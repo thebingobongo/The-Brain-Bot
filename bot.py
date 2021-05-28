@@ -1101,7 +1101,7 @@ async def help(ctx,* ,type=None):
         embedVar.add_field(name=".unprison or .unpanopticon [@user]",value="Will free the user.")
         embedVar.add_field(name=".ban [@user]",value="Will ban the user from the server.")
 
-    elif type.lower() == "message":
+    elif type.lower() == "message" or type.lower() == 'messages':
         embedVar = discord.Embed(title="Message commands:", color=0x00ff00)
         embedVar.add_field(name=".ask [question]",value="I will answer your question.")
         embedVar.add_field(name=".ask2 [question]",value="I will answer your question in a more intellectual way.")
@@ -1130,7 +1130,9 @@ async def help(ctx,* ,type=None):
         embedVar.add_field(name=".pingvc",value="I will ping all members with the Ping for VC role.",inline=False)
         embedVar.add_field(name=".pinggame",value="I will ping all members with the Ping for Games role.",inline=False)
         embedVar.add_field(name=".pingmovie [optional movie name]",value="I will ping members with the Ping for Movies role.",inline=False)
-
+    else:
+        await ctx.send("Invalid category. Try again")
+        return
     embedVar.set_footer(text="For more info check the Rules and Info channel. \n If you encouter any issues, DM me or any of the mods!")
     await ctx.send(embed=embedVar)
 
