@@ -168,7 +168,7 @@ def getSearchPhilosopher(philosopher):
 
 def getMathFact():
     response = requests.get('http://numbersapi.com/random/math')
-    embed = discord.Embed(title=text, color=0x00ffff)
+    embed = discord.Embed(title=response.text, color=0x00ffff)
     return embed
 
 
@@ -177,7 +177,7 @@ def getDateFact():
     day = today.day
     month = today.month
     response = requests.get('http://numbersapi.com/' + str(month) + '/' + str(day) + '/date')
-    embed = discord.Embed(title=respoonse.text, color=0x00ffff)
+    embed = discord.Embed(title=response.text, color=0x00ffff)
     return embed
 
 
