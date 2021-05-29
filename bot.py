@@ -1137,7 +1137,7 @@ async def help(ctx,* ,type=None):
     else:
         await ctx.send("Invalid category. Try again")
         return
-    embedVar.set_footer(text="For more info check the Rules and Info channel. \n If you encouter any issues, DM me or any of the mods!")
+    embedVar.set_footer(text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
     await ctx.send(embed=embedVar)
 
     # rules = client.get_channel(831215204280958986)
