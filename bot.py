@@ -1150,7 +1150,9 @@ async def help(ctx,* ,type=None):
 async def hug(ctx):
     await ctx.send("Sending a nice warm embrace your way, my friend.")
 
-
+@client.command()
+async def kill(ctx):
+    await ctx.send("***bang bang***")
 
 
 from discord.ext.commands import CommandNotFound
