@@ -394,15 +394,22 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
 
 @client.command()
 @commands.has_role(835400292979179530)
-async def slowban(ctx, member:discord.Member, time_to_ban,*, reason):
+async def slowban(ctx, member:discord.Member, time_to_ban: int,*, reason):
     await ctx.send(f" <a:vibing:847619864738267217> <a:vibing:847619864738267217> {member.mention} is gonna get banned in {time_to_ban} seconds!!!! <a:vibing:847619864738267217> <a:vibing:847619864738267217>")
-    time_to_ban = int(time_to_ban)
     for i in range(time_to_ban):
-        ctx.send(f"{member.mention} is gone in {time_to_ban - 1} seconds <a:vibing:847619864738267217>")
+        ctx.send(f"{member.mention} is gone in {time_to_ban - i} seconds <a:vibing:847619864738267217>")
         await asyncio.sleep(1)
     await member.ban(reason=reason)
     await ctx.send(f"<a:vibing:847619864738267217><a:vibing:847619864738267217><a:vibing:847619864738267217> {member.display_name} IS GONE NOW! <a:vibing:847619864738267217><a:vibing:847619864738267217><a:vibing:847619864738267217>")
 
+@client.command()
+@commands.has_role(835400292979179530)
+async def slowestban(ctx, member:discord.Member, time_to_ban: int,*, reason):
+    await ctx.send(f" <a:vibing:847619864738267217> <a:vibing:847619864738267217> {member.mention} is gonna get banned in {time_to_ban} seconds!!!! <a:vibing:847619864738267217> <a:vibing:847619864738267217>")
+    for i in range(time_to_ban):
+        await ctx.send(f"{member.mention} is gone in {time_to_ban - i} seconds <a:vibing:847619864738267217>")
+        await asyncio.sleep(1)
+    await ctx.send(f"<a:vibing:847619864738267217><a:vibing:847619864738267217><a:vibing:847619864738267217> {member.display_name} IS GONE NOW! <a:vibing:847619864738267217><a:vibing:847619864738267217><a:vibing:847619864738267217>")
 
 
 @client.command()
@@ -751,16 +758,23 @@ async def eightball(ctx):
     rand = random.randint(0, len(options))
     await ctx.send(options[rand])
 
-# import time
-# @client.command()
-# @commands.has_role(831214459682029588)
-# async def doomsday(ctx,ntime):
-#     await ctx.send(f"**Doomsday initiated for {time} seconds.\n Commencing Doomsday")
-#     ntime = int(ntime)
-#     for i in range(ntime):
-#         await ctx.send(f"T - {ntime-i}")
-#         time.sleep(1)
-#     await ctx.send("Sike motherfuckers. Get a life.")
+
+@client.command()
+@commands.has_role(831214459682029588)
+async def doomsday(ctx,ntime):
+    await ctx.send(f"<a:vibing:847619864738267217><a:vibing:847619864738267217> **Doomsday initiated for {ntime} seconds.** \n Commencing Doomsday <a:vibing:847619864738267217><a:vibing:847619864738267217>")
+    ntime = int(ntime)
+    for i in range(ntime):
+        await ctx.send(f"<a:vibing:847619864738267217><a:vibing:847619864738267217> T - {ntime-i} <a:vibing:847619864738267217><a:vibing:847619864738267217>")
+        await asyncio.sleep(1)
+    await ctx.send("Sike motherfuckers. Get a life.")
+    await ctx.send(" <a:vibing:847619864738267217><a:vibing:847619864738267217><a:vibing:847619864738267217><a:vibing:847619864738267217>")
+
+
+@client.command()
+@commands.has_role(835400292979179530)
+async def gclr(ctx,number:int):
+    await ctx.channel.purge(limit=number)
 
 
 @client.command()
@@ -1114,16 +1128,19 @@ async def help(ctx,* ,type=None):
                            value="For the commands only rook and up can use", inline=False)
 
     elif type.lower() == "moderation":
-        embedVar = discord.Embed(title="Moderation commands:",color=0x00ff00)
-        embedVar.add_field(name=".approve [@user]",value="This approves a user in the verification page.")
-        embedVar.add_field(name='.underage [@user]',value="This gives the user the underage tag.")
-        embedVar.add_field(name=".todo",value="Displays the staff todo list.")
-        embedVar.add_field(name=".mute [@user] [time] [reason]",value="This will mute the user for the specified time, and if time isn't specified, indefinitely.")
-        embedVar.add_field(name=".unmute [@user] [reason]",value="This will unmute the user.")
-        embedVar.add_field(name=".kick [@user]",value="Will kick the user from the server.")
-        embedVar.add_field(name=".panopticon or .prison [@user] [time] [reason]", value="This will send the user to the panopticon for the specified time, and if time isn't specified, indefinitely.")
-        embedVar.add_field(name=".unprison or .unpanopticon [@user]",value="Will free the user.")
-        embedVar.add_field(name=".ban [@user]",value="Will ban the user from the server.")
+        staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
+        if staff_role in ctx.author.roles:
+            embedVar = discord.Embed(title="Moderation commands:",color=0x00ff00)
+            embedVar.add_field(name=".approve [@user]",value="This approves a user in the verification page.")
+            embedVar.add_field(name='.underage [@user]',value="This gives the user the underage tag.")
+            embedVar.add_field(name=".todo",value="Displays the staff todo list.")
+            embedVar.add_field(name=".mute [@user] [time] [reason]",value="This will mute the user for the specified time, and if time isn't specified, indefinitely.")
+            embedVar.add_field(name=".unmute [@user] [reason]",value="This will unmute the user.")
+            embedVar.add_field(name=".kick [@user]",value="Will kick the user from the server.")
+            embedVar.add_field(name=".panopticon or .prison [@user] [time] [reason]", value="This will send the user to the panopticon for the specified time, and if time isn't specified, indefinitely.")
+            embedVar.add_field(name=".unprison or .unpanopticon [@user]",value="Will free the user.")
+            embedVar.add_field(name=".ban [@user]",value="Will ban the user from the server.")
+        else: embedVar = discord.Embed(title="You dont have access to those commands.",color=0xff0000)
 
     elif type.lower() == "message" or type.lower() == 'messages':
         embedVar = discord.Embed(title="Message commands:", color=0x00ff00)
@@ -1192,6 +1209,8 @@ async def on_command_error(ctx, error):
         await ctx.send("One of the arguments failed. Please try again.\n P.S. If a member is a required argument, you must **mention** them with @.")
     elif isinstance(error,commands.TooManyArguments):
         await ctx.send("You have added too many arguments, please try again.")
+    elif isinstance(error,commands.MissingRole):
+        return
     elif isinstance(error,commands.CommandInvokeError):
         if "(error code: 40032)" in str(error.original):
             await ctx.send("User was not connected to voice.")
