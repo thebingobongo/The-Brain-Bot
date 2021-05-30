@@ -264,7 +264,7 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
             time = f"for {mute_minutes} minutes"
 
         await member.add_roles(muted_role, reason=reason)
-        voice_state = ctx.author.voice
+        voice_state = member.voice
 
         if voice_state is not None:
             await member.edit(mute=True)
@@ -280,8 +280,14 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
         count = 0
         for member in members:
             await member.remove_roles(muted_role, reason="time's up ")
+            voice_state = member.voice
+            if voice_state is not None:
+                await member.edit(mute=False)
             await member.edit(mute=False)
             await member.add_roles(member_role[count], reason=reason)
+
+            await ctx.send(f"{member.mention} has been released from the unmuted.")
+            await logs.send(f"{member.mention} has been released from the unmuted.")
             count += 1
 
 
@@ -299,6 +305,7 @@ async def unmute(ctx, member: discord.Member, *, reason=None):
     member_role = originalrole[member]
     await member.remove_roles(muted_role, reason=reason)
     await member.add_roles(member_role, reason='unmuted')
+    voice_state = member.voice
     if voice_state is not None:
         await member.edit(mute=False)
     await ctx.send(
@@ -381,6 +388,8 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
         for member in members:
             await member.remove_roles(dungeon_role, reason="time's up ")
             await member.add_roles(member_role[count], reason=reason)
+            await ctx.send(f"{member.mention} has been released from the Panopticon.")
+            await logs.send(f"{member.mention} has been released from the Panopticon.")
 
 
 
@@ -1178,7 +1187,7 @@ async def on_command_error(ctx, error):
         else:
             await ctx.send(f"Command raised an exception: {error.original}")
     else:
-        raise error
+        await ctx.send(f"Command raised an exception: {error.original}")
 
 
 guessedletters = ''
