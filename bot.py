@@ -396,6 +396,7 @@ async def dungeon(ctx, members: commands.Greedy[discord.Member],
 @commands.has_role(835400292979179530)
 async def slowban(ctx, member:discord.Member, time_to_ban,*, reason):
     await ctx.send(f" <a:vibing:847619864738267217> <a:vibing:847619864738267217> {member.mention} is gonna get banned in {time_to_ban} seconds!!!! <a:vibing:847619864738267217> <a:vibing:847619864738267217>")
+    time_to_ban = int(time_to_ban)
     for i in range(time_to_ban):
         ctx.send(f"{member.mention} is gone in {time_to_ban - 1} seconds <a:vibing:847619864738267217>")
         await asyncio.sleep(1)
