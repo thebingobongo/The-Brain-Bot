@@ -1221,8 +1221,7 @@ async def on_command_error(ctx, error):
             await ctx.send("User was not connected to voice.")
         else:
             await ctx.send(f"Command raised an exception: {error.original}")
-    else:
-        await ctx.send(f"Command raised an exception: {error.original}")
+
 
 
 guessedletters = ''
