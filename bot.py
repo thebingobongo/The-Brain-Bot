@@ -827,6 +827,11 @@ async def pray(ctx):
 
 
 @client.command()
+async def vibing(ctx):
+    await ctx.send("<a:vibing:847619864738267217><a:vibing:847619864738267217><a:vibing:847619864738267217><a:vibing:847619864738267217>")
+
+
+@client.command()
 async def debateme(ctx):
     await ctx.send("no u")
 
@@ -1258,7 +1263,7 @@ async def on_message(message):
                      'injun', '1njun', 'jewboy', 'kyke', 'mayo monkey', 'mayonnaise monkey', 'pickaninny', 'polack',
                      'polak', 'polack', 'prarie nigger', 'prarie nigga', 'tacohead', 'thicklips', 'thicklips',
                      'thick lips', 'ting tong', 'towel head', 'twink', 'uncle tom', 'uncle-tom', 'Wigger', 'wigga',
-                     'zipperhead', 'zippahead', 'zipper-head', 'zippa-head']
+                     'zipperhead', 'zippahead', 'zipper-head', 'zippa-head', 'twinks', 'cum', 'c u m']
 
     msgwords = msg.split()
     for msgword in msgwords:
