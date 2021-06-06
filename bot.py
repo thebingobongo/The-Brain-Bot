@@ -1278,10 +1278,14 @@ async def on_message(message):
                 await sendchannel.send(embed=embedVar2)
 
 
-    if "bingo" in msg or "bingobongo" in msg:
+    if "bingo" in msg.lower() or "bingobongo" in msg.lower():
         await message.add_reaction("<:bingo:838288733748461588>")
-    if "gag" in msg:
+    if "gag" in msg.lower():
         await message.add_reaction("<:gag:837859560566816788>")
+    if "yes" in msg.lower():
+        await message.add_reaction("<:yes:837729670958415873>")
+    if "brain" in msg.lower():
+        await message.add_reaction("<:happybrain:838485449512452157>")
 
 
     # Processing the message so commands will work
