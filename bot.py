@@ -190,7 +190,7 @@ def getDateFact():
 
 
 def getDefinition(search):
-    response = requests.get('https://api.dictionaryapi.dev/api/v2/entries/en_US/' + str(search))
+    response = requests.get('https://api.dictionaryapi.dev/api/v2/entries/en_US/' + str(search), verify=False)
     text = json.loads(response.text)
     if len(text) == 3:
         return ["Word not found. Try again."]
