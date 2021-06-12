@@ -1151,6 +1151,7 @@ async def help(ctx,* ,type=None):
         embedVar = discord.Embed(title="Message commands:", color=0x00ff00)
         embedVar.add_field(name=".ask [question]",value="I will answer your question.")
         embedVar.add_field(name=".ask2 [question]",value="I will answer your question in a more intellectual way.")
+        embedVar.add_field(name=".invite",value="I will send you an invite to The Vat!")
         embedVar.add_field(name=".search [philosopher]",value="I will send a random quote by your chosen philosopher from my database.")
         embedVar.add_field(name=".quote [optional search term]",value="I will send a quote from my database with your search term, otherwise, I'll just send a random quote.")
         embedVar.add_field(name=".ideas",value="I will send a list of ideas and thought experiments for you to choose from ")
@@ -1186,6 +1187,12 @@ async def help(ctx,* ,type=None):
     # await ctx.send(
     #     "Hi, I am The Brain bot and I am here to help you enjoy the server. \n If you have any complaints or need to speak to mods, send me a dm! \n\n Here are my commands:\n .quote -> I'll send a random quote \n .quote [searchterm] -> I'll send a quote with the term you searched for \n .search [philosopher] -> I'll send a quote by the philosopher you mention \n .ask [question] -> I will answer your questions \n .ask2 [question] -> I will answer your question in the most intellectual way I can \n .sep [article name] -> I will send the link to the sep article \n .wiki [article name] -> I will send the link to the wikipedia article \n .google [search term] -> I will return a link to the google search \n .define [word] -> I will get you the definition of the word. \n .ideas -> I will send a list of ideas and thought experiments for you to choose from \n\n .advice -> I'll give you some helpful advice \n .joke -> I'll tell you a funny joke \n .programming -> I'll tell you a funny programming joke \n .knockknock -> I'll tell you a knock knock joke \n .insult -> I'll insult you, and be warned, I'm mean! \n .mathfact -> I will tell you an interesting math fact \n .today -> I will tell you a fact about todays date \n .hangman -> you can play a game of hangman  \n\n You can try out other commands, and see what you find! I have some hidden gems too!\n I'll give you one, try .pray \n\n For more information about the server go to  {0.mention}".format(
     #         rules))
+
+@client.command()
+async def invite(ctx):
+    link = await ctx.channel.create_invite(max_uses=5,reason=f"{ctx.author} wanted an invite.")
+    await ctx.send("Here is an instant invite to The Vat:\n\n " + str(link))
+
 
 
 @client.command()
@@ -1262,7 +1269,7 @@ async def on_message(message):
                      'injun', '1njun', 'jewboy', 'kyke', 'mayo monkey', 'mayonnaise monkey', 'pickaninny', 'polack',
                      'polak', 'polack', 'prarie nigger', 'prarie nigga', 'tacohead', 'thicklips', 'thicklips',
                      'thick lips', 'ting tong', 'towel head', 'twink', 'uncle tom', 'uncle-tom', 'Wigger', 'wigga',
-                     'zipperhead', 'zippahead', 'zipper-head', 'zippa-head', 'twinks', 'cum', 'c u m']
+                     'zipperhead', 'zippahead', 'zipper-head', 'zippa-head', 'twinks']
 
     msgwords = msg.split()
     for msgword in msgwords:
@@ -1275,16 +1282,20 @@ async def on_message(message):
                 embedVar2.add_field(name=f"{message.author} said in {message.channel}:",
                            value=f"{message.content} \n \n Word = **{msgword}**", inline=False)
                 await sendchannel.send(embed=embedVar2)
+        if msgword.lower() in ["bingo", "bingobongo", "<:bingo:838288733748461588>"]:
+            print(msg)
+            await message.add_reaction("<:bingo:838288733748461588>")
+        if msgword.lower() in ["gag", "<:gag:837859560566816788>"]:
+            print(msg)
+            await message.add_reaction("<:gag:837859560566816788>")
+        if msgword.lower() in ["yes", "<:yes:837729670958415873>", "yea", "yup", "ye", "yessir", "yeah"]:
+            print(msg)
+            await message.add_reaction("<:yes:837729670958415873>")
+        if msgword.lower() in ["brain", "<:happybrain:838485449512452157>", "vat"]:
+            print(msg)
+            await message.add_reaction("<:happybrain:838485449512452157>")
 
 
-    if "bingo" in msg.lower() or "bingobongo" in msg.lower():
-        await message.add_reaction("<:bingo:838288733748461588>")
-    if "gag" in msg.lower():
-        await message.add_reaction("<:gag:837859560566816788>")
-    if "yes" in msg.lower():
-        await message.add_reaction("<:yes:837729670958415873>")
-    if "brain" in msg.lower():
-        await message.add_reaction("<:happybrain:838485449512452157>")
 
 
     # Processing the message so commands will work
