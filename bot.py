@@ -283,7 +283,6 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
             voice_state = member.voice
             if voice_state is not None:
                 await member.edit(mute=False)
-            await member.edit(mute=False)
             await member.add_roles(member_role[count], reason=reason)
 
             await ctx.send(f"{member.mention} has been released from the unmuted.")
