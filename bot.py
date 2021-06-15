@@ -1283,17 +1283,15 @@ async def on_message(message):
                            value=f"{message.content} \n \n Word = **{msgword}**", inline=False)
                 await sendchannel.send(embed=embedVar2)
         if msgword.lower() in ["bingo", "bingobongo", "<:bingo:838288733748461588>"]:
-            print(msg)
             await message.add_reaction("<:bingo:838288733748461588>")
         if msgword.lower() in ["gag", "<:gag:837859560566816788>"]:
-            print(msg)
             await message.add_reaction("<:gag:837859560566816788>")
-        if msgword.lower() in ["yes", "<:yes:837729670958415873>", "yea", "yup", "ye", "yessir", "yeah"]:
-            print(msg)
-            await message.add_reaction("<:yes:837729670958415873>")
         if msgword.lower() in ["brain", "<:happybrain:838485449512452157>", "vat"]:
-            print(msg)
             await message.add_reaction("<:happybrain:838485449512452157>")
+        if msgword.lower() in ["canada", 'toronto', 'eh', 'timmies','tims', "timbits"]:
+            await message.add_reaction("🍁")
+        if msgword.lower() == "<:feelsbadeh:854187237356863489>":
+            await message.add_reaction("<:feelsbadeh:854187237356863489>")
 
 
 
