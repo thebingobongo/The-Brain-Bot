@@ -217,6 +217,12 @@ originalrole = {}
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
     print("I am alive.")
+    general =client.get_channel(831211215878488078)
+    while True:
+        embed = getDateFact()
+        embed.add_field(name="This is your hourly reminder to go drink some water!",value="** **")
+        await general.send(embed=embed)
+        await asyncio.sleep(3600)
 
 
 @client.command()
@@ -285,8 +291,8 @@ async def mute(ctx, members: commands.Greedy[discord.Member],
                 await member.edit(mute=False)
             await member.add_roles(member_role[count], reason=reason)
 
-            await ctx.send(f"{member.mention} has been released from the unmuted.")
-            await logs.send(f"{member.mention} has been released from the unmuted.")
+            await ctx.send(f"{member.mention} has been unmuted.")
+            await logs.send(f"{member.mention} has been unmuted.")
             count += 1
 
 
