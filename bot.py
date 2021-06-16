@@ -1123,7 +1123,6 @@ async def test(ctx):
 async def fact(ctx):
     await ctx.send("I can confirm that this is perhaps the only objective truth in this universe.")
 
-
 @client.command(aliases=['thevat', 'info'])
 async def about(ctx):
     await ctx.send(
@@ -1306,8 +1305,16 @@ async def on_message(message):
         if msgword.lower() == "<:feelsbadeh:854187237356863489>":
             await message.add_reaction("<:feelsbadeh:854187237356863489>")
 
-
-
+    try:
+        if msg[0] == ":" and msg[-1] == ":":
+            emotename = msg[1:-1]
+            thevat = client.get_guild(831211215375433728)
+            for emote in thevat.emojis:
+                if emotename == emote.name:
+                    await message.delete()
+                    await message.channel.send(str(emote))
+    except:
+        pass
 
     # Processing the message so commands will work
     await client.process_commands(message)
