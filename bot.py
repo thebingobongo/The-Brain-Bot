@@ -223,6 +223,14 @@ async def on_ready():
         embed.add_field(name="This is your hourly reminder to go drink some water!",value="** **")
         await general.send(embed=embed)
         await asyncio.sleep(3600)
+        embed = getQuote()
+        embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
+        await general.send(embed=embed)
+        await asyncio.sleep(3600)
+        embed = getAdvice()
+        embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
+        await general.send(embed=embed)
+        await asyncio.sleep(3600)
 
 
 @client.command()
