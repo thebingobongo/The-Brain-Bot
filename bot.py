@@ -1142,8 +1142,6 @@ async def ob(ctx,*,emotename=None):
                     c= 0
             await ctx.send(returnt)
         else:
-            #emotename = "OB_" + emotename
-            emotelist = emotename.split(" ")
             for emote in observer.emojis:
                 if emotename == emote.name[3:].lower():
                     await ctx.message.delete()
