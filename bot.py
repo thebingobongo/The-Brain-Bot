@@ -1,6 +1,6 @@
 import requests
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import json
 import random
 import openai
@@ -217,20 +217,27 @@ originalrole = {}
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
     print("I am alive.")
-    general =client.get_channel(831211215878488078)
-    while True:
+    waterreminder.start()
+
+
+
+@tasks.loop(minutes=60)
+async def waterreminder():
+    general = client.get_channel(831211215878488078)
+    rand = random.randint(1,3)
+    if rand == 1:
         embed = getDateFact()
         embed.add_field(name="This is your hourly reminder to go drink some water!",value="** **")
         await general.send(embed=embed)
-        await asyncio.sleep(3600)
+    elif rand== 2:
         embed = getQuote()
         embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
         await general.send(embed=embed)
-        await asyncio.sleep(3600)
+    elif rand ==3:
         embed = getAdvice()
         embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
         await general.send(embed=embed)
-        await asyncio.sleep(3600)
+
 
 
 @client.command()
