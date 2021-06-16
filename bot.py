@@ -1123,6 +1123,36 @@ async def test(ctx):
 async def fact(ctx):
     await ctx.send("I can confirm that this is perhaps the only objective truth in this universe.")
 
+
+@client.command()
+async def ob(ctx,*,emotename=None):
+    if not emotename == None:
+        emotename = emotename.strip()
+        observer = client.get_guild(737104128777650217)
+        if emotename == "list":
+            c = 0
+            returnt = ''
+            line = ''
+            for emote in observer.emojis:
+                line = line + " " + emote.name
+                c += 1
+                if c == 3:
+                    returnt = returnt + "`" + line + "` \n"
+                    line = ''
+                    c= 0
+            await ctx.send(returnt)
+        else:
+            #emotename = "OB_" + emotename
+            emotelist = emotename.split(" ")
+            for emote in observer.emojis:
+                if emotename == emote.name[3:].lower():
+                    await ctx.message.delete()
+                    await ctx.send(str(emote))
+                    break
+    else:
+        await ctx.send("Try .ob [emote name] or .ob [list]")
+
+
 @client.command(aliases=['thevat', 'info'])
 async def about(ctx):
     await ctx.send(
