@@ -1320,6 +1320,16 @@ async def on_message(message):
 
     msgwords = msg.split()
     for msgword in msgwords:
+        msgword = msgword.replace("?","")
+        msgword = msgword.replace("!","")
+        msgword = msgword.replace(".","")
+        msgword = msgword.replace("*","")
+        msgword = msgword.replace("/","")
+        msgword = msgword.replace("|","")
+        msgword = msgword.replace("`","")
+        msgword = msgword.replace("~","")
+
+
         for filter in filteredwords:
             # print(f'{msgword} {filter}')
             if msgword.lower() == filter.lower():
@@ -1329,6 +1339,7 @@ async def on_message(message):
                 embedVar2.add_field(name=f"{message.author} said in {message.channel}:",
                            value=f"{message.content} \n \n Word = **{msgword}**", inline=False)
                 await sendchannel.send(embed=embedVar2)
+                break
         if msgword.lower() in ["bingo", "bingobongo", "<:bingo:838288733748461588>"]:
             await message.add_reaction("<:bingo:838288733748461588>")
         if msgword.lower() in ["gag", "<:gag:837859560566816788>"]:
