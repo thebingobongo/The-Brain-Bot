@@ -818,7 +818,14 @@ async def arnold(ctx):
 @client.command()
 async def debatetopic(ctx):
     rand = random.randint(1, len(debateTopics))
-    await ctx.send(debateTopics[rand])
+    #await ctx.send(debateTopics[rand])
+    while len(debateTopics[rand]) > 256:
+        rand = random.randint(1, len(debateTopics))
+
+    embed = discord.Embed(title=debateTopics[rand], color=0xc203fc)
+    embed.add_field(name="It's .debatetopic for more!", value="** **")
+    embed.set_footer(text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
+    await ctx.send(embed=embed)
 
 
 @client.command()
