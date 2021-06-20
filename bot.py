@@ -217,6 +217,7 @@ originalrole = {}
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
     print("I am alive.")
+    keepalive.start()
     waterreminder.start()
     await asyncio.sleep(1800)
     debatetopicloop.start()
@@ -245,11 +246,21 @@ async def waterreminder():
 async def debatetopicloop():
     general = client.get_channel(831211215878488078)
     rand = random.randint(1, len(debateTopics))
+    while len(debateTopics[rand]) > 250:
+        rand = random.randint(1, len(debateTopics))
+
     embed = discord.Embed(title=debateTopics[rand],color=0xc203fc)
     embed.add_field(name="It's .debatetopic for more!", value="** **")
 
     embed.set_footer(text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
     await general.send(embed=embed)
+
+
+@tasks.loop(minutes=3)
+async def keepalive():
+    channel = client.get_channel(856065317524733954)
+    await channel.send("keeping shit alive ")
+
 
 
 
