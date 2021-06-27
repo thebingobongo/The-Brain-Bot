@@ -1,8 +1,13 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
+import random
 import openai
 from dotenv import load_dotenv
 import os
+import asyncio
+
+from cogs.messages import getDateFact, getQuote, getAdvice
+from debateTopics import debateTopics
 
 
 # get bot token and openai apikey
@@ -30,6 +35,50 @@ originalrole = {}
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
     print("I am alive.")
+    keepalive.start()
+    waterreminder.start()
+    await asyncio.sleep(1800)
+    debatetopicloop.start()
+
+
+@tasks.loop(minutes=60)
+async def waterreminder():
+    general = client.get_channel(831211215878488078)
+    rand = random.randint(1, 3)
+    if rand == 1:
+        embed = getDateFact()
+        embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
+    elif rand == 2:
+        embed = getQuote()
+        embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
+    elif rand == 3:
+        embed = getAdvice()
+        embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
+
+    embed.set_footer(
+        text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
+    await general.send(embed=embed)
+
+@tasks.loop(minutes=60)
+async def debatetopicloop():
+    await client.wait_until_ready()
+    general = client.get_channel(831211215878488078)
+    rand = random.randint(1, len(debateTopics))
+    while len(debateTopics[rand]) > 250:
+        rand = random.randint(1, len(debateTopics))
+
+    embed = discord.Embed(title=debateTopics[rand], color=0xc203fc)
+    embed.add_field(name="It's .debatetopic for more!", value="** **")
+
+    embed.set_footer(
+        text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
+    await general.send(embed=embed)
+
+@tasks.loop(minutes=3)
+async def keepalive():
+    await client.wait_until_ready()
+    channel = client.get_channel(856065317524733954)
+    await channel.send("keeping shit alive ")
 
 
 @client.command()
@@ -54,10 +103,9 @@ async def load(ctx, extension):
     await ctx.send("done")
 
 
-from discord.ext.commands import CommandNotFound
 @client.event
 async def on_command_error(ctx, error):
-    if isinstance(error, CommandNotFound):
+    if isinstance(error, commands.CommandNotFound):
         return
     elif isinstance(error,commands.MissingPermissions):
         await ctx.send("You do not have the permissions to use that command.")
@@ -78,8 +126,6 @@ async def on_command_error(ctx, error):
             await ctx.send("User was not connected to voice.")
         else:
             await ctx.send(f"Command raised an exception: {error.original}")
-
-
 
 
 
