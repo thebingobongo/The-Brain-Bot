@@ -4,7 +4,6 @@ import openai
 from dotenv import load_dotenv
 import os
 
-from cogs.hangman import hangman
 
 # get bot token and openai apikey
 load_dotenv()
@@ -103,5 +102,4 @@ for filename in os.listdir("./cogs"):
 
 
 # data['TOKEN']
-#client.run(bot_token)
-client.run("ODQxNzg0NDYxNDY1MDkyMTI2.YJry3w.7B86VAA1qw9c9_oUEWb-b4Zo_XM")
+client.run(bot_token)
