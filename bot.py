@@ -34,6 +34,7 @@ async def on_ready():
 
 
 @client.command()
+@commands.has_any_role(835623182484373535,835400292979179530)
 async def reload(ctx, extension):
     client.unload_extension(f"cogs.{extension}")
     client.load_extension(f"cogs.{extension}")
@@ -41,12 +42,14 @@ async def reload(ctx, extension):
 
 
 @client.command()
+@commands.has_any_role(835623182484373535,835400292979179530)
 async def unload(ctx, extension):
     client.unload_extension(f"cogs.{extension}")
     await ctx.send("done")
 
 
 @client.command()
+@commands.has_any_role(835623182484373535,835400292979179530)
 async def load(ctx, extension):
     client.load_extension(f"cogs.{extension}")
     await ctx.send("done")
