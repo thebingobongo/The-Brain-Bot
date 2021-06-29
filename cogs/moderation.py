@@ -12,6 +12,8 @@ def predicate(ctx):
 
 has_roles = commands.check(predicate)
 
+originalrole = {}
+
 class Moderation(commands.Cog):
 
     def __init__(self, client):
@@ -201,7 +203,7 @@ class Moderation(commands.Cog):
                 "{0.mention} has been punished by {1.mention} for *{2}* {3}".format(member, ctx.author,
                                                                                     reason, time))
         logs = self.client.get_channel(831214657439924284)
-        await logs.send("{0.mention} has been punished by {1.mention} for *{2}* {3}}".format(member, ctx.author,
+        await logs.send("{0.mention} has been punished by {1.mention} for *{2}* {3}".format(member, ctx.author,
                                                                                              reason, time))
         if dungeon_minutes > 0:
             await asyncio.sleep(dungeon_minutes * 60)
@@ -246,7 +248,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @has_roles
-    async def promote(ctx, member: discord.Member, *, reason='Promotion'):
+    async def promote(self, ctx, member: discord.Member, *, reason='Promotion'):
         if not member:
             await ctx.send("You need to name someone to promote.")
             return
@@ -275,9 +277,12 @@ class Moderation(commands.Cog):
         else:
             await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
 
+        logs = self.client.get_channel(831214657439924284)
+        await logs.send("{0.mention} has been promoted by {1.mention}.".format(member, ctx.author))
+
     @commands.command()
     @commands.has_role(831214459682029588)
-    async def demote(ctx, member: discord.Member, *, reason='Demotion'):
+    async def demote(self, ctx, member: discord.Member, *, reason='Demotion'):
         if not member:
             await ctx.send("You need to name someone to demote.")
             return
@@ -301,6 +306,9 @@ class Moderation(commands.Cog):
             await ctx.send("{0.mention} is a Pawn. Cannot be further demoted.".format(member))
         else:
             await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
+
+        logs = self.client.get_channel(831214657439924284)
+        await logs.send("{0.mention} has been demoted by {1.mention}.".format(member, ctx.author))
 
     @commands.command(aliases=['gbr', 'brainrole'])
     @has_roles
