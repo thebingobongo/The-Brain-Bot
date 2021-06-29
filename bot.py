@@ -4,10 +4,10 @@ import random
 import openai
 from dotenv import load_dotenv
 import os
-import asyncio
+# import asyncio
 
 from cogs.messages import getDateFact, getQuote, getAdvice
-from debateTopics import debateTopics
+# from debateTopics import debateTopics
 
 
 # get bot token and openai apikey

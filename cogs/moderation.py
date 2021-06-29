@@ -25,6 +25,11 @@ class Moderation(commands.Cog):
         if not member:
             await ctx.send("You need to name someone to approve.")
             return
+
+        if member == self.client.user:
+            await ctx.send("You cannot do that to me, young one.")
+            return
+
         pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
         sendchannel = self.client.get_channel(831211215878488078)
         await member.add_roles(pawn_role)
@@ -39,6 +44,11 @@ class Moderation(commands.Cog):
         if not member:
             await ctx.send("You need to name someone to approve.")
             return
+
+        if member == self.client.user:
+            await ctx.send("You cannot do that to me, young one.")
+            return
+
         textchannel = self.client.get_channel(839252122550009876)
         voicechannel = self.client.get_channel(839253190667141181)
         underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
@@ -69,6 +79,9 @@ class Moderation(commands.Cog):
         muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
 
         for member in members:
+            if member == self.client.user:
+                await ctx.send("You cannot do that to me, young one.")
+                return
             if rook_role in member.roles:
                 member_role.append(rook_role)
                 await member.remove_roles(rook_role, reason=reason)
@@ -125,6 +138,9 @@ class Moderation(commands.Cog):
         if not member:
             await ctx.send("You need to name someone to unmute.")
             return
+        if member == self.client.user:
+            await ctx.send("You cannot do that to me, young one.")
+            return
         member_role = originalrole[member]
         await member.remove_roles(muted_role, reason=reason)
         await member.add_roles(member_role, reason='unmuted')
@@ -144,6 +160,9 @@ class Moderation(commands.Cog):
         dungeon_role = discord.utils.get(ctx.guild.roles, name="Punished")
         if not member:
             await ctx.send("You need to name someone to unpunish.")
+            return
+        if member == self.client.user:
+            await ctx.send("You cannot do that to me, young one.")
             return
         member_role = originalrole[member]
         await member.remove_roles(dungeon_role, reason=reason)
@@ -176,6 +195,9 @@ class Moderation(commands.Cog):
         dungeon_role = discord.utils.get(ctx.guild.roles, name="Punished")
 
         for member in members:
+            if member == self.client.user:
+                await ctx.send("You cannot do that to me, young one.")
+                return
             if rook_role in member.roles:
                 member_role.append(rook_role)
                 await member.remove_roles(rook_role, reason=reason)
@@ -220,6 +242,9 @@ class Moderation(commands.Cog):
         if not member:
             await ctx.send("You need to name someone to kick.")
             return
+        if member == self.client.user:
+            await ctx.send("You cannot do that to me, young one.")
+            return
         staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
         if staff_role in member.roles:
             await ctx.send("Cannot kick staff. Please contact a Mod III")
@@ -236,6 +261,9 @@ class Moderation(commands.Cog):
         if not member:
             await ctx.send("You need to name someone to ban.")
             return
+        if member == self.client.user:
+            await ctx.send("You cannot do that to me, young one.")
+            return
         staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
         if staff_role in member.roles:
             await ctx.send("Cannot ban staff. Please contact a Mod III")
@@ -251,6 +279,9 @@ class Moderation(commands.Cog):
     async def promote(self, ctx, member: discord.Member, *, reason='Promotion'):
         if not member:
             await ctx.send("You need to name someone to promote.")
+            return
+        if member == self.client.user:
+            await ctx.send("You cannot do that to me, young one.")
             return
         rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
         bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
@@ -286,6 +317,9 @@ class Moderation(commands.Cog):
         if not member:
             await ctx.send("You need to name someone to demote.")
             return
+        if member == self.client.user:
+            await ctx.send("You cannot do that to me, young one.")
+            return
         rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
         bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
         knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
@@ -315,6 +349,9 @@ class Moderation(commands.Cog):
     async def givebrainrole(self, ctx, member: discord.Member, *, role_id=None):
         if not member:
             await ctx.send("You need to name someone to demote.")
+            return
+        if member == self.client.user:
+            await ctx.send("You cannot do that to me, young one.")
             return
         if role_id == None:
             await ctx.send("Please specify which brain role you want to give to this user.")
