@@ -7,6 +7,7 @@ import os
 # import asyncio
 
 from cogs.messages import getDateFact, getQuote, getAdvice
+from databaselayer import *
 # from debateTopics import debateTopics
 
 
@@ -58,7 +59,7 @@ async def waterreminder():
     embed.set_footer(
         text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
     await general.send(embed=embed)
-
+#
 # @tasks.loop(minutes=60)
 # async def debatetopicloop():
 #     await client.wait_until_ready()
@@ -103,10 +104,28 @@ async def load(ctx, extension):
     await ctx.send("done")
 
 
+@client.command()
+@commands.has_any_role(835623182484373535,835400292979179530)
+async def coglist(ctx):
+    embed = discord.Embed(title="List of Cogs",color=0x00ffff)
+    for filename in os.listdir("./cogs"):
+        if filename.endswith(".py"):
+            embed.add_field(name=filename,value="** **", inline=True)
+    await ctx.send(embed=embed)
+
+
+
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         return
+    elif isinstance(error, commands.CommandOnCooldown):
+        if error.retry_after < 60:
+            await ctx.send(f'This command is on cooldown, you can use it in {round(error.retry_after, 1)} seconds')
+        else:
+            timeleft = error.retry_after / 60
+            await ctx.send(f'This command is on cooldown, you can use it in {round(timeleft, 1)} minutes')
+
     elif isinstance(error,commands.MissingPermissions):
         await ctx.send("You do not have the permissions to use that command.")
     elif isinstance(error,commands.MissingRequiredArgument):
@@ -116,7 +135,8 @@ async def on_command_error(ctx, error):
     elif isinstance(error,commands.ChannelNotFound):
         await ctx.send("The channel could not be found or does not exist, please try again.")
     elif isinstance(error,commands.BadArgument):
-        await ctx.send("One of the arguments failed. Please try again.\n P.S. If a member is a required argument, you must **mention** them with @.")
+        pass
+        #await ctx.send("One of the arguments failed. Please try again.\n P.S. If a member is a required argument, you must **mention** them with @.")
     elif isinstance(error,commands.TooManyArguments):
         await ctx.send("You have added too many arguments, please try again.")
     elif isinstance(error,commands.MissingRole):
@@ -126,7 +146,7 @@ async def on_command_error(ctx, error):
             await ctx.send("User was not connected to voice.")
         else:
             await ctx.send(f"Command raised an exception: {error.original}")
-
+#
 
 
 @client.event
@@ -134,12 +154,17 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    msg = message.content
-
     # Processing the message so commands will work
     await client.process_commands(message)
 
 
+@client.event
+async def on_member_remove(member):
+    deleteUser(member.id)
+
+# @client.event
+# async def on_member_join(member):
+#     createUser(member.id)
 
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):

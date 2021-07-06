@@ -3,6 +3,8 @@ from discord.ext import commands
 import typing
 import asyncio
 
+from databaselayer import *
+
 def predicate(ctx):
     staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
     return staff_role in ctx.author.roles
@@ -12,7 +14,6 @@ def predicate(ctx):
 
 has_roles = commands.check(predicate)
 
-originalrole = {}
 
 class Moderation(commands.Cog):
 
@@ -32,6 +33,7 @@ class Moderation(commands.Cog):
 
         pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
         sendchannel = self.client.get_channel(831211215878488078)
+        createUser(member.id)
         await member.add_roles(pawn_role)
         await ctx.send("User has been approved.")
         await sendchannel.send(
@@ -62,7 +64,6 @@ class Moderation(commands.Cog):
     async def mute(self, ctx, members: commands.Greedy[discord.Member],
                    mute_minutes: typing.Optional[int] = 0,
                    *, reason: str = "None"):
-        global originalrole
         """Mass mute members with an optional mute_minutes parameter to time it"""
 
         rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
@@ -70,7 +71,6 @@ class Moderation(commands.Cog):
         knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
         pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
 
-        member_role = []
 
         if not members:
             await ctx.send("You need to name someone to mute")
@@ -83,20 +83,12 @@ class Moderation(commands.Cog):
                 await ctx.send("You cannot do that to me, young one.")
                 return
             if rook_role in member.roles:
-                member_role.append(rook_role)
                 await member.remove_roles(rook_role, reason=reason)
-                originalrole[member] = rook_role
             elif bishop_role in member.roles:
-                member_role.append(bishop_role)
                 await member.remove_roles(bishop_role, reason=reason)
-                originalrole[member] = bishop_role
             elif knight_role in member.roles:
-                member_role.append(knight_role)
                 await member.remove_roles(knight_role, reason=reason)
-                originalrole[member] = knight_role
             elif pawn_role in member.roles:
-                member_role.append(pawn_role)
-                originalrole[member] = pawn_role
                 await member.remove_roles(pawn_role, reason=reason)
 
             if mute_minutes == 0:
@@ -118,22 +110,21 @@ class Moderation(commands.Cog):
                                                                              time))
         if mute_minutes > 0:
             await asyncio.sleep(mute_minutes * 60)
-            count = 0
             for member in members:
                 await member.remove_roles(muted_role, reason="time's up ")
                 voice_state = member.voice
                 if voice_state is not None:
                     await member.edit(mute=False)
-                await member.add_roles(member_role[count], reason=reason)
+                roleid = int(getUserRole(member.id))
+                memberrole = discord.utils.get(ctx.guild.roles, id=roleid)
+                await member.add_roles(memberrole, reason=reason)
 
                 await ctx.send(f"{member.mention} has been unmuted.")
                 await logs.send(f"{member.mention} has been unmuted.")
-                count += 1
 
     @commands.command()
     @has_roles
     async def unmute(self, ctx, member: discord.Member, *, reason=None):
-        global originalrole
         muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
         if not member:
             await ctx.send("You need to name someone to unmute.")
@@ -141,7 +132,8 @@ class Moderation(commands.Cog):
         if member == self.client.user:
             await ctx.send("You cannot do that to me, young one.")
             return
-        member_role = originalrole[member]
+        roleid = int(getUserRole(member.id))
+        member_role = discord.utils.get(ctx.guild.roles, id=roleid)
         await member.remove_roles(muted_role, reason=reason)
         await member.add_roles(member_role, reason='unmuted')
         voice_state = member.voice
@@ -156,7 +148,6 @@ class Moderation(commands.Cog):
     @commands.command(aliases=['unpunish', 'unpanopticon', 'unprison'])
     @has_roles
     async def undungeon(self, ctx, member: discord.Member, *, reason=None):
-        global originalrole
         dungeon_role = discord.utils.get(ctx.guild.roles, name="Punished")
         if not member:
             await ctx.send("You need to name someone to unpunish.")
@@ -164,7 +155,8 @@ class Moderation(commands.Cog):
         if member == self.client.user:
             await ctx.send("You cannot do that to me, young one.")
             return
-        member_role = originalrole[member]
+        roleid = int(getUserRole(member.id))
+        member_role = discord.utils.get(ctx.guild.roles, id=roleid)
         await member.remove_roles(dungeon_role, reason=reason)
         await member.add_roles(member_role, reason='unmuted')
         await ctx.send(
@@ -178,7 +170,6 @@ class Moderation(commands.Cog):
     async def dungeon(self, ctx, members: commands.Greedy[discord.Member],
                       dungeon_minutes: typing.Optional[int] = 0,
                       *, reason: str = "None"):
-        global originalrole
         """Mass mute members with an optional mute_minutes parameter to time it"""
 
         rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
@@ -186,7 +177,6 @@ class Moderation(commands.Cog):
         knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
         pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
 
-        member_role = []
 
         if not members:
             await ctx.send("You need to name someone to punish.")
@@ -199,20 +189,12 @@ class Moderation(commands.Cog):
                 await ctx.send("You cannot do that to me, young one.")
                 return
             if rook_role in member.roles:
-                member_role.append(rook_role)
                 await member.remove_roles(rook_role, reason=reason)
-                originalrole[member] = rook_role
             elif bishop_role in member.roles:
-                member_role.append(bishop_role)
                 await member.remove_roles(bishop_role, reason=reason)
-                originalrole[member] = bishop_role
             elif knight_role in member.roles:
-                member_role.append(knight_role)
                 await member.remove_roles(knight_role, reason=reason)
-                originalrole[member] = knight_role
             elif pawn_role in member.roles:
-                member_role.append(pawn_role)
-                originalrole[member] = pawn_role
                 await member.remove_roles(pawn_role, reason=reason)
 
             if dungeon_minutes == 0:
@@ -229,10 +211,11 @@ class Moderation(commands.Cog):
                                                                                              reason, time))
         if dungeon_minutes > 0:
             await asyncio.sleep(dungeon_minutes * 60)
-            count = 0
             for member in members:
                 await member.remove_roles(dungeon_role, reason="time's up ")
-                await member.add_roles(member_role[count], reason=reason)
+                roleid = int(getUserRole(member.id))
+                member_role = discord.utils.get(ctx.guild.roles, id=roleid)
+                await member.add_roles(member_role, reason=reason)
                 await ctx.send(f"{member.mention} has been released from the Panopticon.")
                 await logs.send(f"{member.mention} has been released from the Panopticon.")
 
@@ -293,15 +276,18 @@ class Moderation(commands.Cog):
         elif bishop_role in member.roles:
             await member.remove_roles(bishop_role, reason=reason)
             await member.add_roles(rook_role, reason=reason)
+            updateUserRole(member.id, 831227767671619636)
             await ctx.send("{0.mention} has been promoted to Rook!".format(member))
         elif knight_role in member.roles:
             await member.remove_roles(knight_role, reason=reason)
             await member.add_roles(bishop_role, reason=reason)
             await ctx.send("{0.mention} has been promoted to Bishop!".format(member))
+            updateUserRole(member.id, 831213133066534993)
         elif member_role in member.roles:
             await member.remove_roles(pawn_role, reason=reason)
             await member.add_roles(knight_role, reason=reason)
             await ctx.send("{0.mention} has been promoted to Knight!".format(member))
+            updateUserRole(member.id, 831213165105643520)
         elif pawn_role in member.roles:
             await member.add_roles(member_role, reason=reason)
             await ctx.send("{0.mention} has been promoted to Member!".format(member))
@@ -328,14 +314,17 @@ class Moderation(commands.Cog):
             await member.remove_roles(rook_role, reason=reason)
             await member.add_roles(bishop_role, reason=reason)
             await ctx.send("{0.mention} has been demoted to bishop.".format(member))
+            updateUserRole(member.id, 831213133066534993)
         elif bishop_role in member.roles:
             await member.remove_roles(bishop_role, reason=reason)
             await member.add_roles(knight_role, reason=reason)
             await ctx.send("{0.mention} has been demoted to a Knight.".format(member))
+            updateUserRole(member.id, 831213165105643520)
         elif knight_role in member.roles:
             await member.remove_roles(knight_role, reason=reason)
             await member.add_roles(pawn_role, reason=reason)
             await ctx.send("{0.mention} has been demoted to Pawn.".format(member))
+            updateUserRole(member.id, 831213206155952179)
         elif pawn_role in member.roles:
             await ctx.send("{0.mention} is a Pawn. Cannot be further demoted.".format(member))
         else:

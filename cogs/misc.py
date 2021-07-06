@@ -74,12 +74,6 @@ class Misc(commands.Cog):
 
 
 
-
-    @commands.command()
-    async def think(self, ctx):
-        await ctx.send("That hurts!")
-
-
     @commands.command()
     async def mel(self, ctx):
         await ctx.send("Mel passed on, and from the flaming ashes of her corpse arose Miffy.")

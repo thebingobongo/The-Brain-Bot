@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import asyncio
+from databaselayer import *
 
 def predicate(ctx):
     admin_role1 = discord.utils.get(ctx.guild.roles, id=835623182484373535)
@@ -16,6 +17,19 @@ class Admin(commands.Cog):
 
     def __init__(self, client):
         self.client = client
+
+    @commands.command()
+    @has_roles
+    async def award(self, ctx, member:discord.Member, ammount:int):
+        if member == None:
+            await ctx.send("Who do you want to give brain cells.")
+            return
+        if ammount == None:
+            await ctx.send(f"How much do you want to give {member.name}?")
+            return
+        addBal(member.id, ammount)
+        await ctx.send(f"{member.name} has been awarded {ammount} Brain Cells!")
+
 
     @commands.command()
     @has_roles
@@ -51,6 +65,8 @@ class Admin(commands.Cog):
     async def echo(self, ctx, channelID: int, *, txt):
         sendchannel = self.client.get_channel(channelID)
         await sendchannel.send(txt)
+
+
 
     @commands.command()
     @has_roles
