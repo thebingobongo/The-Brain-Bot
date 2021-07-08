@@ -11,7 +11,9 @@ class Database(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        addBal(message.author.id, 1)
+        rand = random.randint(1,2)
+        if rand == 2:
+            addBal(message.author.id, 1)
 
 
 
@@ -91,6 +93,45 @@ class Database(commands.Cog):
         await ctx.send(f"You just earned {earned} Brain Cells!")
 
 
+    @commands.command(aliases=["addwarn"])
+    async def warn(self, ctx, member:discord.Member = None, warn:str=None):
+        if member == None:
+            await ctx.send("Name a member.")
+            return
+        if warn == None:
+            await ctx.send("What are you warning them for?")
+            return
+        if len(warn) > 300:
+            await ctx.send("Please limit the length of the 'warn' to 300 characters.")
+            return
+        addWarn(member.id, warn, ctx.author.id)
+        await ctx.send(f"{member.mention} has been warned.")
+
+
+    # @commands.command()
+    # async def showWarns(self,ctx,target:discord.Member=None):
+    #     res = getWarns(target.id)
+    #     await ctx.send(res)
+
+
+    @commands.command(aliases=["addnote"])
+    async def note(self, ctx, member:discord.Member = None, note:str=None):
+        if member == None:
+            await ctx.send("Name a member.")
+            return
+        if note == None:
+            await ctx.send("What did you want to note?")
+            return
+        if len(note) > 300:
+            await ctx.send("Please limit the length of the 'note' to 300 characters.")
+            return
+        addNote(member.id, note, ctx.author.id)
+        await ctx.send("Note has been added.")
+
+    # @commands.command()
+    # async def showNotes(self,ctx,target:discord.Member=None):
+    #     res = getNotes(target.id)
+    #     await ctx.send(res)
 
 def setup(client):
     client.add_cog(Database(client))

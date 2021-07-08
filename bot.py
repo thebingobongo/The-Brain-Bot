@@ -26,10 +26,9 @@ bot_token = os.getenv('TOKEN')
 
 # todolist = []
 
-
-client = commands.Bot(command_prefix='.', help_command=None)
-
-originalrole = {}
+intents = discord.Intents().default()
+intents.members = True
+client = commands.Bot(command_prefix='.', help_command=None, intents=intents)
 
 
 @client.event
@@ -38,8 +37,32 @@ async def on_ready():
     print("I am alive.")
     keepalive.start()
     waterreminder.start()
+    vccheck.start()
     # await asyncio.sleep(1800)
     # debatetopicloop.start()
+
+
+# @client.command()
+# async def test(ctx):
+#     c = client.get_channel(831215253076574219)
+#     embed = discord.Embed(title= ":heart: Love Island Role!",colour=0xff0000)
+#     await c.send(embed=embed)
+
+
+
+
+@tasks.loop(minutes=1)
+async def vccheck():
+    vat = client.get_guild(831211215375433728)
+    vc_channels = vat.voice_channels
+    for channel in vc_channels:
+        if channel.id == 835061032073297920:
+            pass
+        for member in channel.members:
+            if member.voice.self_deaf:
+                pass
+            addBal(member.id, 10)
+
 
 
 @tasks.loop(minutes=60)
@@ -48,18 +71,15 @@ async def waterreminder():
     rand = random.randint(1, 3)
     if rand == 1:
         embed = getDateFact()
-        embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
     elif rand == 2:
         embed = getQuote()
-        embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
     elif rand == 3:
         embed = getAdvice()
-        embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
-
+    embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
     embed.set_footer(
         text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
     await general.send(embed=embed)
-#
+
 # @tasks.loop(minutes=60)
 # async def debatetopicloop():
 #     await client.wait_until_ready()
@@ -94,14 +114,33 @@ async def reload(ctx, extension):
 @commands.has_any_role(835623182484373535,835400292979179530)
 async def unload(ctx, extension):
     client.unload_extension(f"cogs.{extension}")
-    await ctx.send("done")
+    await ctx.send("Done")
 
 
 @client.command()
 @commands.has_any_role(835623182484373535,835400292979179530)
 async def load(ctx, extension):
     client.load_extension(f"cogs.{extension}")
-    await ctx.send("done")
+    await ctx.send("Done")
+
+@client.command()
+@commands.has_any_role(835623182484373535,835400292979179530)
+async def loadall(ctx):
+    for filename in os.listdir("./cogs"):
+        if filename.endswith(".py"):
+            client.load_extension(f"cogs.{filename[:-3]}")
+            print(f"{filename} has been loaded.")
+    await ctx.send("Done.")
+
+
+@client.command()
+@commands.has_any_role(835623182484373535,835400292979179530)
+async def unloadall(ctx):
+    for filename in os.listdir("./cogs"):
+        if filename.endswith(".py"):
+            client.unload_extension(f"cogs.{filename[:-3]}")
+            print(f"{filename} has been unloaded.")
+    await ctx.send("Done.")
 
 
 @client.command()
@@ -110,7 +149,7 @@ async def coglist(ctx):
     embed = discord.Embed(title="List of Cogs",color=0x00ffff)
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py"):
-            embed.add_field(name=filename,value="** **", inline=True)
+            embed.add_field(name=filename, value="** **", inline=True)
     await ctx.send(embed=embed)
 
 

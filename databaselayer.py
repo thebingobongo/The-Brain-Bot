@@ -13,8 +13,30 @@ con = pymysql.connect(host=hostname, user='admin',
 cur = con.cursor()
 cur.execute("USE thevat")
 
+
+def addWarn(target, warn, submitter):
+    cur.execute(f"INSERT INTO warns (discordid, warnmessage, submitterid, submittime) values ({target}, '{warn}', {submitter}, now());")
+    con.commit()
+
+
+def getWarns(target):
+    cur.execute(f"SELECT * FROM warns WHERE discordid = {target};")
+    res = cur.fetchall()
+    return res
+
+
+def addNote(target, note, submitter):
+    cur.execute(f"INSERT INTO notes (discordid, note, submitterid, submittime) values ({target}, '{note}', {submitter}, now());")
+    con.commit()
+
+def getNotes(target):
+    cur.execute(f"SELECT * FROM notes WHERE discordid = {target};")
+    res = cur.fetchall()
+    return res
+
+
 def getUserBal(memberID):
-    cur.execute(f"SELECT * FROM users WHERE discordid = {memberID}")
+    cur.execute(f"SELECT * FROM users WHERE discordid = {memberID};")
     userbal = cur.fetchone()
     return userbal[1]
 
@@ -44,7 +66,7 @@ def hasEnough(memberid, ammount):
 
 
 def getUserRole(discordid):
-    cur.execute(f"SELECT * FROM users WHERE discordid = {discordid}")
+    cur.execute(f"SELECT * FROM users WHERE discordid = {discordid};")
     userrole = cur.fetchone()
     return userrole[2]
 
@@ -55,9 +77,9 @@ def updateUserRole(discordid,roleid):
 
 
 def createUser(discordid):
-    cur.execute(f"INSERT INTO users (discordid, balance, roleid) values ({discordid}, 200, 831213206155952179)")
+    cur.execute(f"INSERT INTO users (discordid, balance, roleid) values ({discordid}, 200, 831213206155952179);")
     con.commit()
 
 
 def deleteUser(discordid):
-    cur.execute(f"delete from users where discordid = {discordid}")
+    cur.execute(f"delete from users where discordid = {discordid};")

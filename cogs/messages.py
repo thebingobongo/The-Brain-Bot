@@ -255,6 +255,37 @@ class Messages(commands.Cog):
         await message.add_reaction("<:downvote:837763222886547486>")
 
     @commands.command()
+    async def makepoll(self, ctx, options: int, messagelink):
+        if options > 9:
+            await ctx.send("Can only add up to 9 options. Try again with less.")
+            return
+        try:
+            messagelink = messagelink.strip()
+            if len(messagelink) == 18:
+                try:
+                    message = await ctx.fetch_message(int(messagelink))
+                except:
+                    await ctx.send("Either the message ID is invalid, or you are not in the channel of the message.")
+                    return
+            else:
+                links = messagelink.split('/')
+                messageid = int(links[-1])
+                channelid = int(links[-2])
+                guildid = int(links[-3])
+
+                server = self.client.get_guild(guildid)
+                channel = server.get_channel(channelid)
+                message = await channel.fetch_message(messageid)
+        except:
+            await ctx.send("Invalid message link, try again.")
+            return
+
+        reactions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]
+
+        for i in range(options):
+            await message.add_reaction(reactions[i])
+
+    @commands.command()
     async def advice(self,ctx):
         await ctx.send(embed=getAdvice())
 

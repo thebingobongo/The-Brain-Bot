@@ -3,7 +3,7 @@ from discord.ext import commands
 import typing
 import asyncio
 
-from databaselayer import *
+from databaselayer import createUser, getUserRole, updateUserRole
 
 def predicate(ctx):
     staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
@@ -33,7 +33,10 @@ class Moderation(commands.Cog):
 
         pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
         sendchannel = self.client.get_channel(831211215878488078)
-        createUser(member.id)
+        try:
+            createUser(member.id)
+        except:
+            updateUserRole(member.id, 831213206155952179)
         await member.add_roles(pawn_role)
         await ctx.send("User has been approved.")
         await sendchannel.send(
