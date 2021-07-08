@@ -17,11 +17,11 @@ class Database(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        rand = random.randint(1,2)
-        if rand == 2:
-            addBal(message.author.id, 1)
+    # @commands.Cog.listener()
+    # async def on_message(self, message):
+    #     rand = random.randint(1,2)
+    #     if rand == 2:
+    #         addBal(message.author.id, 1)
 
 
 
