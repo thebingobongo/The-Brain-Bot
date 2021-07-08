@@ -4,6 +4,14 @@ import random
 
 from databaselayer import *
 
+def predicate(ctx):
+    staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
+    return staff_role in ctx.author.roles
+    # test = discord.utils.get(ctx.guild.roles, id=858614845363322881)
+    # return test in ctx.author.roles
+
+has_roles = commands.check(predicate)
+
 class Database(commands.Cog):
 
     def __init__(self, client):
@@ -94,6 +102,7 @@ class Database(commands.Cog):
 
 
     @commands.command(aliases=["addwarn"])
+    @has_roles
     async def warn(self, ctx, member:discord.Member = None, warn:str=None):
         if member == None:
             await ctx.send("Name a member.")
@@ -115,6 +124,7 @@ class Database(commands.Cog):
 
 
     @commands.command(aliases=["addnote"])
+    @has_roles
     async def note(self, ctx, member:discord.Member = None, note:str=None):
         if member == None:
             await ctx.send("Name a member.")
