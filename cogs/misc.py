@@ -254,6 +254,8 @@ class Misc(commands.Cog):
                                inline=False)
             embedVar.add_field(name="Moderation",
                                value="For moderators", inline=False)
+            embedVar.add_field(name="Economy / Brain Cells",
+                               value="For the economy with Brain Cells", inline=False)
             embedVar.add_field(name="Message",
                                value="For the chat bot commands", inline=False)
             embedVar.add_field(name="Utility",
@@ -276,8 +278,20 @@ class Misc(commands.Cog):
                                    value="This will send the user to the panopticon for the specified time, and if time isn't specified, indefinitely.")
                 embedVar.add_field(name=".unprison or .unpanopticon [@user]", value="Will free the user.")
                 embedVar.add_field(name=".ban [@user]", value="Will ban the user from the server.")
+                embedVar.add_field(name=".note or .warn [@user]",value="Adds notes/warns accessible to all mods.")
+                embedVar.add_field(name=".notes or .warns [@user]",value="Shows all the notes/warns a user has gotten.")
             else:
                 embedVar = discord.Embed(title="You dont have access to those commands.", color=0xff0000)
+
+        elif type.lower() in ['economy', 'brain cells', 'coins']:
+            embedVar = discord.Embed(title="Economy commands:", color=0x00ff00)
+            embedVar.add_field(name='.bal or .balance',value="Tells you how many brain cells you have")
+            embedVar.add_field(name='.give [@user] [ammount]',value='Gives the user the specified number of Brain cells.')
+            embedVar.add_field(name='.think',value='You earn a random ammount of brain cells. Cooldown for an hour!')
+            embedVar.add_field(name='.smartest',value="Shows you the smartest people in the server.")
+            embedVar.add_field(name='.coinflip [heads or tails] [ammount]',value='Flips a coin!')
+            embedVar.add_field(name=".warns",value="Shows you the active warnings for you.")
+
 
         elif type.lower() == "message" or type.lower() == 'messages':
             embedVar = discord.Embed(title="Message commands:", color=0x00ff00)

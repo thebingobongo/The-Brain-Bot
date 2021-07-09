@@ -6,16 +6,23 @@ load_dotenv()
 hostname = os.getenv('HOST')
 passwd = os.getenv('PASSWD')
 
-
 connection = None
 con = pymysql.connect(host=hostname, user='admin',
-    passwd=passwd, database='thevat')
+                      passwd=passwd, database='thevat')
 cur = con.cursor()
 cur.execute("USE thevat")
 
 
+def getLeaderBoard(limit=10):
+    cur.execute(f"SELECT * FROM users ORDER BY balance DESC LIMIT {limit}")
+    res = cur.fetchall()
+    return res
+
+
+
 def addWarn(target, warn, submitter):
-    cur.execute(f"INSERT INTO warns (discordid, warnmessage, submitterid, submittime) values ({target}, '{warn}', {submitter}, now());")
+    cur.execute(
+        f"INSERT INTO warns (discordid, warnmessage, submitterid, submittime) values ({target}, '{warn}', {submitter}, now());")
     con.commit()
 
 
@@ -25,14 +32,26 @@ def getWarns(target):
     return res
 
 
-def addNote(target, note, submitter):
-    cur.execute(f"INSERT INTO notes (discordid, note, submitterid, submittime) values ({target}, '{note}', {submitter}, now());")
+def deleteWarn(memberid, warn):
+    cur.execute(f"DELETE FROM warns WHERE discordid = {memberid} AND warnmessage = {warn}")
     con.commit()
+
+
+def addNote(target, note, submitter):
+    cur.execute(
+        f"INSERT INTO notes (discordid, note, submitterid, submittime) values ({target}, '{note}', {submitter}, now());")
+    con.commit()
+
 
 def getNotes(target):
     cur.execute(f"SELECT * FROM notes WHERE discordid = {target};")
     res = cur.fetchall()
     return res
+
+
+def deleteNote(memberid, note):
+    cur.execute(f"DELETE FROM notes WHERE discordid = {memberid} AND note = {note}")
+    con.commit()
 
 
 def getUserBal(memberID):
@@ -51,6 +70,7 @@ def addBal(memberid, ammount):
     bal = int(bal) + int(ammount)
     updateUserBal(memberid, bal)
 
+
 def subBal(memberid, ammount):
     bal = getUserBal(memberid)
     bal = int(bal) - int(ammount)
@@ -60,9 +80,9 @@ def subBal(memberid, ammount):
 def hasEnough(memberid, ammount):
     bal = getUserBal(memberid)
     if bal >= ammount:
-        return False
-    else:
         return True
+    else:
+        return False
 
 
 def getUserRole(discordid):
@@ -71,7 +91,7 @@ def getUserRole(discordid):
     return userrole[2]
 
 
-def updateUserRole(discordid,roleid):
+def updateUserRole(discordid, roleid):
     cur.execute(f"UPDATE users SET roleid = {roleid} WHERE discordid = {discordid};")
     con.commit()
 

@@ -35,7 +35,6 @@ client = commands.Bot(command_prefix='.', help_command=None, intents=intents)
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
     print("I am alive.")
-    keepalive.start()
     waterreminder.start()
     vccheck.start()
     # await asyncio.sleep(1800)
@@ -94,13 +93,6 @@ async def waterreminder():
 #     embed.set_footer(
 #         text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
 #     await general.send(embed=embed)
-
-@tasks.loop(minutes=3)
-async def keepalive():
-    await client.wait_until_ready()
-    channel = client.get_channel(856065317524733954)
-    await channel.send("keeping shit alive ")
-
 
 @client.command()
 @commands.has_any_role(835623182484373535,835400292979179530)
@@ -174,12 +166,12 @@ async def on_command_error(ctx, error):
     elif isinstance(error,commands.ChannelNotFound):
         await ctx.send("The channel could not be found or does not exist, please try again.")
     elif isinstance(error,commands.BadArgument):
-        pass
-        #await ctx.send("One of the arguments failed. Please try again.\n P.S. If a member is a required argument, you must **mention** them with @.")
+        await ctx.send("One of the arguments failed. Please try again.\n P.S. If a member is a required argument, you must **mention** them with @.")
     elif isinstance(error,commands.TooManyArguments):
         await ctx.send("You have added too many arguments, please try again.")
     elif isinstance(error,commands.MissingRole):
-        return
+        await ctx.send("You do not have the roles required for that command, please try again.")
+
     elif isinstance(error,commands.CommandInvokeError):
         if "(error code: 40032)" in str(error.original):
             await ctx.send("User was not connected to voice.")
@@ -190,6 +182,10 @@ async def on_command_error(ctx, error):
 
 @client.event
 async def on_message(message):
+    rand = random.randint(1, 2)
+    if rand == 2:
+        addBal(message.author.id, 1)
+
     if message.author == client.user:
         return
 
