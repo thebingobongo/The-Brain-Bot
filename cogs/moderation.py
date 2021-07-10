@@ -465,6 +465,9 @@ class Moderation(commands.Cog):
         if message == None:
             await ctx.send(f"What do you want to say to {member.display_name}?")
             return
+        if not hasOpenTicket(member.id):
+            await ctx.send(f"{member.name} has no open tickets.")
+            return
         embed = discord.Embed(title=f"{ctx.author.display_name} says:",colour=0x00ff00)
         embed.add_field(name=message,value="** **")
         await member.send(embed=embed)
