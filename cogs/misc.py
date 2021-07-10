@@ -285,12 +285,12 @@ class Misc(commands.Cog):
 
         elif type.lower() in ['economy', 'brain cells', 'coins']:
             embedVar = discord.Embed(title="Economy commands:", color=0x00ff00)
-            embedVar.add_field(name='.bal or .balance',value="Tells you how many brain cells you have")
-            embedVar.add_field(name='.give [@user] [ammount]',value='Gives the user the specified number of Brain cells.')
-            embedVar.add_field(name='.think',value='You earn a random ammount of brain cells. Cooldown for an hour!')
-            embedVar.add_field(name='.smartest',value="Shows you the smartest people in the server.")
-            embedVar.add_field(name='.coinflip [heads or tails] [ammount]',value='Flips a coin!')
-            embedVar.add_field(name=".warns",value="Shows you the active warnings for you.")
+            embedVar.add_field(name='.bal or .balance', value="Tells you how many brain cells you have")
+            embedVar.add_field(name='.give [@user] [ammount]', value='Gives the user the specified number of Brain cells.')
+            embedVar.add_field(name='.think', value='You earn a random ammount of brain cells. Cooldown for an hour!')
+            embedVar.add_field(name='.smartest', value="Shows you the smartest people in the server.")
+            embedVar.add_field(name='.coinflip [ammount] [heads or tails] ', value='Flips a coin!')
+            embedVar.add_field(name=".warns", value="Shows you the active warnings for you.")
 
 
         elif type.lower() == "message" or type.lower() == 'messages':

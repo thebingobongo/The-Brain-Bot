@@ -19,6 +19,22 @@ def getLeaderBoard(limit=10):
     return res
 
 
+def hasOpenTicket(memberid):
+    cur.execute(f"SELECT * FROM opentickets WHERE discordid = {memberid};")
+    if cur.rowcount == 0:
+        return False
+    else:
+        return True
+
+
+def createTicket(memberid):
+    cur.execute(f"INSERT INTO opentickets (discordid) value({memberid})")
+    con.commit()
+
+
+def closeTicket(memberid):
+    cur.execute(f"DELETE FROM opentickets WHERE discordid = '{memberid}';")
+    con.commit()
 
 def addWarn(target, warn, submitter):
     cur.execute(

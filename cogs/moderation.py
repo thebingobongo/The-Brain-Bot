@@ -3,7 +3,7 @@ from discord.ext import commands
 import typing
 import asyncio
 
-from databaselayer import createUser, getUserRole, updateUserRole
+from databaselayer import *
 
 def predicate(ctx):
     staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
@@ -456,6 +456,29 @@ class Moderation(commands.Cog):
                 "{0.mention} has been awarded the brain role for {1} by {2.mention}".format(member, role, ctx.author))
 
 
+    @commands.command()
+    @has_roles
+    async def reply(self,ctx,member:discord.Member = None, *,message=None ):
+        if member == None:
+            await ctx.send("Name a member to reply to.")
+            return
+        if message == None:
+            await ctx.send(f"What do you want to say to {member.display_name}?")
+            return
+        embed = discord.Embed(title=f"{ctx.author.display_name} says:",colour=0x00ff00)
+        embed.add_field(name=message,value="** **")
+        await member.send(embed=embed)
+        await ctx.send("Message sent.")
+
+
+    @commands.command()
+    @has_roles
+    async def closeticket(self,ctx, member:discord.Member):
+        if hasOpenTicket(member.id):
+            closeTicket(member.id)
+            await ctx.send("Ticket has successfully been closed.")
+        else:
+            await ctx.send("No open tickets for that member.")
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -470,10 +493,12 @@ class Moderation(commands.Cog):
             embedVar.add_field(name=f"{message.author} sent the bot:",
                                value=f"{message.content}", inline=False)
             await sendchannel.send(embed=embedVar)
-            embedVar1 = discord.Embed(title="Ticket created", color=0x00ff00)
-            embedVar1.add_field(name="Mods will solve the issue as soon as possible. Thanks.",
-                                value="Please refrain from sending too many messages here.", inline=False)
-            await message.channel.send(embed=embedVar1)
+            if not hasOpenTicket(message.author.id):
+                embedVar1 = discord.Embed(title="Ticket created", color=0x00ff00)
+                embedVar1.add_field(name="Mods will solve the issue as soon as possible. Thanks.",
+                                    value="Please refrain from sending too many messages here.", inline=False)
+                await message.channel.send(embed=embedVar1)
+                createTicket(message.author.id)
 
         msg = message.content
 
