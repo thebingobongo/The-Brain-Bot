@@ -31,6 +31,8 @@ class Database(commands.Cog):
             member = ctx.author
         res = getUserBal(member.id)
         embed = discord.Embed(title=f"{member.display_name} has {res} Brain cells!",colour=member.colour)
+        embed.set_thumbnail(
+            url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
         await ctx.send(embed=embed)
 
     @commands.command()
@@ -53,6 +55,8 @@ class Database(commands.Cog):
         addBal(member.id, ammount)
         subBal(ctx.author.id, ammount)
         embed = discord.Embed(title=f"You have given {ammount} brain cells to {member.display_name}!", colour=member.colour)
+        embed.set_thumbnail(
+            url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
         await ctx.send(embed=embed)
 
 
@@ -89,6 +93,8 @@ class Database(commands.Cog):
             st = "There was an error."
         embed = discord.Embed(title=st,
                               colour=ctx.author.colour)
+        embed.set_thumbnail(
+            url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
         await ctx.send(embed=embed)
 
     @commands.command(aliases=["think", "earn"])
@@ -98,6 +104,8 @@ class Database(commands.Cog):
         addBal(ctx.author.id, earned)
         embed = discord.Embed(title=f"You just earned {earned} Brain Cells!",
                               colour=ctx.author.colour)
+        embed.set_thumbnail(
+            url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
         await ctx.send(embed=embed)
 
 
