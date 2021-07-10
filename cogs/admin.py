@@ -33,6 +33,14 @@ class Admin(commands.Cog):
 
     @commands.command()
     @has_roles
+    async def awardvc(self,ctx, ammount = 200):
+        voice_channel = ctx.message.author.voice.channel
+        for mem in voice_channel.members:
+            addBal(mem.id,ammount)
+        await ctx.send(f"All members in this VC have been awarded {ammount} Brain Cells!")
+
+    @commands.command()
+    @has_roles
     async def slowban(self, ctx, member: discord.Member, time_to_ban: int, *, reason):
         await ctx.send(
             f" <a:vibing:847619864738267217> <a:vibing:847619864738267217> {member.mention} is gonna get banned in {time_to_ban} seconds!!!! <a:vibing:847619864738267217> <a:vibing:847619864738267217>")
