@@ -251,6 +251,9 @@ class Messages(commands.Cog):
 
     @commands.command(aliases=['pl'])
     async def poll(self, ctx, *, msg):
+        if '@' in msg:
+            await ctx.send("No.")
+            return
         embed = discord.Embed(title=msg, color=ctx.author.color)
         message = await ctx.send(embed=embed)
         await message.add_reaction("<:upvote:837763222513778759>")
@@ -291,7 +294,6 @@ class Messages(commands.Cog):
     async def trivia(self, ctx):
         res = requests.get("https://opentdb.com/api.php?amount=1&type=multiple")
         result = json.loads(res.text)
-        # await ctx.send(result['results'])
         ans = result['results'][0]
         question = ans['question'].replace('&quot;', '"')
         question = question.replace('&#039;', "'")
@@ -310,35 +312,46 @@ class Messages(commands.Cog):
             embed.set_thumbnail(
                 url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
             msg = await ctx.send(embed=embed)
-            await msg.add_reaction("1️⃣")
-            await msg.add_reaction("2️⃣")
-            await msg.add_reaction("3️⃣")
-            await msg.add_reaction("4️⃣")
+            emotelist = ["1️⃣", "2️⃣", "3️⃣", "4️⃣"]
+            for emote in emotelist:
+                await msg.add_reaction(emote)
 
         # await ctx.send(f"Winning option is {index + 1}")
 
         if ans['difficulty'] == 'easy':
             award = 10
         elif ans['difficulty'] == 'medium':
-            award = 25
+            award = 20
         elif ans['difficulty'] == 'hard':
-            award = 50
+            award = 30
         await asyncio.sleep(10)
         cache_msg = discord.utils.get(self.client.cached_messages, id=msg.id)
-        c = cache_msg.reactions
-        # for r in c:
-        #     await ctx.send(f"For this reaction {r.emoji}:")
-        #     users = await r.users().flatten()
-        #     # # users is now a list of User...
-        users = await c[index].users().flatten()
-        c.pop(index)
-        for reactions in c:
-            for user in users:
-                temp = await reactions.users().flatten()
+        cache_reaction = cache_msg.reactions
+        users = await cache_reaction[index].users().flatten()
+        users.remove(self.client.user)
+        cache_reaction.remove(cache_reaction[index])
+
+        removelist = []
+        for user in users:
+
+            for reaction in cache_reaction:
+                temp = await reaction.users().flatten()
+                # print(f"{user} reacted {reaction}")
+                # print(temp)
                 if user in temp:
-                    users.remove(user)
-                    break
-        if len(users) == 1:
+                    # print(f"User was in temp")
+                    try:
+                        removelist.append(user)
+                        # users.remove(user)
+                    except:
+                        print("something")
+                        # pass
+                    # print('removed user')
+
+        for user in removelist:
+            users.remove(user)
+
+        if len(users) == 0:
             sendmsg = f"No one got it right. The correct answer was: {index + 1}. {answerlist[index]}"
         else:
             sendmsg = "Congrats to "
@@ -347,15 +360,13 @@ class Messages(commands.Cog):
                     pass
                 else:
                     sendmsg = sendmsg + f"{user.mention}"
-                    addBal(user.id,award)
+                    addBal(user.id, award)
                 # addbal
                 # print(f"Added bal to {user.display_name}")
                 # await ctx.send(user.display_name)
             sendmsg = sendmsg + f" for getting it right! They win {award} Brain Cells."
-            if len(users) == 0:
-                sendmsg = f"No one got it right. The correct answer was: {index + 1}. {answerlist[index]}"
-            else:
-                sendmsg = sendmsg + f"The correct answer was: {index + 1}. {answerlist[index]}"
+
+            sendmsg = sendmsg + f"The correct answer was: {index + 1}. {answerlist[index]}"
         await ctx.send(sendmsg)
 
     @commands.command()
