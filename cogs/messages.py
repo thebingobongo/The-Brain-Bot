@@ -349,7 +349,10 @@ class Messages(commands.Cog):
                     # print('removed user')
 
         for user in removelist:
-            users.remove(user)
+            try:
+                users.remove(user)
+            except:
+                pass
 
         if len(users) == 0:
             sendmsg = f"No one got it right. The correct answer was: {index + 1}. {answerlist[index]}"
