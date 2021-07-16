@@ -479,6 +479,9 @@ class Moderation(commands.Cog):
     async def closeticket(self,ctx, member:discord.Member):
         if hasOpenTicket(member.id):
             closeTicket(member.id)
+            embed= discord.Embed(title="Your ticket has been closed.",colour=0xff0000)
+            embed.add_field(name="If you are not satisfied with our response, reply below, or contact a MOD 3 within The Vat.",value="** **")
+            await member.send(embed=embed)
             await ctx.send("Ticket has successfully been closed.")
         else:
             await ctx.send("No open tickets for that member.")

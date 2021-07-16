@@ -118,4 +118,28 @@ def createUser(discordid):
 
 
 def deleteUser(discordid):
-    cur.execute(f"delete from users where discordid = {discordid};")
+    cur.execute(f"delete from users where discordid = '{discordid}';")
+
+
+def getInventory(discordid):
+    cur.execute(f"SELECT * FROM inventory WHERE discordid = '{discordid}'")
+    res = cur.fetchall()
+    return res
+
+
+def hasItem(discordid, itemname):
+    cur.execute(f"SELECT * FROM inventory WHERE discordid = '{discordid}' AND item_name = '{itemname}'")
+    if cur.rowcount == 0:
+        return False
+    else:
+        return True
+
+
+def addItem(discordid, itemname):
+    cur.execute(f"INSERT INTO inventory (discordid, item_name) values ('{discordid}', '{itemname})'")
+    con.commit()
+
+
+def removeItem(discordid, itemname):
+    cur.execute(f"DELETE FROM inventory WHERE discordid = '{discordid}' AND item_name = '{itemname}'")
+    con.commit()

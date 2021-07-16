@@ -291,6 +291,7 @@ class Messages(commands.Cog):
             await message.add_reaction(reactions[i])
 
     @commands.command()
+    @commands.cooldown(1,15,commands.BucketType.guild)
     async def trivia(self, ctx):
         res = requests.get("https://opentdb.com/api.php?amount=1&type=multiple")
         result = json.loads(res.text)
@@ -324,7 +325,7 @@ class Messages(commands.Cog):
             award = 20
         elif ans['difficulty'] == 'hard':
             award = 30
-        await asyncio.sleep(10)
+        await asyncio.sleep(15)
         cache_msg = discord.utils.get(self.client.cached_messages, id=msg.id)
         cache_reaction = cache_msg.reactions
         users = await cache_reaction[index].users().flatten()
@@ -362,12 +363,12 @@ class Messages(commands.Cog):
                 if user == self.client.user:
                     pass
                 else:
-                    sendmsg = sendmsg + f"{user.mention}"
+                    sendmsg = sendmsg + f"{user.mention} "
                     addBal(user.id, award)
                 # addbal
                 # print(f"Added bal to {user.display_name}")
                 # await ctx.send(user.display_name)
-            sendmsg = sendmsg + f" for getting it right! They win {award} Brain Cells."
+            sendmsg = sendmsg + f" for getting it right! They win {award} Brain Cells. "
 
             sendmsg = sendmsg + f"The correct answer was: {index + 1}. {answerlist[index]}"
         await ctx.send(sendmsg)

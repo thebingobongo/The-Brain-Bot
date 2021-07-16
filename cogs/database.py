@@ -62,7 +62,7 @@ class Database(commands.Cog):
 
     @commands.command()
     @commands.cooldown(1, 2, commands.BucketType.user)
-    async def coinflip(self, ctx,ammount:int = 10, options:str = None):
+    async def coinflip(self, ctx,ammount = 10, options:str = None):
         if options == None:
             await ctx.send("Heads or Tails? Try again.")
             return
@@ -73,6 +73,15 @@ class Database(commands.Cog):
             await ctx.send("You don't have enough Brain Cells for that.")
             return
         options = options.strip().lower()
+
+        if ammount == "all":
+            ammount = getUserBal(ctx.author.id)
+
+        try:
+            ammount = int(ammount)
+        except:
+            await ctx.send("There was an error, try again.")
+
         result = random.randint(0,1)
         if options not in ["heads", 'head', 'tails', "tail"]:
             await ctx.send("Enter a valid option.")
