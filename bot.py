@@ -56,10 +56,10 @@ async def vccheck():
     vc_channels = vat.voice_channels
     for channel in vc_channels:
         if channel.id == 835061032073297920:
-            pass
+            continue
         for member in channel.members:
             if member.voice.self_deaf:
-                pass
+                continue
             addBal(member.id, 10)
 
 
