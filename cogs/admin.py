@@ -41,7 +41,7 @@ class Admin(commands.Cog):
 
     @commands.command()
     @has_roles
-    async def slowban(self, ctx, member: discord.Member, time_to_ban: int, *, reason):
+    async def slowban(self, ctx, member: discord.Member, time_to_ban: int, *, reason=None):
         await ctx.send(
             f" <a:vibing:847619864738267217> <a:vibing:847619864738267217> {member.mention} is gonna get banned in {time_to_ban} seconds!!!! <a:vibing:847619864738267217> <a:vibing:847619864738267217>")
         for i in range(time_to_ban):
@@ -53,7 +53,7 @@ class Admin(commands.Cog):
 
     @commands.command()
     @has_roles
-    async def slowestban(self, ctx, member: discord.Member, time_to_ban: int, *, reason):
+    async def slowestban(self, ctx, member: discord.Member, time_to_ban: int, *, reason=None):
         await ctx.send(
             f" <a:vibing:847619864738267217> <a:vibing:847619864738267217> {member.mention} is gonna get banned in {time_to_ban} seconds!!!! <a:vibing:847619864738267217> <a:vibing:847619864738267217>")
         for i in range(time_to_ban):

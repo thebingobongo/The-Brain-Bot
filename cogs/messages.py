@@ -221,7 +221,7 @@ class Messages(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def quote(self,ctx, *, searchterm=None):
+    async def quote(self, ctx, *, searchterm = None):
         if searchterm == None:
             await ctx.send(embed=getQuote())
         else:

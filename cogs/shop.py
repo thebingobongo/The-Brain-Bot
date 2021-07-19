@@ -1,7 +1,10 @@
+import asyncio
+
 import discord
 from discord.ext import commands
 from databaselayer import *
 import random
+from cogs.moderation import Moderation
 
 
 class Shop(commands.Cog):
@@ -9,7 +12,7 @@ class Shop(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    minute_mute = {'name': '1 Minute Mute', 'cost': 10000, 'effect': "You can mute anyone in the server for 1 minute."}
+    minute_mute = {'name': '1 Minute Mute', 'cost': 10000, 'effect': "You can mute anyone in the server in a VC for 1 minute."}
     dj_role = {'name': 'DJ Role', 'cost': 10000, 'effect': 'You gain the DJ role for the music bot.'}
     book = {'name': 'Book', 'cost': 5000, 'effect': 'Gives you access to the .study command.'}
     items = {"1 Minute Mute":minute_mute, 'DJ Role':  dj_role, 'Book': book}
@@ -42,7 +45,7 @@ class Shop(commands.Cog):
             return
         else:
             bookburn = random.randint(0,9)
-            await ctx.send(bookburn)
+            # await ctx.send(bookburn)
             if bookburn in [0,1,2,3]:
                 await ctx.send("Your book spontaneously combusted. Get another book if you'd like to keep studying.")
                 removeItem(ctx.author.id, "Book")
@@ -109,10 +112,100 @@ class Shop(commands.Cog):
             await ctx.author.add_roles(dj_role, reason="Bought dj role")
             removeItem(ctx.author.id, "DJ Role")
             await ctx.send("The DJ Role has been applied to you.")
+
+
         elif item in ['mute', 'minute mute', '1 minute mute', '1mm']:
-            await ctx.send("That part is still under construction.")
+            if not hasItem(ctx.author.id, "1 Minute Mute"):
+                await ctx.send("You do not have that item.")
+                return
+            # if member == None or not isinstance(member, discord.Member):
+            #     await ctx.send("Try .use mute @(whoever)")
+            #     return
+            await ctx.send("Who do you want to mute?")
+            def check(m):
+                return m.author == ctx.author and len(m.mentions) == 1 and m.channel == ctx.channel
+
+            try:
+                reply = await self.client.wait_for('message', check=check, timeout = 30.0)
+            except asyncio.TimeoutError:
+                await ctx.send("Timed out, try again.")
+                return
+            member = reply.mentions[0]
+
+            rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
+            bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
+            knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
+            pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
+            muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
+
+            if member == self.client.user:
+                await ctx.send("You cannot do that to me, young one.")
+                return
+            if rook_role in member.roles:
+                await member.remove_roles(rook_role, reason='use item')
+            elif bishop_role in member.roles:
+                await member.remove_roles(bishop_role, reason='use item')
+            elif knight_role in member.roles:
+                await member.remove_roles(knight_role, reason='use item')
+            elif pawn_role in member.roles:
+                await member.remove_roles(pawn_role, reason='use item')
+
+            await member.add_roles(muted_role, reason='use item')
+            voice_state = member.voice
+
+            if voice_state is not None:
+                await member.edit(mute=True)
+            await ctx.send(
+                "{0.mention} has been muted by {1.mention} with the item.".format(member, ctx.author))
+            logs = self.client.get_channel(831214657439924284)
+            await logs.send(
+                "{0.mention} has been muted by {1.mention} with the item.".format(member, ctx.author))
+
+            try:
+                removeItem(ctx.author.id, "1 Minute Mute")
+            except:
+                await ctx.send("You got really lucky! You can use 1 minute mute again!")
+            await asyncio.sleep(60)
+
+            await member.remove_roles(muted_role, reason="time's up ")
+            voice_state = member.voice
+            if voice_state is not None:
+                await member.edit(mute=False)
+            roleid = int(getUserRole(member.id))
+            memberrole = discord.utils.get(ctx.guild.roles, id=roleid)
+            await member.add_roles(memberrole, reason="time's up")
+
+            await ctx.send(f"{member.mention} has been unmuted.")
 
 
+        else:
+            await ctx.send("That item could not be found. Try again.")
+
+            # mute = self.client.get_command("mute")
+            # print(mute, type(mute))
+            # print('got mute')
+            # m = Moderation(self.client)
+            # await m.mute(ctx=ctx, members=member,mute_minutes= 1, reason='use item')
+            # #await self.client.invoke(mute, members=member,mute_minutes= 1, reason='use item')
+            # print('muted')
+
+            # if member.voice is not None:
+            #     await member.edit(mute=True)
+            #     await ctx.send(f"{member.mention} has been muted for a minute by {ctx.author.mention}")
+            #     logs = self.client.get_channel(831214657439924284)
+            #     await logs.send(
+            #         "{0.mention} has been muted by {1.mention} using the item.".format(member, ctx.author))
+            #     await asyncio.sleep(60)
+            #     await member.edit(mute=False)
+            #     removeItem(ctx.author.id, "1 Minute Mute")
+            # else:
+            #     await ctx.send("The member isn't connected to a VC.")
+                    # await ctx.send("That part is still under construction.")
+            # await ctx.invoke(self.client.get_command('mute'), members = member, mute_minutes = 1)
+            # await ctx.Moderation.mute(member, 1, 'use item')
+            # await Moderation.mute(self.client, ctx, member, 1, 'use item')
+            # mute = self.client.get_command('mute')
+            # await ctx.invoke(mute,members = member, mute_minutes = 1 )
 
 
 

@@ -65,7 +65,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @has_roles
     async def mute(self, ctx, members: commands.Greedy[discord.Member],
-                   mute_minutes: typing.Optional[int] = 0,
+                   mute_minutes: typing.Optional[int] = 5,
                    *, reason: str = "None"):
         """Mass mute members with an optional mute_minutes parameter to time it"""
 
@@ -114,6 +114,8 @@ class Moderation(commands.Cog):
         if mute_minutes > 0:
             await asyncio.sleep(mute_minutes * 60)
             for member in members:
+                if muted_role in member.roles:
+                    continue
                 await member.remove_roles(muted_role, reason="time's up ")
                 voice_state = member.voice
                 if voice_state is not None:
@@ -215,6 +217,8 @@ class Moderation(commands.Cog):
         if dungeon_minutes > 0:
             await asyncio.sleep(dungeon_minutes * 60)
             for member in members:
+                if dungeon_role in member.roles:
+                    continue
                 await member.remove_roles(dungeon_role, reason="time's up ")
                 roleid = int(getUserRole(member.id))
                 member_role = discord.utils.get(ctx.guild.roles, id=roleid)
