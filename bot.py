@@ -35,8 +35,8 @@ client = commands.Bot(command_prefix='.', help_command=None, intents=intents)
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
     print("I am alive.")
-    waterreminder.start()
-    vccheck.start()
+    #waterreminder.start()
+    #vccheck.start()
     # await asyncio.sleep(1800)
     # debatetopicloop.start()
 

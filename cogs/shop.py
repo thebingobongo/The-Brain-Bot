@@ -27,9 +27,11 @@ class Shop(commands.Cog):
 
 
     @commands.command(aliases=['inventory'])
-    async def inv(self, ctx):
-        res= getInventory(ctx.author.id)
-        embed=discord.Embed(title=f"{ctx.author.name}'s Inventory",color=ctx.author.color)
+    async def inv(self, ctx, member:discord.Member=None):
+        if member == None:
+            member = ctx.author
+        res= getInventory(member.id)
+        embed=discord.Embed(title=f"{member.name}'s Inventory",color=member.color)
         for item in res:
             embed.add_field(name=item[1],value="** **")
         embed.set_thumbnail(
@@ -42,6 +44,7 @@ class Shop(commands.Cog):
     async def study(self,ctx):
         if not hasItem(ctx.author.id, "Book"):
             await ctx.send("You need a book for that command.")
+            self.study.reset_cooldown(ctx)
             return
         else:
             bookburn = random.randint(0,9)
