@@ -36,9 +36,20 @@ class Database(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def give(self, ctx, member: discord.Member = None, ammount: int = None):
+    async def give(self, ctx, member: discord.Member = None, ammount: str = None):
+        if 'all' in ammount.strip().lower():
+        # if ammount == "all":
+            ammount = getUserBal(ctx.author.id)
+        try:
+            ammount = int(ammount)
+        except:
+            await ctx.send("There was an error, try again.")
+            return
         if member == None:
             await ctx.send("Who do you want to give brain cells.")
+            return
+        if ctx.author == member:
+            await ctx.send("Can't give yourself brain cells, dummy.")
             return
         if ammount == None:
             await ctx.send(f"How much do you want to give {member.name}?")
@@ -62,7 +73,15 @@ class Database(commands.Cog):
 
     @commands.command()
     @commands.cooldown(1, 2, commands.BucketType.user)
-    async def coinflip(self, ctx,ammount = 10, options:str = None):
+    async def coinflip(self, ctx,ammount:str = '10', options:str = None):
+        if 'all' in ammount.strip().lower():
+        # if ammount == "all":
+            ammount = getUserBal(ctx.author.id)
+        try:
+            ammount = int(ammount)
+        except:
+            await ctx.send("There was an error, try again.")
+            return
         if options == None:
             await ctx.send("Heads or Tails? Try again.")
             return
@@ -73,14 +92,6 @@ class Database(commands.Cog):
             await ctx.send("You don't have enough Brain Cells for that.")
             return
         options = options.strip().lower()
-
-        if ammount == "all":
-            ammount = getUserBal(ctx.author.id)
-
-        try:
-            ammount = int(ammount)
-        except:
-            await ctx.send("There was an error, try again.")
 
         result = random.randint(0,1)
         if options not in ["heads", 'head', 'tails', "tail"]:
@@ -109,7 +120,7 @@ class Database(commands.Cog):
     @commands.command(aliases=["think", "earn"])
     @commands.cooldown(1, 3600, commands.BucketType.user)
     async def work(self, ctx):
-        earned = random.randint(5, 50)
+        earned = random.randint(200, 1000)
         addBal(ctx.author.id, earned)
         embed = discord.Embed(title=f"You just earned {earned} Brain Cells!",
                               colour=ctx.author.colour)

@@ -55,9 +55,10 @@ async def vccheck():
         if channel.id == 835061032073297920:
             continue
         for member in channel.members:
+            ammount = 20
             if member.voice.self_deaf:
-                continue
-            addBal(member.id, 10)
+                ammount = 5
+            addBal(member.id, ammount)
 
 
 @tasks.loop(minutes=60)
@@ -152,10 +153,10 @@ async def on_command_error(ctx, error):
             await ctx.send(f'This command is on cooldown, you can use it in {round(error.retry_after, 1)} seconds')
         elif error.retry_after > 3600:
             timeleft = (error.retry_after / 60) / 60
-            await ctx.send(f'This command is on cooldown, you can use it in {round(error.retry_after, 1)} hours.')
+            await ctx.send(f'This command is on cooldown, you can use it in {round(timeleft, 1)} hour(s).')
         else:
             timeleft = error.retry_after / 60
-            await ctx.send(f'This command is on cooldown, you can use it in {round(timeleft, 1)} minutes')
+            await ctx.send(f'This command is on cooldown, you can use it in {round(timeleft, 1)} minute(s)')
 
     elif isinstance(error,commands.MissingPermissions):
         await ctx.send("You do not have the permissions to use that command.")
