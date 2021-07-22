@@ -121,9 +121,11 @@ class Moderation(commands.Cog):
                 if voice_state is not None:
                     await member.edit(mute=False)
                 roleid = int(getUserRole(member.id))
-                memberrole = discord.utils.get(ctx.guild.roles, id=roleid)
-                await member.add_roles(memberrole, reason=reason)
-
+                try:
+                    memberrole = discord.utils.get(ctx.guild.roles, id=roleid)
+                    await member.add_roles(memberrole, reason=reason)
+                except:
+                    pass
                 await ctx.send(f"{member.mention} has been unmuted.")
                 await logs.send(f"{member.mention} has been unmuted.")
 
@@ -137,10 +139,15 @@ class Moderation(commands.Cog):
         if member == self.client.user:
             await ctx.send("You cannot do that to me, young one.")
             return
+
         roleid = int(getUserRole(member.id))
-        member_role = discord.utils.get(ctx.guild.roles, id=roleid)
+        try:
+            member_role = discord.utils.get(ctx.guild.roles, id=roleid)
+            await member.add_roles(member_role, reason='unmuted')
+        except Exception as e:
+            pass
         await member.remove_roles(muted_role, reason=reason)
-        await member.add_roles(member_role, reason='unmuted')
+
         voice_state = member.voice
         if voice_state is not None:
             await member.edit(mute=False)
@@ -161,9 +168,13 @@ class Moderation(commands.Cog):
             await ctx.send("You cannot do that to me, young one.")
             return
         roleid = int(getUserRole(member.id))
-        member_role = discord.utils.get(ctx.guild.roles, id=roleid)
+        try:
+            member_role = discord.utils.get(ctx.guild.roles, id=roleid)
+            await member.add_roles(member_role, reason='unmuted')
+        except Exception as e:
+            pass
         await member.remove_roles(dungeon_role, reason=reason)
-        await member.add_roles(member_role, reason='unmuted')
+        await ctx.author.move_to(None)
         await ctx.send(
             "{0.mention} has been unpunished by {1.mention} for *{2}* ".format(member, ctx.author, reason))
         logs = self.client.get_channel(831214657439924284)
@@ -208,6 +219,7 @@ class Moderation(commands.Cog):
                 time = f"for {dungeon_minutes} minutes."
 
             await member.add_roles(dungeon_role, reason=reason)
+            await ctx.author.move_to(None)
             await ctx.send(
                 "{0.mention} has been punished by {1.mention} for *{2}* {3}".format(member, ctx.author,
                                                                                     reason, time))
@@ -221,8 +233,11 @@ class Moderation(commands.Cog):
                     continue
                 await member.remove_roles(dungeon_role, reason="time's up ")
                 roleid = int(getUserRole(member.id))
-                member_role = discord.utils.get(ctx.guild.roles, id=roleid)
-                await member.add_roles(member_role, reason=reason)
+                try:
+                    member_role = discord.utils.get(ctx.guild.roles, id=roleid)
+                    await member.add_roles(member_role, reason=reason)
+                except:
+                    pass
                 await ctx.send(f"{member.mention} has been released from the Panopticon.")
                 await logs.send(f"{member.mention} has been released from the Panopticon.")
 

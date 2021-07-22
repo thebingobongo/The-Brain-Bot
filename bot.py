@@ -23,7 +23,6 @@ bot_token = os.getenv('TOKEN')
 # openai.api_key = data['APIKEY']
 
 
-
 # todolist = []
 
 intents = discord.Intents().default()
@@ -36,7 +35,7 @@ async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
     print("I am alive.")
     #waterreminder.start()
-    #vccheck.start()
+    vccheck.start()
     # await asyncio.sleep(1800)
     # debatetopicloop.start()
 
@@ -46,8 +45,6 @@ async def on_ready():
 #     c = client.get_channel(831215253076574219)
 #     embed = discord.Embed(title= ":heart: Love Island Role!",colour=0xff0000)
 #     await c.send(embed=embed)
-
-
 
 
 @tasks.loop(minutes=1)
@@ -61,7 +58,6 @@ async def vccheck():
             if member.voice.self_deaf:
                 continue
             addBal(member.id, 10)
-
 
 
 @tasks.loop(minutes=60)
@@ -94,6 +90,7 @@ async def waterreminder():
 #         text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
 #     await general.send(embed=embed)
 
+
 @client.command()
 @commands.has_any_role(835623182484373535,835400292979179530)
 async def reload(ctx, extension):
@@ -114,6 +111,7 @@ async def unload(ctx, extension):
 async def load(ctx, extension):
     client.load_extension(f"cogs.{extension}")
     await ctx.send("Done")
+
 
 @client.command()
 @commands.has_any_role(835623182484373535,835400292979179530)
@@ -145,7 +143,6 @@ async def coglist(ctx):
     await ctx.send(embed=embed)
 
 
-
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
@@ -153,6 +150,9 @@ async def on_command_error(ctx, error):
     elif isinstance(error, commands.CommandOnCooldown):
         if error.retry_after < 60:
             await ctx.send(f'This command is on cooldown, you can use it in {round(error.retry_after, 1)} seconds')
+        elif error.retry_after > 3600:
+            timeleft = (error.retry_after / 60) / 60
+            await ctx.send(f'This command is on cooldown, you can use it in {round(error.retry_after, 1)} hours.')
         else:
             timeleft = error.retry_after / 60
             await ctx.send(f'This command is on cooldown, you can use it in {round(timeleft, 1)} minutes')
@@ -177,7 +177,6 @@ async def on_command_error(ctx, error):
             await ctx.send("User was not connected to voice.")
         else:
             await ctx.send(f"Command raised an exception: {error.original}")
-
 
 
 @client.event

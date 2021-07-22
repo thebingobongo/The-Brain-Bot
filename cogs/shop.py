@@ -211,29 +211,29 @@ class Shop(commands.Cog):
             # await ctx.invoke(mute,members = member, mute_minutes = 1 )
 
 
-    @commands.command()
-    @commands.cooldown(1,42200,commands.BucketType.user)
-    async def steal(self,ctx, member:discord.Member):
-        stealbal = getUserBal(member.id)
-        chances = random.randint(0,2)
-        success = False
-        if chances == 0:
-            success = True
-            newbal = int(stealbal * 0.15)
-        elif chances == 1:
-            success = True
-            newbal = int(stealbal * 0.35)
-        else:
-            userbal = getUserBal(ctx.author.id)
-            newuserbal = int(userbal * 0.80)
-            subBal(ctx.author.id, newuserbal)
-            addBal(member.id, newuserbal)
-            await ctx.send("You got caught, stupid. You lost 20% of your brain cells.")
-            return
-        if success == True:
-            addBal(ctx.author.id, newbal)
-            subBal(member.id, newbal)
-            await ctx.send(f"You stole {newbal} Brain Cells from {member.display_name}!")
+    # @commands.command()
+    # @commands.cooldown(1,42200,commands.BucketType.user)
+    # async def steal(self,ctx, member:discord.Member):
+    #     stealbal = getUserBal(member.id)
+    #     chances = random.randint(0,2)
+    #     success = False
+    #     if chances == 0:
+    #         success = True
+    #         newbal = int(stealbal * 0.15)
+    #     elif chances == 1:
+    #         success = True
+    #         newbal = int(stealbal * 0.35)
+    #     else:
+    #         userbal = getUserBal(ctx.author.id)
+    #         newuserbal = int(userbal * 0.80)
+    #         subBal(ctx.author.id, newuserbal)
+    #         addBal(member.id, newuserbal)
+    #         await ctx.send("You got caught, stupid. You lost 20% of your brain cells.")
+    #         return
+    #     if success == True:
+    #         addBal(ctx.author.id, newbal)
+    #         subBal(member.id, newbal)
+    #         await ctx.send(f"You stole {newbal} Brain Cells from {member.display_name}!")
 
 
 def setup(client):
