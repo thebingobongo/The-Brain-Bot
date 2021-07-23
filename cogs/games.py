@@ -225,7 +225,7 @@ class Hangman(commands.Cog):
             await ctx.send(embed=embed)
 
             def check(m):
-                return m.author == ctx.author and m.channel == ctx.channel
+                return m.author == ctx.author and m.channel == ctx.channel and m.content.lower().strip() in ["h", 'H', 'S', 's']
 
             try:
                 reply = await self.client.wait_for('message', check=check, timeout=60.0)
