@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 import random
-
+from databaselayer import addBal, subBal
+import asyncio
 
 def hangman(word, guessedletters, game_in_progress):
     hangmanpics = ['''
@@ -109,7 +110,7 @@ place_list = ['paris', 'toronto', 'canada', 'america', 'france', 'europe', 'engl
               'india', 'poland',
               'mexico', 'ottawa', 'berlin', 'alaska', 'serbia', 'japan', 'africa', 'australia', 'asia']
 
-easy_list = ['wolf', 'deer', 'dangerous', ' fire station', 'surgeon', 'building', 'astrophysics', 'phiilosophy',
+easy_list = ['wolf', 'deer', 'dangerous', ' fire station', 'surgeon', 'building', 'astrophysics', 'philosophy',
              'telekinetic',
              'genuine', 'nuclear', 'animal', 'greenhouse', 'firetruck', 'finger', 'palace', 'military',
              'commercial',
@@ -128,11 +129,156 @@ guessedletters = ''
 word = ''
 game_in_progress = False
 
+
+def getCard(deck):
+    rand = random.randint(0, len(deck) - 1)
+    # print(f"card index {rand} in {len(deck)}")
+    card = deck.pop(rand)
+    # diamonds -> spades -> clubs -> hearts
+    if card <= 13:
+        suit = '♢'
+        value = card
+    elif card <= 26:
+        suit = "♤"
+        value = card - 13
+    elif card <= 39:
+        suit = '♧'
+        value = card - 26
+    else:
+        suit = '♡'
+        value = card - 39
+
+    return (suit, value)
+
+
+def printCard(card):
+    suit = card[0]
+    value = card[1]
+    if value == 1:
+        value = "A"
+    elif value == 11:
+        value = "J"
+    elif value == 12:
+        value = "Q"
+    elif value == 13:
+        value = 'K'
+    return f"`{value}{suit}` "
+
+
+def getValue(hand):
+    sum = 0
+    for card in hand:
+        value = card[1]
+        if value >= 10:
+            value = 10
+        sum = sum + value
+    return sum
+
+
+def printHand(hand):
+    rts = ''
+    for card in hand:
+        rts = rts + printCard(card)
+    return rts
+
 class Hangman(commands.Cog):
 
 
     def __init__(self, client):
         self.client = client
+
+
+
+    @commands.command()
+    async def blackjack(self, ctx, ammount:int = None):
+        if ammount == None:
+            await ctx.send("How much do you want to bet? Try again.")
+            return
+
+        deck = []
+        for i in range(1, 52):
+            deck.append(i)
+        game_state = True
+        player_hand = []
+        bot_hand = []
+        player_hand.append(getCard(deck))
+        player_hand.append(getCard(deck))
+        bot_hand.append(getCard(deck))
+        bot_hand.append(getCard(deck))
+
+        # bot_hand_to_print = f"
+
+        while game_state:
+            embed = discord.Embed(title=f"{ctx.author.display_name}'s blackjack game", color=ctx.author.color)
+            embed.add_field(name=f"Your hand: {printHand(player_hand)}", value=f"Value = `{getValue(player_hand)}`",
+                            inline=True)
+            embed.add_field(name=f"My hand: {printCard(bot_hand[0])} `?`", value="Value = `?`")
+            embed.add_field(name='H for Hit, S for Stand.', value="** **", inline=False)
+            # {printHand(bot_hand)}, value = {getValue(bot_hand)}")
+            if getValue(player_hand) > 21:
+                embed.add_field(name="**You lose.**", value="** **", inline=False)
+                embed.color = 0xff0000
+                await ctx.send(embed=embed)
+                subBal(ctx.author.id, ammount)
+                return
+            embed.set_footer(text="A = 1, | J, Q, K = 10")
+            await ctx.send(embed=embed)
+
+            def check(m):
+                return m.author == ctx.author and m.channel == ctx.channel
+
+            try:
+                reply = await self.client.wait_for('message', check=check, timeout=60.0)
+            except asyncio.TimeoutError:
+                await ctx.send("Since you didn't answer within a minute, I'm assuming you Stand..")
+                game_state = False
+                break
+
+            msg = reply.content
+            msg = msg.strip().lower()
+            if msg == 'h':
+                player_card = getCard(deck)
+                player_hand.append(player_card)
+            elif msg == 's':
+                game_state = False
+            else:
+                await ctx.send("Since you didn't give me a valid response, I'm assuming you Stand.")
+                game_state = False
+
+        # game_state = True
+        while not getValue(bot_hand) >= 17:
+            bot_card = getCard(deck)
+            bot_hand.append(bot_card)
+
+            # await ctx.send(printCard(card))
+        embed = discord.Embed(title=f"{ctx.author.display_name}'s blackjack game")
+        embed.add_field(name=f"Your hand: {printHand(player_hand)}", value=f"Value = {getValue(player_hand)}",
+                        inline=True)
+        embed.add_field(name=f"My hand: {printHand(bot_hand)}", value=f"Value = {getValue(bot_hand)}")
+        # await ctx.send(embed=embed)
+        if getValue(player_hand) == 21 and getValue(bot_hand) == 21:
+            embed.add_field(name="**It's a draw.**", value="** **", inline=False)
+
+        elif getValue(bot_hand) > 21:
+            embed.add_field(name="**You win.**", value="** **", inline=False)
+            embed.color = 0x00ff00
+            addBal(ctx.author.id, ammount)
+
+        elif getValue(player_hand) == getValue(bot_hand):
+            embed.add_field(name="**You draw.**", value="** **", inline=False)
+
+        elif getValue(player_hand) > getValue(bot_hand):
+            embed.add_field(name="**You win**.", value="** **", inline=False)
+            embed.color = 0x00ff00
+            addBal(ctx.author.id, ammount)
+
+        else:
+            embed.add_field(name="**You lose.**", value="** **", inline=False)
+            embed.color = 0xff0000
+            subBal(ctx.author.id, ammount)
+
+        embed.set_footer(text="A = 1, | J, Q, K = 10")
+        await ctx.send(embed=embed)
 
 
     @commands.Cog.listener()
@@ -216,6 +362,8 @@ class Hangman(commands.Cog):
                 (hangmanResult, game_in_progress) = hangman(word, guessedletters, game_in_progress)
                 returntext = hangmanResult
                 if 'WIN' in returntext or "LOSE" in returntext:
+                    if "WIN" in returntext:
+                        addBal(message.author.id, 250)
                     guessedletters = ''
                     word = ''
                 await message.channel.send(returntext)
