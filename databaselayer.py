@@ -70,6 +70,22 @@ def deleteNote(memberid, note):
     con.commit()
 
 
+def getTodo():
+    cur.execute("SELECT * FROM todo;")
+    res = cur.fetchall()
+    print(res)
+    return res
+
+def deleteTodo(todo_item):
+    cur.execute(f"DELETE FROM todo WHERE todo_item = '{todo_item}';")
+    con.commit()
+
+
+def addTodo(todo_item):
+    cur.execute(f"INSERT INTO todo (todo_item) values ('{todo_item}');")
+    con.commit()
+
+
 def getUserBal(memberID):
     cur.execute(f"SELECT * FROM users WHERE discordid = {memberID};")
     userbal = cur.fetchone()
