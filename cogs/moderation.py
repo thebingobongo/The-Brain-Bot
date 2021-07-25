@@ -175,7 +175,7 @@ class Moderation(commands.Cog):
         except Exception as e:
             pass
         await member.remove_roles(dungeon_role, reason=reason)
-        await ctx.author.move_to(None)
+        await member.move_to(None)
         await ctx.send(
             "{0.mention} has been unpunished by {1.mention} for *{2}* ".format(member, ctx.author, reason))
         logs = self.client.get_channel(831214657439924284)
@@ -220,7 +220,7 @@ class Moderation(commands.Cog):
                 time = f"for {dungeon_minutes} minutes."
 
             await member.add_roles(dungeon_role, reason=reason)
-            await ctx.author.move_to(None)
+            await member.move_to(None)
             await ctx.send(
                 "{0.mention} has been punished by {1.mention} for *{2}* {3}".format(member, ctx.author,
                                                                                     reason, time))

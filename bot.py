@@ -29,7 +29,6 @@ intents = discord.Intents().default()
 intents.members = True
 client = commands.Bot(command_prefix='.', help_command=None, intents=intents)
 
-
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
