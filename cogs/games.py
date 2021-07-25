@@ -293,7 +293,7 @@ class Hangman(commands.Cog):
         else:
             embed.add_field(name="**You lose.**", value="** **", inline=False)
             embed.color = 0xff0000
-            subBal(ctx.author.id, ammount)
+            # subBal(ctx.author.id, ammount)
 
         embed.set_footer(text="A = 1, | J, Q, K = 10")
         await ctx.send(embed=embed)
