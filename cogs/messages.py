@@ -320,11 +320,11 @@ class Messages(commands.Cog):
         # await ctx.send(f"Winning option is {index + 1}")
 
         if ans['difficulty'] == 'easy':
-            award = 10
+            award = 100
         elif ans['difficulty'] == 'medium':
-            award = 20
+            award = 200
         elif ans['difficulty'] == 'hard':
-            award = 30
+            award = 300
         await asyncio.sleep(15)
         cache_msg = discord.utils.get(self.client.cached_messages, id=msg.id)
         cache_reaction = cache_msg.reactions

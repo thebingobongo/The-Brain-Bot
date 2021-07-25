@@ -284,6 +284,7 @@ class Hangman(commands.Cog):
 
         elif getValue(player_hand) == getValue(bot_hand):
             embed.add_field(name="**You draw.**", value="** **", inline=False)
+            addBal(ctx.author.id, ammount)
 
         elif getValue(player_hand) > getValue(bot_hand):
             embed.add_field(name="**You win**.", value="** **", inline=False)
