@@ -115,7 +115,7 @@ async def load(ctx, extension):
 
 
 @client.command()
-@commands.has_any_role(835623182484373535,835400292979179530)
+@commands.has_any_role(835623182484373535, 835400292979179530)
 async def loadall(ctx):
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py"):
@@ -125,7 +125,7 @@ async def loadall(ctx):
 
 
 @client.command()
-@commands.has_any_role(835623182484373535,835400292979179530)
+@commands.has_any_role(835623182484373535, 835400292979179530)
 async def unloadall(ctx):
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py"):
@@ -135,7 +135,25 @@ async def unloadall(ctx):
 
 
 @client.command()
-@commands.has_any_role(835623182484373535,835400292979179530)
+@commands.has_any_role(835623182484373535, 835400292979179530)
+async def cogstatus(ctx):
+    for filename in os.listdir("./cogs"):
+        if filename.endswith(".py"):
+            try:
+                client.load_extension(f"cogs.{filename[:-3]}")
+            except commands.ExtensionAlreadyLoaded:
+                await ctx.send(f"{filename} is loaded")
+            except commands.ExtensionNotFound:
+                await ctx.send(f"{filename} not found")
+            else:
+                await ctx.send(f"{filename} is unloaded")
+                client.unload_extension(f"cogs.{filename[:-3]}")
+
+    await ctx.send("Done.")
+
+
+@client.command()
+@commands.has_any_role(835623182484373535, 835400292979179530)
 async def coglist(ctx):
     embed = discord.Embed(title="List of Cogs",color=0x00ffff)
     for filename in os.listdir("./cogs"):
