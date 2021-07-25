@@ -34,7 +34,7 @@ client = commands.Bot(command_prefix='.', help_command=None, intents=intents)
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
     print("I am alive.")
-    #waterreminder.start()
+    waterreminder.start()
     vccheck.start()
     # await asyncio.sleep(1800)
     # debatetopicloop.start()
@@ -64,13 +64,7 @@ async def vccheck():
 @tasks.loop(minutes=60)
 async def waterreminder():
     general = client.get_channel(831211215878488078)
-    rand = random.randint(1, 3)
-    if rand == 1:
-        embed = getDateFact()
-    elif rand == 2:
-        embed = getQuote()
-    elif rand == 3:
-        embed = getAdvice()
+    embed = getDateFact()
     embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
     embed.set_footer(
         text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")

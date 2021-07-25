@@ -65,7 +65,7 @@ def getAnswer3(question):
 
 
 def getJoke():
-    response = requests.get('https://official-joke-api.appspot.com/random_joke')
+    response = requests.get('https://official-joke-api.appspot.com/random_joke', timeout=30)
     joke = json.loads(response.text)
     text = joke['setup'] + " \n " + joke['punchline']
     embed = discord.Embed(title=text, color=0x00ffff)
@@ -73,7 +73,7 @@ def getJoke():
 
 
 def getProgrammingJoke():
-    response = requests.get('https://official-joke-api.appspot.com/jokes/programming/random')
+    response = requests.get('https://official-joke-api.appspot.com/jokes/programming/random', timeout=30)
     joke = json.loads(response.text)
     text = joke[0]['setup'] + " \n " + joke[0]['punchline']
     embed = discord.Embed(title=text, color=0x00ffff)
@@ -81,7 +81,7 @@ def getProgrammingJoke():
 
 
 def getKnockKnock():
-    response = requests.get('https://official-joke-api.appspot.com/jokes/knock-knock/random')
+    response = requests.get('https://official-joke-api.appspot.com/jokes/knock-knock/random', timeout=30)
     joke = json.loads(response.text)
     text = joke[0]['setup'] + " \n " + joke[0]['punchline']
     embed = discord.Embed(title=text, color=0x00ffff)
@@ -89,7 +89,7 @@ def getKnockKnock():
 
 
 def getInsult():
-    response = requests.get('https://evilinsult.com/generate_insult.php?lang=en&type=json')
+    response = requests.get('https://evilinsult.com/generate_insult.php?lang=en&type=json', timeout=30)
     insult = json.loads(response.text)
     text = insult['insult']
     while 'testicles' in text or 'Suck' in text or 'chromosomes' in text or 'orangutans' in text or 'abortion' in text or \
@@ -104,7 +104,7 @@ def getInsult():
 
 def getQuote():
     id = random.randint(1, 583)
-    response = requests.get('https://philosophyapi.herokuapp.com/api/ideas/' + str(id))
+    response = requests.get('https://philosophyapi.herokuapp.com/api/ideas/' + str(id), timeout=30)
     json_data = json.loads(response.text)
     quote = '"' + json_data['quote'] + '" \n                           -' + json_data['author']
     while len(quote) >= 256:
@@ -114,7 +114,7 @@ def getQuote():
 
 
 def getAdvice():
-    response = requests.get('https://api.adviceslip.com/advice')
+    response = requests.get('https://api.adviceslip.com/advice', timeout=30)
     advice = json.loads(response.text)
     text = advice['slip']['advice']
     embed = discord.Embed(title=text, color=0x00ffff)
@@ -122,7 +122,7 @@ def getAdvice():
 
 
 def getSearch(searchterm):
-    response = requests.get('http://philosophyapi.herokuapp.com/api/ideas/?search=' + str(searchterm))
+    response = requests.get('http://philosophyapi.herokuapp.com/api/ideas/?search=' + str(searchterm), timeout=30)
     json_data = json.loads(response.text)
     # print(json_data)
     if json_data['count'] != 0:
@@ -145,7 +145,7 @@ def getSearch(searchterm):
 
 
 def getSearchPhilosopher(philosopher):
-    response = requests.get('https://philosophyapi.herokuapp.com/api/philosophers/?search=' + str(philosopher))
+    response = requests.get('https://philosophyapi.herokuapp.com/api/philosophers/?search=' + str(philosopher), timeout=30)
     json_data = json.loads(response.text)
     if json_data['count'] != 0:
         quotelist = json_data['results'][0]['ideas']
@@ -160,7 +160,7 @@ def getSearchPhilosopher(philosopher):
 
 
 def getMathFact():
-    response = requests.get('http://numbersapi.com/random/math')
+    response = requests.get('http://numbersapi.com/random/math', timeout=30)
     embed = discord.Embed(title=response.text, color=0x00ffff)
     return embed
 
@@ -169,13 +169,13 @@ def getDateFact():
     today = date.today()
     day = today.day
     month = today.month
-    response = requests.get('http://numbersapi.com/' + str(month) + '/' + str(day) + '/date')
+    response = requests.get('http://numbersapi.com/' + str(month) + '/' + str(day) + '/date', timeout=30)
     embed = discord.Embed(title=response.text, color=0x00ffff)
     return embed
 
 
 def getDefinition(search):
-    response = requests.get('https://api.dictionaryapi.dev/api/v2/entries/en_US/' + str(search))
+    response = requests.get('https://api.dictionaryapi.dev/api/v2/entries/en_US/' + str(search), timeout=30)
     text = json.loads(response.text)
     if len(text) == 3:
         return ["Word not found. Try again."]
