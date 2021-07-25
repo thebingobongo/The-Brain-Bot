@@ -4,7 +4,7 @@ import random
 import openai
 from dotenv import load_dotenv
 import os
-# import asyncio
+import asyncio
 
 from cogs.messages import getDateFact, getQuote, getAdvice
 from databaselayer import *
@@ -34,7 +34,7 @@ client = commands.Bot(command_prefix='.', help_command=None, intents=intents)
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
     print("I am alive.")
-    waterreminder.start()
+    #waterreminder.start()
     vccheck.start()
     # await asyncio.sleep(1800)
     # debatetopicloop.start()
@@ -197,6 +197,23 @@ async def on_message(message):
 
     if message.author == client.user:
         return
+
+    if message.content == "!d bump":
+        def check(m):
+            return m.author == client.get_user(302050872383242240)
+
+        reply = await client.wait_for('message', check=check)
+        embed = reply.embeds[0]
+        if "Bump done" in embed.description:
+            await message.channel.send("Thanks for bumping the server! We really appreciate the support!\n Here's 1000 Brain Cells for the effort!")0
+            addBal(message.author.id, 1000)
+            await asyncio.sleep(7200)
+            await message.channel.send("Time for a bump!")
+        # await message.channel.send("TRUE")
+        # else:
+        #     await message.channel.send("FALSE")
+        # await message.channel.send(embed=embed)
+        # await message.channel.send(f"title = {embed.title} \n description = {embed.description}")
 
     try:
         rand = random.randint(1, 2)
