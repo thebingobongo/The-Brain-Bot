@@ -205,7 +205,7 @@ async def on_message(message):
         reply = await client.wait_for('message', check=check)
         embed = reply.embeds[0]
         if "Bump done" in embed.description:
-            await message.channel.send("Thanks for bumping the server! We really appreciate the support!\n Here's 1000 Brain Cells for the effort!")0
+            await message.channel.send("Thanks for bumping the server! We really appreciate the support!\n Here's 1000 Brain Cells for the effort!")
             addBal(message.author.id, 1000)
             await asyncio.sleep(7200)
             await message.channel.send("Time for a bump!")
