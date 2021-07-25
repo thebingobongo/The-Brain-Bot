@@ -174,8 +174,9 @@ class Database(commands.Cog):
         res = getWarns(member.id)
         index = index - 1
         warns = res[index]
-        cur.execute(f"DELETE FROM warns WHERE discordid = {member.id} AND warnmessage = '{warns[1]}'")
-        con.commit()
+        # cur.execute(f"DELETE FROM warns WHERE discordid = {member.id} AND warnmessage = '{warns[1]}'")
+        # con.commit()
+        deleteWarn(member.id, warns[1])
         await ctx.send("Warn has been deleted.")
 
 
@@ -221,8 +222,9 @@ class Database(commands.Cog):
             return
         res = getNotes(member.id)
         notes = res[index-1]
-        cur.execute(f"DELETE FROM notes WHERE discordid = {member.id} AND note = '{notes[1]}'")
-        con.commit()
+        # cur.execute(f"DELETE FROM notes WHERE discordid = {member.id} AND note = '{notes[1]}'")
+        # con.commit()
+        deleteNote(member.id, notes[1])
         await ctx.send("Note has been deleted.")
 
 

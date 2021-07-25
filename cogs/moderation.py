@@ -116,18 +116,19 @@ class Moderation(commands.Cog):
             for member in members:
                 if muted_role in member.roles:
                     continue
-                await member.remove_roles(muted_role, reason="time's up ")
-                voice_state = member.voice
-                if voice_state is not None:
-                    await member.edit(mute=False)
-                roleid = int(getUserRole(member.id))
-                try:
-                    memberrole = discord.utils.get(ctx.guild.roles, id=roleid)
-                    await member.add_roles(memberrole, reason=reason)
-                except:
-                    pass
-                await ctx.send(f"{member.mention} has been unmuted.")
-                await logs.send(f"{member.mention} has been unmuted.")
+                else:
+                    await member.remove_roles(muted_role, reason="time's up ")
+                    voice_state = member.voice
+                    if voice_state is not None:
+                        await member.edit(mute=False)
+                    roleid = int(getUserRole(member.id))
+                    try:
+                        memberrole = discord.utils.get(ctx.guild.roles, id=roleid)
+                        await member.add_roles(memberrole, reason=reason)
+                    except:
+                        pass
+                    await ctx.send(f"{member.mention} has been unmuted.")
+                    await logs.send(f"{member.mention} has been unmuted.")
 
     @commands.command()
     @has_roles
@@ -231,15 +232,16 @@ class Moderation(commands.Cog):
             for member in members:
                 if dungeon_role in member.roles:
                     continue
-                await member.remove_roles(dungeon_role, reason="time's up ")
-                roleid = int(getUserRole(member.id))
-                try:
-                    member_role = discord.utils.get(ctx.guild.roles, id=roleid)
-                    await member.add_roles(member_role, reason=reason)
-                except:
-                    pass
-                await ctx.send(f"{member.mention} has been released from the Panopticon.")
-                await logs.send(f"{member.mention} has been released from the Panopticon.")
+                else:
+                    await member.remove_roles(dungeon_role, reason="time's up ")
+                    roleid = int(getUserRole(member.id))
+                    try:
+                        member_role = discord.utils.get(ctx.guild.roles, id=roleid)
+                        await member.add_roles(member_role, reason=reason)
+                    except:
+                        pass
+                    await ctx.send(f"{member.mention} has been released from the Panopticon.")
+                    await logs.send(f"{member.mention} has been released from the Panopticon.")
 
     @commands.command()
     @has_roles

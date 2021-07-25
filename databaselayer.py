@@ -49,7 +49,7 @@ def getWarns(target):
 
 
 def deleteWarn(memberid, warn):
-    cur.execute(f"DELETE FROM warns WHERE discordid = {memberid} AND warnmessage = {warn}")
+    cur.execute(f"DELETE FROM warns WHERE discordid = {memberid} AND warnmessage = '{warn}'")
     con.commit()
 
 
@@ -66,7 +66,7 @@ def getNotes(target):
 
 
 def deleteNote(memberid, note):
-    cur.execute(f"DELETE FROM notes WHERE discordid = {memberid} AND note = {note}")
+    cur.execute(f"DELETE FROM notes WHERE discordid = {memberid} AND note = '{note}'")
     con.commit()
 
 
