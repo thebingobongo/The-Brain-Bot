@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import random
-from databaselayer import addBal, subBal
+from databaselayer import addBal, subBal, hasEnough
 import asyncio
 
 def hangman(word, guessedletters, game_in_progress):
@@ -194,7 +194,17 @@ class Hangman(commands.Cog):
         if ammount == None:
             await ctx.send("How much do you want to bet? Try again.")
             return
+        elif ammount <= 0:
+            await ctx.send("Can't do negative numbers.")
+            return
+        elif ammount < 50:
+            await ctx.send("Need to bet at least 50 Brain Cells.")
+            return
+        elif not hasEnough(ctx.author.id, ammount):
+            await ctx.send("You do not have enough Brain Cells.")
+            return
 
+        subBal(ctx.author.id, ammount)
         deck = []
         for i in range(1, 52):
             deck.append(i)
@@ -207,6 +217,7 @@ class Hangman(commands.Cog):
         bot_hand.append(getCard(deck))
 
         # bot_hand_to_print = f"
+        lost = False
 
         while game_state:
             embed = discord.Embed(title=f"{ctx.author.display_name}'s blackjack game", color=ctx.author.color)
@@ -218,9 +229,12 @@ class Hangman(commands.Cog):
             if getValue(player_hand) > 21:
                 embed.add_field(name="**You lose.**", value="** **", inline=False)
                 embed.color = 0xff0000
-                await ctx.send(embed=embed)
-                subBal(ctx.author.id, ammount)
-                return
+                #await ctx.send(embed=embed)
+                lost = True
+                break
+                # subBal(ctx.author.id, ammount)
+                # return
+
             embed.set_footer(text="A = 1, | J, Q, K = 10")
             await ctx.send(embed=embed)
 
@@ -256,13 +270,17 @@ class Hangman(commands.Cog):
                         inline=True)
         embed.add_field(name=f"My hand: {printHand(bot_hand)}", value=f"Value = {getValue(bot_hand)}")
         # await ctx.send(embed=embed)
-        if getValue(player_hand) == 21 and getValue(bot_hand) == 21:
+        if lost:
+            embed.add_field(name="**You lose.**", value="** **", inline=False)
+            embed.color = 0xff0000
+            # subBal(ctx.author.id, ammount)
+        elif getValue(player_hand) == 21 and getValue(bot_hand) == 21:
             embed.add_field(name="**It's a draw.**", value="** **", inline=False)
-
+            addBal(ctx.author.id, ammount)
         elif getValue(bot_hand) > 21:
             embed.add_field(name="**You win.**", value="** **", inline=False)
             embed.color = 0x00ff00
-            addBal(ctx.author.id, ammount)
+            addBal(ctx.author.id, (ammount*2))
 
         elif getValue(player_hand) == getValue(bot_hand):
             embed.add_field(name="**You draw.**", value="** **", inline=False)
@@ -270,7 +288,7 @@ class Hangman(commands.Cog):
         elif getValue(player_hand) > getValue(bot_hand):
             embed.add_field(name="**You win**.", value="** **", inline=False)
             embed.color = 0x00ff00
-            addBal(ctx.author.id, ammount)
+            addBal(ctx.author.id, (ammount*2))
 
         else:
             embed.add_field(name="**You lose.**", value="** **", inline=False)

@@ -125,6 +125,7 @@ class Shop(commands.Cog):
             #     await ctx.send("Try .use mute @(whoever)")
             #     return
             await ctx.send("Who do you want to mute?")
+
             def check(m):
                 return m.author == ctx.author and len(m.mentions) == 1 and m.channel == ctx.channel
 
@@ -134,12 +135,16 @@ class Shop(commands.Cog):
                 await ctx.send("Timed out, try again.")
                 return
             member = reply.mentions[0]
+            muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
+
+            if muted_role in member.roles:
+                await ctx.send("That member has already been muted.")
+                return
 
             rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
             bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
             knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
             pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
-            muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
 
             if member == self.client.user:
                 await ctx.send("You cannot do that to me, young one.")
