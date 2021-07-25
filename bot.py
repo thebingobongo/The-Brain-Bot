@@ -204,8 +204,19 @@ async def on_message(message):
         reply = await client.wait_for('message', check=check)
         embed = reply.embeds[0]
         if "Bump done" in embed.description:
-            await message.channel.send("Thanks for bumping the server! We really appreciate the support!\n Here's 1000 Brain Cells for the effort!")
-            addBal(message.author.id, 1000)
+            amount = random.randint(2500,6000)
+            rand = random.randint(1,15)
+            if rand == 13:
+                amount = 42069
+            rand = random.randint(1,100)
+            if rand == 25:
+                amount = 500000
+            rand = random.randint(1,1000)
+            if rand == 832:
+                amount = 1000000
+            addBal(message.author.id, amount)
+            await message.channel.send(f"Thanks for bumping the server! We really appreciate the support!\n Here's {amount} Brain Cells for the effort!")
+            await message.channel.send("Keep bumping and you may get **really** lucky ; )")
             await asyncio.sleep(7200)
             await message.channel.send("Time for a bump!")
         # await message.channel.send("TRUE")
