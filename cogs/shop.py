@@ -100,6 +100,7 @@ class Shop(commands.Cog):
 
 
     @commands.command()
+    @commands.cooldown(1,86400,commands.BucketType.user)
     async def use(self, ctx,*, item=None):
         if item == None:
             await ctx.send("What would you like to use?")
