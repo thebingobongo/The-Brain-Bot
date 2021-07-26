@@ -45,7 +45,7 @@ class Admin(commands.Cog):
         await ctx.send(
             f" <a:vibing:847619864738267217> <a:vibing:847619864738267217> {member.mention} is gonna get banned in {time_to_ban} seconds!!!! <a:vibing:847619864738267217> <a:vibing:847619864738267217>")
         for i in range(time_to_ban):
-            ctx.send(f"{member.mention} is gone in {time_to_ban - i} seconds <a:vibing:847619864738267217>")
+            await ctx.send(f"{member.mention} is gone in {time_to_ban - i} seconds <a:vibing:847619864738267217>")
             await asyncio.sleep(1)
         await member.ban(reason=reason)
         await ctx.send(
