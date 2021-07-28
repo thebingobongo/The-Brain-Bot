@@ -29,6 +29,19 @@ intents = discord.Intents().default()
 intents.members = True
 client = commands.Bot(command_prefix='.', help_command=None, intents=intents)
 
+
+
+def predicate(ctx):
+    admin_role1 = discord.utils.get(ctx.guild.roles, id=835623182484373535)
+    admin_role2 = discord.utils.get(ctx.guild.roles, id=835400292979179530)
+    return admin_role1 in ctx.author.roles or admin_role2 in ctx.author.roles or ctx.author.id == 339070790987284491
+    # test = discord.utils.get(ctx.guild.roles, id=858614845363322881)
+    # return test in ctx.author.roles
+
+
+has_roles = commands.check(predicate)
+
+
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
@@ -86,7 +99,7 @@ async def waterreminder():
 
 
 @client.command()
-@commands.has_any_role(835623182484373535,835400292979179530)
+@has_roles
 async def reload(ctx, extension):
     client.unload_extension(f"cogs.{extension}")
     client.load_extension(f"cogs.{extension}")
@@ -94,21 +107,21 @@ async def reload(ctx, extension):
 
 
 @client.command()
-@commands.has_any_role(835623182484373535,835400292979179530)
+@has_roles
 async def unload(ctx, extension):
     client.unload_extension(f"cogs.{extension}")
     await ctx.send("Done")
 
 
 @client.command()
-@commands.has_any_role(835623182484373535,835400292979179530)
+@has_roles
 async def load(ctx, extension):
     client.load_extension(f"cogs.{extension}")
     await ctx.send("Done")
 
 
 @client.command()
-@commands.has_any_role(835623182484373535, 835400292979179530)
+@has_roles
 async def loadall(ctx):
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py"):
@@ -118,7 +131,7 @@ async def loadall(ctx):
 
 
 @client.command()
-@commands.has_any_role(835623182484373535, 835400292979179530)
+@has_roles
 async def unloadall(ctx):
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py"):
@@ -128,7 +141,7 @@ async def unloadall(ctx):
 
 
 @client.command()
-@commands.has_any_role(835623182484373535, 835400292979179530)
+@has_roles
 async def cogstatus(ctx):
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py"):
@@ -146,7 +159,7 @@ async def cogstatus(ctx):
 
 
 @client.command()
-@commands.has_any_role(835623182484373535, 835400292979179530)
+@has_roles
 async def coglist(ctx):
     embed = discord.Embed(title="List of Cogs",color=0x00ffff)
     for filename in os.listdir("./cogs"):
@@ -204,16 +217,16 @@ async def on_message(message):
         reply = await client.wait_for('message', check=check)
         embed = reply.embeds[0]
         if "Bump done" in embed.description:
-            amount = random.randint(2500,6000)
-            rand = random.randint(1,25)
+            amount = random.randint(2500, 6000)
+            rand = random.randint(1, 25)
             if rand == 13:
                 await message.channel.send("**YOU HIT THE JACKPOT**")
                 amount = 42069
-            rand = random.randint(1,100)
+            rand = random.randint(1, 100)
             if rand == 25:
                 await message.channel.send("**YOU HIT THE JACKPOT**")
                 amount = 500000
-            rand = random.randint(1,10000)
+            rand = random.randint(1, 10000)
             if rand == 8132:
                 await message.channel.send("**YOU HIT THE JACKPOT**")
                 amount = 1000000

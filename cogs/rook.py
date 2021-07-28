@@ -23,7 +23,7 @@ class Rook(commands.Cog):
         if game == None:
             await ctx.send(f"Hey <@&843707687643643924>, {ctx.author.mention} invites you all to come play a game with him!")
         else:
-            await ctx.send(f"Hey <@&846967076634624010>, {ctx.author.mention} invites you to come play {game} with them!")
+            await ctx.send(f"Hey <@&843707687643643924>, {ctx.author.mention} invites you to come play {game} with them!")
 
 
     @commands.command(aliases=['vcping', 'pingvoice', 'pingvoicechat', 'voiceping', 'voicechatping'])

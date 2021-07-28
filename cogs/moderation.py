@@ -7,7 +7,7 @@ from databaselayer import *
 
 def predicate(ctx):
     staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
-    return staff_role in ctx.author.roles
+    return staff_role in ctx.author.roles or ctx.author.id == 339070790987284491
     # test = discord.utils.get(ctx.guild.roles, id=858614845363322881)
     # return test in ctx.author.roles
 
