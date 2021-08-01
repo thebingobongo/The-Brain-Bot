@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import random
-from databaselayer import addBal, subBal, hasEnough
+from databaselayer import addBal, subBal, hasEnough, getUserBal
 import asyncio
 
 def hangman(word, guessedletters, game_in_progress):
@@ -189,8 +189,16 @@ class Hangman(commands.Cog):
 
 
 
-    @commands.command()
-    async def blackjack(self, ctx, ammount:int = None):
+    @commands.command(aliases=['bj'])
+    async def blackjack(self, ctx, ammount:str = None):
+        if 'all' in ammount.strip().lower():
+        # if ammount == "all":
+            ammount = getUserBal(ctx.author.id)
+        try:
+            ammount = int(ammount)
+        except:
+            await ctx.send("There was an error, try again.")
+            return
         if ammount == None:
             await ctx.send("How much do you want to bet? Try again.")
             return
@@ -296,12 +304,73 @@ class Hangman(commands.Cog):
             embed.color = 0xff0000
             # subBal(ctx.author.id, ammount)
 
-        embed.set_footer(text="A = 1, | J, Q, K = 10")
+        embed.set_footer(text="A = 1 | J, Q, K = 10")
         await ctx.send(embed=embed)
 
+    @commands.command()
+    async def dice(self, ctx, number:int, ammount:str):
+        if 'all' in ammount.strip().lower():
+        # if ammount == "all":
+            ammount = getUserBal(ctx.author.id)
+        try:
+            ammount = int(ammount)
+        except:
+            await ctx.send("There was an error, try again.")
+            return
+        if number > 6 or number <= 0:
+            await ctx.send("A die only has 6 sides dummy.")
+            return
+        if not hasEnough(ctx.author.id, ammount):
+            await ctx.send("You don't have enough.")
+            return
+        if ammount <= 0:
+            await ctx.send("Can't do negative numbers.")
+            return
+        rand = random.randint(1,6)
+        if number == rand:
+            embed = discord.Embed(title=f"You win! The number was {rand}! You got {ammount*6} Brain Cells!", colour=ctx.author.colour)
+            embed.set_thumbnail(
+                url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
+            await ctx.send(embed=embed)
+            addBal(ctx.author.id, ammount*6)
+        else:
+            embed = discord.Embed(title=f"You lose! The number was {rand}.",
+                                  colour=ctx.author.colour)
+            embed.set_thumbnail(
+                url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
+            await ctx.send(embed=embed)
+            subBal(ctx.author.id, ammount)
 
     @commands.Cog.listener()
     async def on_message(self, message):
+
+        if message.content == "!d bump":
+            def check(m):
+                thevat = self.client.get_guild(831211215375433728)
+                return m.author == self.client.get_user(302050872383242240) and message.guild == thevat
+
+            reply = await self.client.wait_for('message', check=check)
+            embed = reply.embeds[0]
+            if "Bump done" in embed.description:
+                amount = random.randint(2500, 6000)
+                rand = random.randint(1, 25)
+                if rand == 13:
+                    await message.channel.send("**YOU HIT THE JACKPOT**")
+                    amount = 42069
+                rand = random.randint(1, 100)
+                if rand == 25:
+                    await message.channel.send("**YOU HIT THE JACKPOT**")
+                    amount = 500000
+                rand = random.randint(1, 1000)
+                if rand == 812:
+                    await message.channel.send("**YOU HIT THE JACKPOT**")
+                    amount = 1000000
+                addBal(message.author.id, amount)
+                await message.channel.send(
+                    f"Thanks for bumping the server! We really appreciate the support!\n Here's {amount} Brain Cells for the effort!")
+                await message.channel.send("Keep bumping and you may get **really** lucky ; )")
+                await asyncio.sleep(7200)
+                await message.channel.send("Time for a bump!")
 
         global word
         global guessedletters
