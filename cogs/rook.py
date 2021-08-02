@@ -11,6 +11,7 @@ def predicate(ctx):
 
 has_roles = commands.check(predicate)
 
+
 class Rook(commands.Cog):
 
     def __init__(self, client):
@@ -28,10 +29,12 @@ class Rook(commands.Cog):
 
     @commands.command(aliases=['vcping', 'pingvoice', 'pingvoicechat', 'voiceping', 'voicechatping'])
     @has_roles
-    async def pingvc(self, ctx):
-        await ctx.send(
-            f"Hey <@&843707891265306624>, {ctx.author.mention} thinks there is an interesting discussion that you would like to hear!!")
-
+    async def pingvc(self, ctx, * , topic=None):
+        if topic == None:
+            await ctx.send(
+                f"Hey <@&843707891265306624>, {ctx.author.mention} thinks there is an interesting discussion that you would like to hear!")
+        else:
+            await ctx.send(f"Hey <@&843707891265306624>, {ctx.author.mention} is talking about {topic}, and thought you would like to join!")
 
     @commands.command(aliases=['movieping', 'pingM', 'pingmovie', 'moviesvoice'])
     @has_roles

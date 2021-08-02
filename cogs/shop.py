@@ -49,14 +49,14 @@ class Shop(commands.Cog):
         else:
             bookburn = random.randint(0,9)
             # await ctx.send(bookburn)
-            if bookburn in [0,1,2,3]:
+            if bookburn in [0,1,2]:
                 await ctx.send("Your book spontaneously combusted. Get another book if you'd like to keep studying.")
                 removeItem(ctx.author.id, "Book")
                 return
             elif bookburn in [4, 5]:
                 earned = random.randint(7500, 10000)
                 sendstring = f"You learned a lot from your book! You got {earned} Brain Cells!"
-            elif bookburn in [6, 7, 8, 9]:
+            elif bookburn in [3, 6, 7, 8, 9]:
                 earned = random.randint(2000, 4000)
                 sendstring = f"Studying has earned you {earned} Brain Cells!"
 

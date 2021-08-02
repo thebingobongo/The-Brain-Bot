@@ -291,6 +291,13 @@ class Misc(commands.Cog):
             embedVar.add_field(name='.smartest', value="Shows you the smartest people in the server.")
             embedVar.add_field(name='.coinflip [ammount] [heads or tails] ', value='Flips a coin!')
             embedVar.add_field(name=".warns", value="Shows you the active warnings for you.")
+            embedVar.add_field(name=".blackjack [ammount]", value="You can play blackjack!")
+            embedVar.add_field(name=".dice [guess] [amount]",value="I will roll a die and if you get it right, you get 6 times the brain cells!")
+            embedVar.add_field(name='.shop',value="I will show you the shop!")
+            embedVar.add_field(name='.inventory',value='I will show you your inventory.')
+            embedVar.add_field(name='.buy [item]', value='You can buy an item!')
+            embedVar.add_field(name='.use [item]',value='Use the item!')
+            embedVar.add_field(name='.study',value='You can earn extra coins if you own a book!')
 
 
         elif type.lower() == "message" or type.lower() == 'messages':

@@ -77,7 +77,7 @@ async def vccheck():
 async def waterreminder():
     general = client.get_channel(831211215878488078)
     embed = getDateFact()
-    embed.add_field(name="This is your hourly reminder to go drink some water!", value="** **")
+    embed.add_field(name="This is your reminder to go drink some water!", value="** **")
     embed.set_footer(
         text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
     await general.send(embed=embed)
