@@ -352,7 +352,7 @@ class Hangman(commands.Cog):
 
             reply = await self.client.wait_for('message', check=check)
             embed = reply.embeds[0]
-            if "👍" in embed.description:
+            if "Bump done" in embed.description:
                 amount = random.randint(2500, 6000)
                 rand = random.randint(1, 15)
                 if rand == 13:
