@@ -327,6 +327,7 @@ class Hangman(commands.Cog):
             await ctx.send("Can't do negative numbers.")
             return
         rand = random.randint(1,6)
+        subBal(ctx.author.id, ammount)
         if number == rand:
             embed = discord.Embed(title=f"You win! The number was {rand}! You got {ammount*6} Brain Cells!", colour=ctx.author.colour)
             embed.set_thumbnail(
@@ -339,7 +340,7 @@ class Hangman(commands.Cog):
             embed.set_thumbnail(
                 url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
             await ctx.send(embed=embed)
-            subBal(ctx.author.id, ammount)
+
 
     @commands.Cog.listener()
     async def on_message(self, message):
