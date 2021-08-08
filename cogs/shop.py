@@ -12,10 +12,10 @@ class Shop(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    minute_mute = {'name': '1 Minute Mute', 'cost': 17500, 'effect': "You can mute anyone in the server in a VC for 1 minute."}
+    #minute_mute = {'name': '1 Minute Mute', 'cost': 17500, 'effect': "You can mute anyone in the server in a VC for 1 minute."}
     dj_role = {'name': 'DJ Role', 'cost': 25000, 'effect': 'You gain the DJ role for the music bot.'}
     book = {'name': 'Book', 'cost': 6000, 'effect': 'Gives you access to the .study command.'}
-    items = {"1 Minute Mute":minute_mute, 'DJ Role':  dj_role, 'Book': book}
+    items = {'DJ Role':  dj_role, 'Book': book} # "1 Minute Mute":minute_mute,
 
     @commands.command()
     async def shop(self, ctx):

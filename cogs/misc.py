@@ -283,7 +283,7 @@ class Misc(commands.Cog):
             else:
                 embedVar = discord.Embed(title="You dont have access to those commands.", color=0xff0000)
 
-        elif type.lower() in ['economy', 'brain cells', 'coins']:
+        elif type.lower() in ['economy', 'brain cells', 'coins', 'shop']:
             embedVar = discord.Embed(title="Economy commands:", color=0x00ff00)
             embedVar.add_field(name='.bal or .balance', value="Tells you how many brain cells you have")
             embedVar.add_field(name='.give [@user] [ammount]', value='Gives the user the specified number of Brain cells.')
@@ -326,7 +326,9 @@ class Misc(commands.Cog):
             embedVar.add_field(name=".google [search]", value="I will send a link to the google search.")
             embedVar.add_field(name=".define [word]", value="I will define that word!")
             embedVar.add_field(name=".poll [poll question]", value="I will create a poll for you.")
-            embedVar.add_field(name=".hangman", value="I will start a game of hangman")
+            embedVar.add_field(name=".hangman", value="I will start a game of hangman.")
+            embedVar.add_field(name=".studymode", value="Will put you into the special study mode.")
+            embedVar.add_field(name=".unstudymode", value="Will take you out of study mode.")
 
         elif type.lower() == "rook":
             embedVar = discord.Embed(title="Rook commands:", color=0x00ff00)

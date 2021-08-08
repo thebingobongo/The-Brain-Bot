@@ -346,23 +346,23 @@ class Hangman(commands.Cog):
 
         if message.content == "!d bump":
             def check(m):
-                thevat = self.client.get_guild(831211215375433728)
-                return m.author == self.client.get_user(302050872383242240) and message.guild == thevat
+                # thevat = self.client.get_guild(831211215375433728)
+                return m.author == self.client.get_user(302050872383242240) # and message.guild == thevat
 
             reply = await self.client.wait_for('message', check=check)
             embed = reply.embeds[0]
-            if "Bump done" in embed.description:
+            if "👍" in embed.description:
                 amount = random.randint(2500, 6000)
-                rand = random.randint(1, 25)
+                rand = random.randint(1, 15)
                 if rand == 13:
                     await message.channel.send("**YOU HIT THE JACKPOT**")
                     amount = 42069
-                rand = random.randint(1, 100)
+                rand = random.randint(1, 50)
                 if rand == 25:
                     await message.channel.send("**YOU HIT THE JACKPOT**")
                     amount = 500000
-                rand = random.randint(1, 1000)
-                if rand == 812:
+                rand = random.randint(1, 100)
+                if rand == 81:
                     await message.channel.send("**YOU HIT THE JACKPOT**")
                     amount = 1000000
                 addBal(message.author.id, amount)

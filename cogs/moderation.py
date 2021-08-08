@@ -64,6 +64,26 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @has_roles
+    async def notunderage(self, ctx, member: discord.Member):
+        if not member:
+            await ctx.send("You need to name someone to approve.")
+            return
+
+        if member == self.client.user:
+            await ctx.send("You cannot do that to me, young one.")
+            return
+
+        textchannel = self.client.get_channel(839252122550009876)
+        voicechannel = self.client.get_channel(839253190667141181)
+        underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
+        await member.remove_roles(underage_role)
+        await textchannel.set_permissions(member, view_channel=True)
+        await voicechannel.set_permissions(member, view_channel=True)
+        await ctx.send("Underage Tag has been added!")
+
+
+    @commands.command()
+    @has_roles
     async def mute(self, ctx, members: commands.Greedy[discord.Member],
                    mute_minutes: typing.Optional[int] = 5,
                    *, reason: str = "None"):

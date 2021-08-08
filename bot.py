@@ -242,10 +242,10 @@ async def on_message(message):
     # Processing the message so commands will work
     await client.process_commands(message)
 
-
-@client.event
-async def on_member_remove(member):
-    deleteUser(member.id)
+#
+# @client.event
+# async def on_member_remove(member):
+#     deleteUser(member.id)
 
 # @client.event
 # async def on_member_join(member):
