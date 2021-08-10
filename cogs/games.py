@@ -191,6 +191,9 @@ class Hangman(commands.Cog):
 
     @commands.command(aliases=['bj'])
     async def blackjack(self, ctx, ammount:str = None):
+        if ammount == None:
+            await ctx.send("How much do you want to bet? Try again.")
+            return
         if 'all' in ammount.strip().lower():
         # if ammount == "all":
             ammount = getUserBal(ctx.author.id)
@@ -199,10 +202,8 @@ class Hangman(commands.Cog):
         except:
             await ctx.send("There was an error, try again.")
             return
-        if ammount == None:
-            await ctx.send("How much do you want to bet? Try again.")
-            return
-        elif ammount <= 0:
+
+        if ammount <= 0:
             await ctx.send("Can't do negative numbers.")
             return
         elif ammount < 50:

@@ -168,6 +168,18 @@ async def coglist(ctx):
     await ctx.send(embed=embed)
 
 
+@client.command()
+@commands.is_owner()
+async def init(ctx):
+    for member in ctx.guild.members:
+        try:
+            exists = getUserBal(member.id)
+            print(f'{member.name} is already in the db')
+        except:
+            print(f'{member.name} has been added to the db')
+            createUser(member.id)
+
+
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
