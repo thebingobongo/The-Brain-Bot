@@ -351,7 +351,7 @@ class Hangman(commands.Cog):
                 # thevat = self.client.get_guild(831211215375433728)
                 return m.author == self.client.get_user(302050872383242240) # and message.guild == thevat
 
-            reply = await self.client.wait_for('message', check=check)
+            reply = await self.client.wait_for('message', check=check, timeout=2.0)
             embed = reply.embeds[0]
             if "Bump done" in embed.description:
                 amount = random.randint(2500, 6000)
