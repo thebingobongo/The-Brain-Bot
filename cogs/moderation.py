@@ -300,15 +300,6 @@ class Moderation(commands.Cog):
         logs = self.client.get_channel(831214657439924284)
         await logs.send("{0.mention} has been banned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
-    @commands.command()
-    @has_roles
-    async def movetolounge(ctx):
-        currentvc = ctx.author.voice.channel
-        thelounge = discord.utils.get(ctx.guild.channels, id=831211215878488082)
-        await ctx.send(f"moving members from {currentvc} to {thelounge}.")
-        for member in currentvc.members:
-            await member.move_to(thelounge)
-        await ctx.send("Done.")
 
     @commands.command()
     @has_roles
