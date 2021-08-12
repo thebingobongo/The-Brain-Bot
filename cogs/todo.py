@@ -49,7 +49,6 @@ class Todo(commands.Cog):
     async def todo(self, ctx):
         await ctx.send(embed=displayToDo())
 
-
     @commands.command()
     @has_roles
     async def add(self, ctx, *, task):
@@ -59,7 +58,6 @@ class Todo(commands.Cog):
 
             await ctx.send(addToDo(task))
             await ctx.send(embed=displayToDo())
-
 
     @commands.command(aliases=['del'])
     @has_roles

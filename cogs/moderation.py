@@ -177,7 +177,6 @@ class Moderation(commands.Cog):
         logs = self.client.get_channel(831214657439924284)
         await logs.send("{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
-
     @commands.command(aliases=['unpunish', 'unpanopticon', 'unprison'])
     @has_roles
     async def undungeon(self, ctx, member: discord.Member, *, reason=None):
@@ -200,7 +199,6 @@ class Moderation(commands.Cog):
             "{0.mention} has been unpunished by {1.mention} for *{2}* ".format(member, ctx.author, reason))
         logs = self.client.get_channel(831214657439924284)
         await logs.send("{0.mention} has been unpunished by {1.mention} for *{2}* ".format(member, ctx.author, reason))
-
 
     @commands.command(aliases=['punish', 'prison', 'panopticon'])
     @has_roles
@@ -299,7 +297,6 @@ class Moderation(commands.Cog):
         await ctx.send("{0.mention} has been banned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
         logs = self.client.get_channel(831214657439924284)
         await logs.send("{0.mention} has been banned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
-
 
     @commands.command()
     @has_roles
@@ -496,7 +493,6 @@ class Moderation(commands.Cog):
             await logs.send(
                 "{0.mention} has been awarded the brain role for {1} by {2.mention}".format(member, role, ctx.author))
 
-
     @commands.command()
     @has_roles
     async def reply(self,ctx,member:discord.Member = None, *,message=None ):
@@ -513,7 +509,6 @@ class Moderation(commands.Cog):
         embed.add_field(name=message,value="** **")
         await member.send(embed=embed)
         await ctx.send("Message sent.")
-
 
     @commands.command()
     @has_roles

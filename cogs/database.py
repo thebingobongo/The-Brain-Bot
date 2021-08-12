@@ -22,9 +22,6 @@ class Database(commands.Cog):
     # @commands.Cog.listener()
     # async def on_message(self, message):
     #
-
-
-
     @commands.command(aliases=["bal"])
     async def balance(self, ctx, member: discord.Member = None):
         if member == None:
@@ -69,7 +66,6 @@ class Database(commands.Cog):
         embed.set_thumbnail(
             url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
         await ctx.send(embed=embed)
-
 
     @commands.command()
     @commands.cooldown(1, 2, commands.BucketType.user)
@@ -128,8 +124,6 @@ class Database(commands.Cog):
             url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
         await ctx.send(embed=embed)
 
-
-
     @commands.command(aliases=["addwarn"])
     @has_roles
     async def warn(self, ctx, member:discord.Member = None, *, warn:str=None):
@@ -145,7 +139,6 @@ class Database(commands.Cog):
         addWarn(member.id, warn, ctx.author.id)
         await ctx.send(f"{member.mention} has been warned.")
 
-
     @commands.command(aliases=['showwarns','swarns','warns'])
     async def showWarns(self,ctx,target:discord.Member=None):
         if target == None:
@@ -160,7 +153,6 @@ class Database(commands.Cog):
             count += 1
         embed.set_footer(text="It's .deletewarn to delete a warning, or .warn to add a warning.")
         await ctx.send(embed=embed)
-
 
     @commands.command(aliases=['delwarn','deletewarn'])
     @has_roles
@@ -178,7 +170,6 @@ class Database(commands.Cog):
         # con.commit()
         deleteWarn(member.id, warns[1])
         await ctx.send("Warn has been deleted.")
-
 
     @commands.command(aliases=["addnote"])
     @has_roles
@@ -226,7 +217,6 @@ class Database(commands.Cog):
         # con.commit()
         deleteNote(member.id, notes[1])
         await ctx.send("Note has been deleted.")
-
 
     @commands.command(aliases=['leaderboard','top','rich','smart'])
     async def smartest(self, ctx):

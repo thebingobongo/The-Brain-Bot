@@ -17,7 +17,6 @@ class Rook(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-
     @commands.command(aliases=['gameping', 'pg', 'pinggames', 'pingames', 'pingame'])
     @has_roles
     async def pinggame(self, ctx, game=None):
@@ -25,7 +24,6 @@ class Rook(commands.Cog):
             await ctx.send(f"Hey <@&843707687643643924>, {ctx.author.mention} invites you all to come play a game with him!")
         else:
             await ctx.send(f"Hey <@&843707687643643924>, {ctx.author.mention} invites you to come play {game} with them!")
-
 
     @commands.command(aliases=['vcping', 'pingvoice', 'pingvoicechat', 'voiceping', 'voicechatping'])
     @has_roles
