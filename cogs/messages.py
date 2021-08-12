@@ -254,7 +254,12 @@ class Messages(commands.Cog):
         if '@' in msg:
             await ctx.send("No.")
             return
-        embed = discord.Embed(title=msg, color=ctx.author.color)
+        await ctx.message.delete()
+        title = ctx.author.display_name + " asks: " + msg
+        if len(title) >= 255:
+            await ctx.send("Please use a shorter prompt for your poll.")
+            return
+        embed = discord.Embed(title=title, color=ctx.author.color)
         message = await ctx.send(embed=embed)
         await message.add_reaction("<:upvote:837763222513778759>")
         await message.add_reaction("<:downvote:837763222886547486>")
