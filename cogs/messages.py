@@ -294,89 +294,10 @@ class Messages(commands.Cog):
 
         for i in range(options):
             await message.add_reaction(reactions[i])
+        await ctx.send("Done : )")
+        await ctx.message.delete()
 
-    @commands.command()
-    @commands.cooldown(1,15,commands.BucketType.guild)
-    async def trivia(self, ctx):
-        res = requests.get("https://opentdb.com/api.php?amount=1&type=multiple")
-        result = json.loads(res.text)
-        ans = result['results'][0]
-        question = ans['question'].replace('&quot;', '"')
-        question = question.replace('&#039;', "'")
-        question = question.replace('&amp;', "&")
-        embed = discord.Embed(title="Trivia Time", colour=0x03fcdf)
-        if ans['type'] == "multiple":
-            answerlist = ans['incorrect_answers']
-            index = random.randint(0, 3)
-            answerlist.insert(index, ans['correct_answer'])
-            answers = f"1️⃣: {answerlist[0]}\n2️⃣: {answerlist[1]}\n3️⃣: {answerlist[2]}\n4️⃣: {answerlist[3]} "
-            # msg = await ctx.send(ans['question'])
-            embed.add_field(name=question, value=answers)
-            # await msg.add_reaction("✅")
 
-            embed.set_footer(text=f"Category: {ans['category']}  Difficulty: {ans['difficulty']}")
-            embed.set_thumbnail(
-                url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
-            msg = await ctx.send(embed=embed)
-            emotelist = ["1️⃣", "2️⃣", "3️⃣", "4️⃣"]
-            for emote in emotelist:
-                await msg.add_reaction(emote)
-
-        # await ctx.send(f"Winning option is {index + 1}")
-
-        if ans['difficulty'] == 'easy':
-            award = 100
-        elif ans['difficulty'] == 'medium':
-            award = 200
-        elif ans['difficulty'] == 'hard':
-            award = 300
-        await asyncio.sleep(15)
-        cache_msg = discord.utils.get(self.client.cached_messages, id=msg.id)
-        cache_reaction = cache_msg.reactions
-        users = await cache_reaction[index].users().flatten()
-        users.remove(self.client.user)
-        cache_reaction.remove(cache_reaction[index])
-
-        removelist = []
-        for user in users:
-
-            for reaction in cache_reaction:
-                temp = await reaction.users().flatten()
-                # print(f"{user} reacted {reaction}")
-                # print(temp)
-                if user in temp:
-                    # print(f"User was in temp")
-                    try:
-                        removelist.append(user)
-                        # users.remove(user)
-                    except:
-                        print("something")
-                        # pass
-                    # print('removed user')
-
-        for user in removelist:
-            try:
-                users.remove(user)
-            except:
-                pass
-
-        if len(users) == 0:
-            sendmsg = f"No one got it right. The correct answer was: {index + 1}. {answerlist[index]}"
-        else:
-            sendmsg = "Congrats to "
-            for user in users:
-                if user == self.client.user:
-                    pass
-                else:
-                    sendmsg = sendmsg + f"{user.mention} "
-                    addBal(user.id, award)
-                # addbal
-                # print(f"Added bal to {user.display_name}")
-                # await ctx.send(user.display_name)
-            sendmsg = sendmsg + f" for getting it right! They win {award} Brain Cells. "
-
-            sendmsg = sendmsg + f"The correct answer was: {index + 1}. {answerlist[index]}"
-        await ctx.send(sendmsg)
 
     @commands.command()
     async def advice(self,ctx):

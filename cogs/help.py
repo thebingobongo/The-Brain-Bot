@@ -114,7 +114,6 @@ class Help(commands.Cog):
             text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
         await ctx.send(embed=embedVar)
 
-
     @commands.command()
     async def mary(self, ctx):
         embedVar = discord.Embed(title="Marys Room", color=0x00ffff)

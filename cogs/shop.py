@@ -25,7 +25,6 @@ class Shop(commands.Cog):
         embed.set_footer(text="Suggest an item to add to the shop to bingobongo")
         await ctx.send(embed=embed)
 
-
     @commands.command(aliases=['inventory'])
     async def inv(self, ctx, member:discord.Member=None):
         if member == None:
@@ -37,7 +36,6 @@ class Shop(commands.Cog):
         embed.set_thumbnail(
             url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
         await ctx.send(embed=embed)
-
 
     @commands.command(aliases=['read'])
     @commands.cooldown(1,3600,commands.BucketType.user)
@@ -67,9 +65,6 @@ class Shop(commands.Cog):
                 url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
             await ctx.send(embed=embed)
 
-
-
-
     @commands.command()
     async def buy(self,ctx,*, item = None):
         if item == None:
@@ -96,8 +91,6 @@ class Shop(commands.Cog):
             subBal(ctx.author.id, cost)
             addItem(ctx.author.id, name)
             await ctx.send(f"You successfully bought a {name}")
-
-
 
     @commands.command()
     @commands.cooldown(1,86400,commands.BucketType.user)

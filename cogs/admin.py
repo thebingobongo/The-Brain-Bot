@@ -13,6 +13,7 @@ def predicate(ctx):
 
 has_roles = commands.check(predicate)
 
+
 class Admin(commands.Cog):
 
     def __init__(self, client):
@@ -29,7 +30,6 @@ class Admin(commands.Cog):
             return
         addBal(member.id, ammount)
         await ctx.send(f"{member.name} has been awarded {ammount} Brain Cells!")
-
 
     @commands.command()
     @has_roles
@@ -73,8 +73,6 @@ class Admin(commands.Cog):
     async def echo(self, ctx, channelID: int, *, txt):
         sendchannel = self.client.get_channel(channelID)
         await sendchannel.send(txt)
-
-
 
     @commands.command()
     @has_roles
