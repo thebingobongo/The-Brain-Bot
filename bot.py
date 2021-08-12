@@ -46,8 +46,8 @@ has_roles = commands.check(predicate)
 async def on_ready():
     await client.change_presence(activity=discord.Game('with ideas'))
     print("I am alive.")
-    waterreminder.start()
-    vccheck.start()
+    # waterreminder.start()
+    # vccheck.start()
     # await asyncio.sleep(1800)
     # debatetopicloop.start()
 
@@ -58,29 +58,6 @@ async def on_ready():
 #     embed = discord.Embed(title= ":heart: Love Island Role!",colour=0xff0000)
 #     await c.send(embed=embed)
 
-
-@tasks.loop(minutes=1)
-async def vccheck():
-    vat = client.get_guild(831211215375433728)
-    vc_channels = vat.voice_channels
-    for channel in vc_channels:
-        if channel.id == 835061032073297920:
-            continue
-        for member in channel.members:
-            ammount = 20
-            if member.voice.self_deaf:
-                ammount = 5
-            addBal(member.id, ammount)
-
-
-@tasks.loop(minutes=120)
-async def waterreminder():
-    general = client.get_channel(831211215878488078)
-    embed = getDateFact()
-    embed.add_field(name="This is your reminder to go drink some water!", value="** **")
-    embed.set_footer(
-        text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
-    await general.send(embed=embed)
 
 # @tasks.loop(minutes=60)
 # async def debatetopicloop():
