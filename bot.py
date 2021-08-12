@@ -6,9 +6,7 @@ from dotenv import load_dotenv
 import os
 import asyncio
 
-from cogs.messages import getDateFact, getQuote, getAdvice
 from databaselayer import *
-# from debateTopics import debateTopics
 
 
 # get bot token and openai apikey
@@ -16,14 +14,6 @@ load_dotenv()
 openai.api_key = os.getenv('APIKEY')
 bot_token = os.getenv('TOKEN')
 
-
-# with open('token.json') as json_file:
-#     data = json.load(json_file)
-#
-# openai.api_key = data['APIKEY']
-
-
-# todolist = []
 
 intents = discord.Intents().default()
 intents.members = True
@@ -35,8 +25,7 @@ def predicate(ctx):
     admin_role1 = discord.utils.get(ctx.guild.roles, id=835623182484373535)
     admin_role2 = discord.utils.get(ctx.guild.roles, id=835400292979179530)
     return admin_role1 in ctx.author.roles or admin_role2 in ctx.author.roles or ctx.author.id == 339070790987284491
-    # test = discord.utils.get(ctx.guild.roles, id=858614845363322881)
-    # return test in ctx.author.roles
+
 
 
 has_roles = commands.check(predicate)
@@ -50,29 +39,6 @@ async def on_ready():
     # vccheck.start()
     # await asyncio.sleep(1800)
     # debatetopicloop.start()
-
-
-# @client.command()
-# async def test(ctx):
-#     c = client.get_channel(831215253076574219)
-#     embed = discord.Embed(title= ":heart: Love Island Role!",colour=0xff0000)
-#     await c.send(embed=embed)
-
-
-# @tasks.loop(minutes=60)
-# async def debatetopicloop():
-#     await client.wait_until_ready()
-#     general = client.get_channel(831211215878488078)
-#     rand = random.randint(1, len(debateTopics))
-#     while len(debateTopics[rand]) > 250:
-#         rand = random.randint(1, len(debateTopics))
-#
-#     embed = discord.Embed(title=debateTopics[rand], color=0xc203fc)
-#     embed.add_field(name="It's .debatetopic for more!", value="** **")
-#
-#     embed.set_footer(
-#         text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
-#     await general.send(embed=embed)
 
 
 @client.command()
@@ -225,12 +191,6 @@ async def on_message(message):
                                     value=f"{message.content}", inline=False)
                 await sendchannel.send(embed=embedVar2)
 
-
-        # await message.channel.send("TRUE")
-        # else:
-        #     await message.channel.send("FALSE")
-        # await message.channel.send(embed=embed)
-        # await message.channel.send(f"title = {embed.title} \n description = {embed.description}")
 
     try:
         rand = random.randint(1, 2)
