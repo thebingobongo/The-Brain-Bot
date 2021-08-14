@@ -6,6 +6,7 @@ import json
 from databaselayer import addBal, subBal, hasEnough, getUserBal
 import asyncio
 
+
 def hangman(word, guessedletters, game_in_progress):
     hangmanpics = ['''
   +---+
@@ -96,6 +97,7 @@ def hangman(word, guessedletters, game_in_progress):
     else:
         return [(hangmanpics[errors] + "\n" + guessedletters + '\n' + text), game_in_progress]
 
+
 # Python3 program to Split string into characters
 def split(word):
     return [char for char in word]
@@ -183,13 +185,11 @@ def printHand(hand):
         rts = rts + printCard(card)
     return rts
 
-class Hangman(commands.Cog):
 
+class Hangman(commands.Cog):
 
     def __init__(self, client):
         self.client = client
-
-
 
     @commands.command(aliases=['bj'])
     async def blackjack(self, ctx, ammount:str = None):
@@ -310,7 +310,6 @@ class Hangman(commands.Cog):
         embed.set_footer(text="A = 1 | J, Q, K = 10")
         await ctx.send(embed=embed)
 
-
     @commands.command()
     @commands.cooldown(1,15,commands.BucketType.guild)
     async def trivia(self, ctx):
@@ -394,6 +393,51 @@ class Hangman(commands.Cog):
             sendmsg = sendmsg + f"The correct answer was: {index + 1}. {answerlist[index]}"
         await ctx.send(sendmsg)
 
+    @commands.command()
+    @commands.cooldown(1, 2, commands.BucketType.user)
+    async def coinflip(self, ctx, ammount: str = '10', options: str = None):
+        if 'all' in ammount.strip().lower():
+            # if ammount == "all":
+            ammount = getUserBal(ctx.author.id)
+        try:
+            ammount = int(ammount)
+        except:
+            await ctx.send("There was an error, try again.")
+            return
+        if options == None:
+            await ctx.send("Heads or Tails? Try again.")
+            return
+        elif ammount < 0:
+            await ctx.send("Can't do that buddy.")
+            return
+        elif not hasEnough(ctx.author.id, ammount):
+            await ctx.send("You don't have enough Brain Cells for that.")
+            return
+        options = options.strip().lower()
+
+        result = random.randint(0, 1)
+        if options not in ["heads", 'head', 'tails', "tail"]:
+            await ctx.send("Enter a valid option.")
+            return
+        if result == 1 and (options == "heads" or options == "head"):
+            st = f"It was Heads! You win {ammount} Brain cells!"
+            addBal(ctx.author.id, ammount)
+        elif result == 0 and (options == "tails" or options == "tail"):
+            st = f"It was Tails! You win {ammount} Brain cells!"
+            addBal(ctx.author.id, ammount)
+        elif result == 1 and (options == "tails" or options == "tail"):
+            st = f"It was Heads, you lose {ammount} Brain Cells!"
+            subBal(ctx.author.id, ammount)
+        elif result == 0 and (options == "heads" or options == "head"):
+            st = f"It was Tails, you lose {ammount} Brain Cells!"
+            subBal(ctx.author.id, ammount)
+        else:
+            st = "There was an error."
+        embed = discord.Embed(title=st,
+                              colour=ctx.author.colour)
+        embed.set_thumbnail(
+            url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
+        await ctx.send(embed=embed)
 
     @commands.command()
     async def dice(self, ctx, number:int, ammount:str):
@@ -428,7 +472,6 @@ class Hangman(commands.Cog):
             embed.set_thumbnail(
                 url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
             await ctx.send(embed=embed)
-
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -545,8 +588,6 @@ class Hangman(commands.Cog):
                     word = ''
                 await message.channel.send(returntext)
         #
-
-
 
 
 def setup(client):

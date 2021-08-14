@@ -177,21 +177,6 @@ async def on_message(message):
         return
 
 
-    if 'discord.gg' in message.content:
-        if message.guild.id == 831211215375433728:
-            if not message.channel.id == 838442788021993484:
-                await message.delete()
-                embed = discord.Embed(title="Sorry, that isn't allowed here. Contact a mod if you would like to partner.",colour=0xff0000)
-                embed.add_field(name="If you need an invite to the Vat, try .invite.",value="** **")
-                embed.set_footer(text="DM me or any mods for problems/questions!")
-                await message.channel.send(embed=embed)
-                sendchannel = client.get_channel(831214657439924284)
-                embedVar2 = discord.Embed(title="Filtered Message:", color=0xff0000)
-                embedVar2.add_field(name=f"{message.author} sent an invite in {message.channel}:",
-                                    value=f"{message.content}", inline=False)
-                await sendchannel.send(embed=embedVar2)
-
-
     try:
         rand = random.randint(1, 2)
         if rand == 2:

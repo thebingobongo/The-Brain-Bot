@@ -2,17 +2,16 @@ import discord
 from discord.ext import commands
 import random
 
-
-
 from databaselayer import *
+
 
 def predicate(ctx):
     staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
     return staff_role in ctx.author.roles
-    # test = discord.utils.get(ctx.guild.roles, id=858614845363322881)
-    # return test in ctx.author.roles
+
 
 has_roles = commands.check(predicate)
+
 
 class Database(commands.Cog):
 
@@ -63,52 +62,6 @@ class Database(commands.Cog):
         addBal(member.id, ammount)
         subBal(ctx.author.id, ammount)
         embed = discord.Embed(title=f"You have given {ammount} brain cells to {member.display_name}!", colour=member.colour)
-        embed.set_thumbnail(
-            url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
-        await ctx.send(embed=embed)
-
-    @commands.command()
-    @commands.cooldown(1, 2, commands.BucketType.user)
-    async def coinflip(self, ctx,ammount:str = '10', options:str = None):
-        if 'all' in ammount.strip().lower():
-        # if ammount == "all":
-            ammount = getUserBal(ctx.author.id)
-        try:
-            ammount = int(ammount)
-        except:
-            await ctx.send("There was an error, try again.")
-            return
-        if options == None:
-            await ctx.send("Heads or Tails? Try again.")
-            return
-        elif ammount < 0:
-            await ctx.send("Can't do that buddy.")
-            return
-        elif not hasEnough(ctx.author.id, ammount):
-            await ctx.send("You don't have enough Brain Cells for that.")
-            return
-        options = options.strip().lower()
-
-        result = random.randint(0,1)
-        if options not in ["heads", 'head', 'tails', "tail"]:
-            await ctx.send("Enter a valid option.")
-            return
-        if result == 1 and (options == "heads" or options == "head"):
-            st = f"It was Heads! You win {ammount} Brain cells!"
-            addBal(ctx.author.id, ammount)
-        elif result == 0 and (options == "tails" or options == "tail"):
-            st = f"It was Tails! You win {ammount} Brain cells!"
-            addBal(ctx.author.id, ammount)
-        elif result == 1 and (options == "tails" or options == "tail"):
-            st = f"It was Heads, you lose {ammount} Brain Cells!"
-            subBal(ctx.author.id, ammount)
-        elif result == 0 and (options == "heads" or options == "head"):
-            st =f"It was Tails, you lose {ammount} Brain Cells!"
-            subBal(ctx.author.id, ammount)
-        else:
-            st = "There was an error."
-        embed = discord.Embed(title=st,
-                              colour=ctx.author.colour)
         embed.set_thumbnail(
             url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
         await ctx.send(embed=embed)

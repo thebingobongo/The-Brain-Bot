@@ -79,7 +79,7 @@ class Moderation(commands.Cog):
         await member.remove_roles(underage_role)
         await textchannel.set_permissions(member, view_channel=True)
         await voicechannel.set_permissions(member, view_channel=True)
-        await ctx.send("Underage Tag has been added!")
+        await ctx.send("Underage Tag has been removed!")
 
 
     @commands.command()
@@ -147,7 +147,7 @@ class Moderation(commands.Cog):
                         await member.add_roles(memberrole, reason=reason)
                     except:
                         pass
-                    await ctx.send(f"{member.mention} has been unmuted.")
+                    # await ctx.send(f"{member.mention} has been unmuted.")
                     await logs.send(f"{member.mention} has been unmuted.")
 
     @commands.command()
@@ -258,7 +258,7 @@ class Moderation(commands.Cog):
                         await member.add_roles(member_role, reason=reason)
                     except:
                         pass
-                    await ctx.send(f"{member.mention} has been released from the Panopticon.")
+                    # await ctx.send(f"{member.mention} has been released from the Panopticon.")
                     await logs.send(f"{member.mention} has been released from the Panopticon.")
 
     @commands.command()
@@ -610,11 +610,22 @@ class Moderation(commands.Cog):
         except:
             pass
 
-
-    # @commands.command()
-    # @has_roles
-    # async def testingmod(selfself,ctx):
-    #     await ctx.send("it works")
+        if 'discord.gg' in message.content:
+            if message.guild.id == 831211215375433728:
+                # await message.channel.send(f"{message.channel.category_id} == 831211215375433731")
+                if message.channel.id != 838442788021993484 and message.channel.category_id != 831211215375433731:
+                    await message.delete()
+                    embed = discord.Embed(
+                        title="Sorry, that isn't allowed here. Contact a mod if you would like to partner.",
+                        colour=0xff0000)
+                    embed.add_field(name="If you need an invite to the Vat, try .invite.", value="** **")
+                    embed.set_footer(text="DM me or any mods for problems/questions!")
+                    await message.channel.send(embed=embed)
+                    sendchannel = self.client.get_channel(831214657439924284)
+                    embedVar2 = discord.Embed(title="Filtered Message:", color=0xff0000)
+                    embedVar2.add_field(name=f"{message.author} sent an invite in {message.channel}:",
+                                        value=f"{message.content}", inline=False)
+                    await sendchannel.send(embed=embedVar2)
 
 
 def setup(client):
