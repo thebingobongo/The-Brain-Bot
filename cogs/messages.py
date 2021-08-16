@@ -189,6 +189,18 @@ def getDefinition(search):
             def_list.append([type, definition])
         return [word, def_list]
 
+def getZodiac(ctx, sign):
+    link = f"https://aztro.sameerkumar.website/?sign={sign}&day=today"
+    response = requests.post(link)
+    res = json.loads(response.text)
+    embed = discord.Embed(title=f"Daily horoscope for {sign.capitalize()}", colour=ctx.author.color)
+    embed.add_field(name="Compatibillity", value=res["compatibility"], inline=True)
+    embed.add_field(name="Mood", value=res["mood"], inline=True)
+    embed.add_field(name="Lucky Number", value=res["lucky_number"], inline=True)
+    embed.add_field(name="Horoscope", value=res["description"], inline=False)
+    embed.set_footer(text=res['current_date'])
+    return embed
+
 
 class Messages(commands.Cog):
 
@@ -206,6 +218,14 @@ class Messages(commands.Cog):
     @commands.command()
     async def knockknock(self, ctx):
         await ctx.send(embed=getKnockKnock())
+
+    @commands.command()
+    async def zodiac(self, ctx, sign):
+        if sign.lower() not in ["aries", 'capricorn', 'sagittarius', 'aquarius', 'taurus', 'virgo', 'libra', 'gemini',
+                                'scorpio', 'pisces', 'leo', 'cancer']:
+            await ctx.send("That is not a valid Zodiac sign.")
+            return
+        await ctx.send(embed=getZodiac(ctx, sign))
 
     @commands.command()
     async def debatetopic(self,ctx):
