@@ -186,7 +186,7 @@ def printHand(hand):
     return rts
 
 
-class Hangman(commands.Cog):
+class Games(commands.Cog):
 
     def __init__(self, client):
         self.client = client
@@ -591,4 +591,4 @@ class Hangman(commands.Cog):
 
 
 def setup(client):
-    client.add_cog(Hangman(client))
+    client.add_cog(Games(client))
