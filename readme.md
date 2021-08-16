@@ -20,13 +20,16 @@ Features
 
 To install necesarry libraries run
 
+```bash
 python -m pip install -r requirements.txt
+```
 
 You will need to add your tokens (discord, openai, db credentials) to the .env file.
 
 Next run
-
+```bash
 python bot.py
+```
 
 To start the bot
 
