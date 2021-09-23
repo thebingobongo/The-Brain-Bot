@@ -19,7 +19,7 @@ class Rook(commands.Cog):
 
     @commands.command(aliases=['gameping', 'pg', 'pinggames', 'pingames', 'pingame'])
     @has_roles
-    async def pinggame(self, ctx, game=None):
+    async def pinggame(self, ctx, * , game=None):
         if game == None:
             await ctx.send(f"Hey <@&843707687643643924>, {ctx.author.mention} invites you all to come play a game with him!")
         else:
