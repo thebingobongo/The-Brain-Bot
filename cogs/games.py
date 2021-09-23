@@ -505,7 +505,7 @@ class Games(commands.Cog):
 
     @commands.command()
     @has_roles
-    async def calculate(self,ctx, recipient):
+    async def calculate(self,ctx, recipient:discord.Member):
         await self.getJackpot(ctx.channel, recipient)
 
 
