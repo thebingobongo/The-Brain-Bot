@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 
+
 def predicate(ctx):
     rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
     staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
@@ -19,25 +20,28 @@ class Rook(commands.Cog):
 
     @commands.command(aliases=['gameping', 'pg', 'pinggames', 'pingames', 'pingame'])
     @has_roles
-    async def pinggame(self, ctx, * , game=None):
-        if game == None:
-            await ctx.send(f"Hey <@&843707687643643924>, {ctx.author.mention} invites you all to come play a game with him!")
+    async def pinggame(self, ctx, *, game=None):
+        if game is None:
+            await ctx.send(
+                f"Hey <@&843707687643643924>, {ctx.author.mention} invites you all to come play a game with him!")
         else:
-            await ctx.send(f"Hey <@&843707687643643924>, {ctx.author.mention} invites you to come play {game} with them!")
+            await ctx.send(
+                f"Hey <@&843707687643643924>, {ctx.author.mention} invites you to come play {game} with them!")
 
     @commands.command(aliases=['vcping', 'pingvoice', 'pingvoicechat', 'voiceping', 'voicechatping'])
     @has_roles
-    async def pingvc(self, ctx, * , topic=None):
-        if topic == None:
+    async def pingvc(self, ctx, *, topic=None):
+        if topic is None:
             await ctx.send(
                 f"Hey <@&843707891265306624>, {ctx.author.mention} thinks there is an interesting discussion that you would like to hear!")
         else:
-            await ctx.send(f"Hey <@&843707891265306624>, {ctx.author.mention} is talking about {topic}, and thought you would like to join!")
+            await ctx.send(
+                f"Hey <@&843707891265306624>, {ctx.author.mention} is talking about {topic}, and thought you would like to join!")
 
     @commands.command(aliases=['movieping', 'pingM', 'pingmovie', 'moviesvoice'])
     @has_roles
     async def pingmovies(self, ctx, *, movie=None):
-        if movie == None:
+        if movie is None:
             await ctx.send(
                 f"Hey <@&846967076634624010>, {ctx.author.mention} invites you to come watch a movie with them!")
         else:
