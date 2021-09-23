@@ -186,6 +186,17 @@ def printHand(hand):
     return rts
 
 
+def predicate(ctx):
+    admin_role1 = discord.utils.get(ctx.guild.roles, id=835623182484373535)
+    admin_role2 = discord.utils.get(ctx.guild.roles, id=835400292979179530)
+    return admin_role1 in ctx.author.roles or admin_role2 in ctx.author.roles or ctx.author.id == 339070790987284491
+    # test = discord.utils.get(ctx.guild.roles, id=858614845363322881)
+    # return test in ctx.author.roles
+
+
+has_roles = commands.check(predicate)
+
+
 class Games(commands.Cog):
 
     def __init__(self, client):
@@ -473,6 +484,31 @@ class Games(commands.Cog):
                 url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
             await ctx.send(embed=embed)
 
+
+
+    async def getJackpot(self, channel, recipient):
+        amount = random.randint(2500, 6000)
+        s = ""
+        if random.randint(1, 15) == 13:
+            s = "**YOU HIT THE JACKPOT**"
+            amount = 42069
+        if random.randint(1, 50) == 25:
+            s = "**YOU HIT THE JACKPOT**"
+            amount = 500000
+        if random.randint(1, 100) == 81:
+            s = "**YOU HIT THE JACKPOT**"
+            amount = 1000000
+        addBal(recipient.id, amount)
+        s += f"Thanks for bumping the server! We really appreciate the support!\n Here's {amount} Brain Cells for the effort! \n Keep bumping and you may get **really** lucky ; )"
+        await channel.send(s)
+
+
+    @commands.command()
+    @has_roles
+    async def calculate(self,ctx, recipient):
+        await self.getJackpot(ctx.channel, recipient)
+
+
     @commands.Cog.listener()
     async def on_message(self, message):
 
@@ -484,23 +520,7 @@ class Games(commands.Cog):
             reply = await self.client.wait_for('message', check=check, timeout=2.0)
             embed = reply.embeds[0]
             if "Bump done" in embed.description:
-                amount = random.randint(2500, 6000)
-                rand = random.randint(1, 15)
-                if rand == 13:
-                    await message.channel.send("**YOU HIT THE JACKPOT**")
-                    amount = 42069
-                rand = random.randint(1, 50)
-                if rand == 25:
-                    await message.channel.send("**YOU HIT THE JACKPOT**")
-                    amount = 500000
-                rand = random.randint(1, 100)
-                if rand == 81:
-                    await message.channel.send("**YOU HIT THE JACKPOT**")
-                    amount = 1000000
-                addBal(message.author.id, amount)
-                await message.channel.send(
-                    f"Thanks for bumping the server! We really appreciate the support!\n Here's {amount} Brain Cells for the effort!")
-                await message.channel.send("Keep bumping and you may get **really** lucky ; )")
+                await self.getJackpot(message.channel, message.author)
                 await asyncio.sleep(7200)
                 await message.channel.send("Time for a bump!")
 
