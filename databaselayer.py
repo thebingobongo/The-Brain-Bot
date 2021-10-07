@@ -36,6 +36,12 @@ def closeTicket(memberid):
     cur.execute(f"DELETE FROM opentickets WHERE discordid = '{memberid}';")
     con.commit()
 
+def openTickets():
+    cur.execute(f"SELECT * FROM opentickets;")
+    res = cur.fetchall()
+    return res
+
+
 def addWarn(target, warn, submitter):
     cur.execute(
         f"INSERT INTO warns (discordid, warnmessage, submitterid, submittime) values ({target}, '{warn}', {submitter}, now());")

@@ -524,8 +524,8 @@ class Moderation(commands.Cog):
         if not hasOpenTicket(member.id):
             await ctx.send(f"{member.name} has no open tickets.")
             return
-        embed = discord.Embed(title=f"{ctx.author.display_name} says:",colour=0x00ff00)
-        embed.add_field(name=message,value="** **")
+        embed = discord.Embed(title=f"{ctx.author.display_name} says:", colour=0x00ff00)
+        embed.add_field(name=message, value="** **")
         await member.send(embed=embed)
         await ctx.send("Message sent.")
 
@@ -541,6 +541,23 @@ class Moderation(commands.Cog):
         else:
             await ctx.send("No open tickets for that member.")
 
+
+    @commands.command()
+    @has_roles
+    async def opentickets(self, ctx):
+        opentickets = openTickets()
+        embed = discord.Embed(title="Open Tickets", colour=0x00ff00)
+        for ticket in opentickets:
+            print(ticket[0])
+            try:
+                user = self.client.get_user(int(ticket[0]))
+
+                embed.add_field(name=user.display_name,value="** **")
+            except:
+                print('failed')
+        await ctx.send(embed=embed)
+
+
     @commands.Cog.listener()
     async def on_message(self, message):
         if message.author == self.client.user:
@@ -553,6 +570,7 @@ class Moderation(commands.Cog):
             embedVar = discord.Embed(title="BOT RECIEVED DM", color=0x00ff00)
             embedVar.add_field(name=f"{message.author} sent the bot:",
                                value=f"{message.content}", inline=False)
+            embedVar.set_footer(text=f"Member discord ID is {message.author.id}")
             await sendchannel.send(embed=embedVar)
             if not hasOpenTicket(message.author.id):
                 embedVar1 = discord.Embed(title="Ticket created", color=0x00ff00)
