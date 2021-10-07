@@ -548,13 +548,12 @@ class Moderation(commands.Cog):
         opentickets = openTickets()
         embed = discord.Embed(title="Open Tickets", colour=0x00ff00)
         for ticket in opentickets:
-            print(ticket[0])
             try:
                 user = self.client.get_user(int(ticket[0]))
 
                 embed.add_field(name=user.display_name,value="** **")
             except:
-                print('failed')
+                print(f'failed for {ticket[0]}')
         await ctx.send(embed=embed)
 
 
