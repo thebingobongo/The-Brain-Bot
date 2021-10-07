@@ -464,6 +464,56 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @has_roles
+    async def movetolounge(self, ctx):
+        currentvc = ctx.author.voice.channel
+        thelounge = discord.utils.get(ctx.guild.channels, id=831211215878488082)
+        await ctx.send(f"moving members from {currentvc} to {thelounge}.")
+        for member in currentvc.members:
+            await member.move_to(thelounge)
+        await ctx.send("Done.")
+
+    @commands.command()
+    @has_roles
+    async def movetodiscussion(self, ctx):
+        currentvc = ctx.author.voice.channel
+        discussion = discord.utils.get(ctx.guild.channels, id=831211215878488083)
+        await ctx.send(f"moving members from {currentvc} to {discussion}.")
+        for member in currentvc.members:
+            await member.move_to(discussion)
+        await ctx.send("Done.")
+
+    @commands.command()
+    @has_roles
+    async def movetoadultclub(self, ctx):
+        currentvc = ctx.author.voice.channel
+        adultclub = discord.utils.get(ctx.guild.channels, id=839253190667141181)
+        await ctx.send(f"moving members from {currentvc} to {adultclub}.")
+        for member in currentvc.members:
+            await member.move_to(adultclub)
+        await ctx.send("Done.")
+
+    @commands.command()
+    @has_roles
+    async def movetogaming(self, ctx):
+        currentvc = ctx.author.voice.channel
+        gaming = discord.utils.get(ctx.guild.channels, id=831211216277733436)
+        await ctx.send(f"moving members from {currentvc} to {gaming}.")
+        for member in currentvc.members:
+            await member.move_to(gaming)
+        await ctx.send("Done.")
+
+    @commands.command()
+    @has_roles
+    async def movetomedia(self, ctx):
+        currentvc = ctx.author.voice.channel
+        media = discord.utils.get(ctx.guild.channels, id=838631088959651850)
+        await ctx.send(f"moving members from {currentvc} to {media}.")
+        for member in currentvc.members:
+            await member.move_to(media)
+        await ctx.send("Done.")
+
+    @commands.command()
+    @has_roles
     async def reply(self,ctx,member:discord.Member = None, *,message=None ):
         if member == None:
             await ctx.send("Name a member to reply to.")

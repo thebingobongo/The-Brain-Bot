@@ -159,15 +159,15 @@ async def on_command_error(ctx, error):
             await ctx.send(f"Command raised an exception: {error.original}")
 
 
-@client.command()
-@has_roles
-async def movetolounge(ctx):
-    currentvc = ctx.author.voice.channel
-    thelounge = discord.utils.get(ctx.guild.channels, id=831211215878488082)
-    await ctx.send(f"moving members from {currentvc} to {thelounge}.")
-    for member in currentvc.members:
-        await member.move_to(thelounge)
-    await ctx.send("Done.")
+# @client.command()
+# @has_roles
+# async def movetolounge(ctx):
+#     currentvc = ctx.author.voice.channel
+#     thelounge = discord.utils.get(ctx.guild.channels, id=831211215878488082)
+#     await ctx.send(f"moving members from {currentvc} to {thelounge}.")
+#     for member in currentvc.members:
+#         await member.move_to(thelounge)
+#     await ctx.send("Done.")
 
 
 @client.event
