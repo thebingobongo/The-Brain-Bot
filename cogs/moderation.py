@@ -474,6 +474,16 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @has_roles
+    async def movetoquietroom(self, ctx):
+        currentvc = ctx.author.voice.channel
+        qroom = discord.utils.get(ctx.guild.channels, id=831216042725343282)
+        await ctx.send(f"moving members from {currentvc} to {qroom}.")
+        for member in currentvc.members:
+            await member.move_to(qroom)
+        await ctx.send("Done.")
+
+    @commands.command()
+    @has_roles
     async def movetodiscussion(self, ctx):
         currentvc = ctx.author.voice.channel
         discussion = discord.utils.get(ctx.guild.channels, id=831211215878488083)
