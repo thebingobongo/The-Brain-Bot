@@ -412,44 +412,30 @@ class Messages(commands.Cog):
 
 
     @commands.command()
-    async def studymode(self,ctx):
-        rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
-        bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
-        knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
-        pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
+    async def studymode(self, ctx):
 
+        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
         study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
 
         await ctx.send("You have activated Study Mode, Good Luck!")
 
         member = ctx.author
         reason = 'study mode activated'
-        if rook_role in member.roles:
-            await member.remove_roles(rook_role, reason=reason)
-        elif bishop_role in member.roles:
-            await member.remove_roles(bishop_role, reason=reason)
-        elif knight_role in member.roles:
-            await member.remove_roles(knight_role, reason=reason)
-        elif pawn_role in member.roles:
-            await member.remove_roles(pawn_role, reason=reason)
 
-        await member.add_roles(study_role,reason= "study mode activated.")
+        await member.remove_roles(member_role, reason=reason)
+        await member.add_roles(study_role, reason = "study mode activated.")
         await ctx.author.move_to(None)
 
 
     @commands.command()
     async def unstudymode(self,ctx):
         member = ctx.author
-        roleid = int(getUserRole(member.id))
 
         study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
+        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
 
         await member.remove_roles(study_role, reason='study mode disactivated')
-        try:
-            member_role = discord.utils.get(ctx.guild.roles, id=roleid)
-            await member.add_roles(member_role, reason='study mode disactivated')
-        except:
-            pass
+        await member.add_roles(member_role, reason='study mode disactivated')
         await ctx.send("Study Mode has been deactivated.")
         await ctx.author.move_to(None)
 
