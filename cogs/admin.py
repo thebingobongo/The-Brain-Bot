@@ -91,7 +91,7 @@ class Admin(commands.Cog):
     @commands.command()
     @has_roles
     async def gclr(self, ctx, number: int):
-        await ctx.channel.purge(limit=number)
+        await ctx.channel.purge(limit=(number+1))
 
 def setup(client):
     client.add_cog(Admin(client))
