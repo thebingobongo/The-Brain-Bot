@@ -31,6 +31,12 @@ class Moderation(commands.Cog):
             await ctx.send("You cannot do that to me, young one.")
             return
 
+        aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
+        underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
+
+        if underage_role not in member.roles:
+            await member.add_roles(aboveage_role)
+
         member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
         sendchannel = self.client.get_channel(831211215878488078)
         try:
@@ -54,12 +60,13 @@ class Moderation(commands.Cog):
             await ctx.send("You cannot do that to me, young one.")
             return
 
-        textchannel = self.client.get_channel(839252122550009876)
-        voicechannel = self.client.get_channel(839253190667141181)
+        aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
         underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
+
+        if aboveage_role in member.roles:
+            await member.remove_roles(aboveage_role)
+
         await member.add_roles(underage_role)
-        await textchannel.set_permissions(member, view_channel=False)
-        await voicechannel.set_permissions(member, view_channel=False)
         await ctx.send("Underage Tag has been added!")
 
     @commands.command()
@@ -73,12 +80,12 @@ class Moderation(commands.Cog):
             await ctx.send("You cannot do that to me, young one.")
             return
 
-        textchannel = self.client.get_channel(839252122550009876)
-        voicechannel = self.client.get_channel(839253190667141181)
+        aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
         underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
+
+
         await member.remove_roles(underage_role)
-        await textchannel.set_permissions(member, view_channel=True)
-        await voicechannel.set_permissions(member, view_channel=True)
+        await member.add_roles(aboveage_role)
         await ctx.send("Underage Tag has been removed!")
 
 
