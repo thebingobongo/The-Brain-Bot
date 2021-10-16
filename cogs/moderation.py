@@ -20,7 +20,7 @@ class Moderation(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(aliases=['verify'])
+    @commands.command()
     @has_roles
     async def approve(self, ctx, member: discord.Member):
         if not member:
@@ -89,7 +89,7 @@ class Moderation(commands.Cog):
         await ctx.send("Underage Tag has been removed!")
 
 
-    @commands.command()
+    @commands.command(aliases=["sew"])
     @has_roles
     async def mute(self, ctx, members: commands.Greedy[discord.Member],
                    mute_minutes: typing.Optional[int] = 0,
