@@ -314,7 +314,6 @@ class Messages(commands.Cog):
 
         for i in range(options):
             await message.add_reaction(reactions[i])
-        await ctx.send("Done : )")
         await ctx.message.delete()
 
 
@@ -410,34 +409,6 @@ class Messages(commands.Cog):
             await ctx.send("Try .ob [emote name] or .ob [list]")
 
 
-
-    @commands.command()
-    async def studymode(self, ctx):
-
-        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
-        study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
-
-        await ctx.send("You have activated Study Mode, Good Luck!")
-
-        member = ctx.author
-        reason = 'study mode activated'
-
-        await member.remove_roles(member_role, reason=reason)
-        await member.add_roles(study_role, reason = "study mode activated.")
-        await ctx.author.move_to(None)
-
-
-    @commands.command()
-    async def unstudymode(self,ctx):
-        member = ctx.author
-
-        study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
-        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
-
-        await member.remove_roles(study_role, reason='study mode disactivated')
-        await member.add_roles(member_role, reason='study mode disactivated')
-        await ctx.send("Study Mode has been deactivated.")
-        await ctx.author.move_to(None)
 
 
 
