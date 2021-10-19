@@ -81,7 +81,7 @@ class Study(commands.Cog):
         for member in members:
             await member.add_roles(pomo_role)
 
-        while len(members) > 0:
+        while len(self.groups[currentgroup]) > 0:
             for member in self.groups[currentgroup]:
                 if pomo_role not in member.roles:
                     try:
