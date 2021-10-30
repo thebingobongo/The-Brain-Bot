@@ -64,6 +64,9 @@ class Events(commands.Cog):
                 overwrite.send_messages = False
                 await c.set_permissions(blueteam, overwrite=overwrite)
                 await ctx.message.delete()
+        else:
+            await ctx.send("That is incorrect.")
+            return 
 
 
 
