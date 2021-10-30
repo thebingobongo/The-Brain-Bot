@@ -52,6 +52,7 @@ class Events(commands.Cog):
                 overwrite.view_channel = True
                 overwrite.read_messages = True
                 overwrite.read_message_history = True
+                overwrite.send_messages = False
                 await c.set_permissions(blueteam, overwrite=overwrite)
                 await ctx.message.delete()
             elif blueteam in ctx.author.roles:
@@ -60,6 +61,7 @@ class Events(commands.Cog):
                 overwrite.view_channel = True
                 overwrite.read_messages = True
                 overwrite.read_message_history = True
+                overwrite.send_messages = False
                 await c.set_permissions(blueteam, overwrite=overwrite)
                 await ctx.message.delete()
 
