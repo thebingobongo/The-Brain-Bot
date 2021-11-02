@@ -107,6 +107,26 @@ class Events(commands.Cog):
                 overwrite.send_messages = False
                 await c.set_permissions(blueteam, overwrite=overwrite)
                 await ctx.message.delete()
+        elif answer.lower() in ["somme", "battle of the somme", "the somme", "battle of somme"]:
+            c = self.client.get_channel(905172882064281600)
+            await ctx.send(
+                "Congratulations for finishing the fourth trial. Your team has advanced to the next trial.")
+            if redteam in ctx.author.roles:
+                await ctx.send("Red team has unlocked Trial 5.")
+                overwrite = discord.PermissionOverwrite()
+                overwrite.view_channel = True
+                overwrite.read_messages = True
+                overwrite.read_message_history = True
+                overwrite.send_messages = False
+                await c.set_permissions(blueteam, overwrite=overwrite)
+            elif blueteam in ctx.author.roles:
+                await ctx.send("Blue team has unlocked Trial 5.")
+                overwrite = discord.PermissionOverwrite()
+                overwrite.view_channel = True
+                overwrite.read_messages = True
+                overwrite.read_message_history = True
+                overwrite.send_messages = False
+                await c.set_permissions(blueteam, overwrite=overwrite)
         else:
             await ctx.send("That is incorrect.")
             return
