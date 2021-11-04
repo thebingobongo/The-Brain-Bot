@@ -127,6 +127,13 @@ class Events(commands.Cog):
                 overwrite.read_message_history = True
                 overwrite.send_messages = False
                 await c.set_permissions(blueteam, overwrite=overwrite)
+        elif answer.lower() in ["jenny"]:
+            await ctx.send(
+                "Congratulations for finishing Nebu's trial.")
+            if redteam in ctx.author.roles:
+                await ctx.send("Red team has won.")
+            elif blueteam in ctx.author.roles:
+                await ctx.send("Blue team has won.")
         else:
             await ctx.send("That is incorrect.")
             return
