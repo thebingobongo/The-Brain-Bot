@@ -98,26 +98,26 @@ def getUserBal(memberID):
     return userbal[1]
 
 
-def updateUserBal(memberid, ammount):
-    cur.execute(f"UPDATE users SET balance = {ammount} WHERE discordid = {memberid};")
+def updateUserBal(memberid, amount):
+    cur.execute(f"UPDATE users SET balance = {amount} WHERE discordid = {memberid};")
     con.commit()
 
 
-def addBal(memberid, ammount):
+def addBal(memberid, amount):
     bal = getUserBal(memberid)
-    bal = int(bal) + int(ammount)
+    bal = int(bal) + int(amount)
     updateUserBal(memberid, bal)
 
 
-def subBal(memberid, ammount):
+def subBal(memberid, amount):
     bal = getUserBal(memberid)
-    bal = int(bal) - int(ammount)
+    bal = int(bal) - int(amount)
     updateUserBal(memberid, bal)
 
 
-def hasEnough(memberid, ammount):
+def hasEnough(memberid, amount):
     bal = getUserBal(memberid)
-    if bal >= ammount:
+    if bal >= amount:
         return True
     else:
         return False
