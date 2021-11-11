@@ -123,11 +123,11 @@ class Moderation(commands.Cog):
             if voice_state is not None:
                 await member.edit(mute=True)
             await ctx.send(
-                "{0.mention} has been muted by {1.mention} for *{2}* {3}".format(member, ctx.author, reason,
+                "{0.mention} has been muted by {1} for *{2}* {3}".format(member, ctx.author, reason,
                                                                                  time))
         logs = self.client.get_channel(831214657439924284)
         await logs.send(
-            "{0.mention} has been muted by {1.mention} for *{2}* {3}".format(member, ctx.author, reason,
+            "{0.mention} has been muted by {1} for *{2}* {3}".format(member, ctx.author, reason,
                                                                              time))
         if mute_minutes > 0:
             await asyncio.sleep(mute_minutes * 60)
@@ -162,9 +162,9 @@ class Moderation(commands.Cog):
         if voice_state is not None:
             await member.edit(mute=False)
         await ctx.send(
-            "{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+            "{0.mention} has been unmuted by {1} for *{2}* ".format(member, ctx.author, reason))
         logs = self.client.get_channel(831214657439924284)
-        await logs.send("{0.mention} has been unmuted by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+        await logs.send("{0.mention} has been unmuted by {1} for *{2}* ".format(member, ctx.author, reason))
 
     @commands.command(aliases=['unpunish', 'unpanopticon', 'unprison'])
     @has_roles
@@ -218,10 +218,10 @@ class Moderation(commands.Cog):
             await member.add_roles(dungeon_role, reason=reason)
             await member.move_to(None)
             await ctx.send(
-                "{0.mention} has been punished by {1.mention} for *{2}* {3}".format(member, ctx.author,
+                "{0.mention} has been punished by {1} for *{2}* {3}".format(member, ctx.author,
                                                                                     reason, time))
         logs = self.client.get_channel(831214657439924284)
-        await logs.send("{0.mention} has been punished by {1.mention} for *{2}* {3}".format(member, ctx.author,
+        await logs.send("{0.mention} has been punished by {1} for *{2}* {3}".format(member, ctx.author,
                                                                                              reason, time))
         if dungeon_minutes > 0:
             await asyncio.sleep(dungeon_minutes * 60)
@@ -247,9 +247,9 @@ class Moderation(commands.Cog):
         if staff_role in member.roles:
             await ctx.send("Cannot kick staff. Please contact a Mod III")
             return
-        await ctx.send("{0.mention} has been kicked by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+        await ctx.send("{0.mention} has been kicked by {1} for *{2}* ".format(member, ctx.author, reason))
         logs = self.client.get_channel(831214657439924284)
-        await logs.send("{0.mention} has been kicked by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+        await logs.send("{0.mention} has been kicked by {1} for *{2}* ".format(member, ctx.author, reason))
         await member.kick(reason=reason)
 
 
@@ -267,9 +267,9 @@ class Moderation(commands.Cog):
             await ctx.send("Cannot ban staff. Please contact a Mod III")
             return
         await member.ban(reason=reason)
-        await ctx.send("{0.mention} has been banned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+        await ctx.send("{0.mention} has been banned by {1} for *{2}* ".format(member, ctx.author, reason))
         logs = self.client.get_channel(831214657439924284)
-        await logs.send("{0.mention} has been banned by {1.mention} for *{2}* ".format(member, ctx.author, reason))
+        await logs.send("{0.mention} has been banned by {1} for *{2}* ".format(member, ctx.author, reason))
 
     @commands.command()
     @has_roles
@@ -309,7 +309,7 @@ class Moderation(commands.Cog):
             return
 
         logs = self.client.get_channel(831214657439924284)
-        await logs.send("{0.mention} has been promoted by {1.mention}.".format(member, ctx.author))
+        await logs.send("{0.mention} has been promoted by {1}.".format(member, ctx.author))
 
 
     @commands.command()
@@ -348,7 +348,7 @@ class Moderation(commands.Cog):
             return
 
         logs = self.client.get_channel(831214657439924284)
-        await logs.send("{0.mention} has been demoted by {1.mention}.".format(member, ctx.author))
+        await logs.send("{0.mention} has been demoted by {1}.".format(member, ctx.author))
 
     @commands.command(aliases=['gbr', 'brainrole'])
     @has_roles
@@ -464,10 +464,10 @@ class Moderation(commands.Cog):
                 await member.add_roles(discord.utils.get(ctx.guild.roles, id=843673099807621155))
 
             await ctx.send(
-                "{0.mention} has been awarded the brain role for {1} by {2.mention}".format(member, role, ctx.author))
+                "{0.mention} has been awarded the brain role for {1} by {2}".format(member, role, ctx.author))
             logs = self.client.get_channel(831214657439924284)
             await logs.send(
-                "{0.mention} has been awarded the brain role for {1} by {2.mention}".format(member, role, ctx.author))
+                "{0.mention} has been awarded the brain role for {1} by {2}".format(member, role, ctx.author))
 
     @commands.command()
     @has_roles
