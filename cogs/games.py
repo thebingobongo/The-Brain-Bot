@@ -257,7 +257,7 @@ class Games(commands.Cog):
                 # subBal(ctx.author.id, ammount)
                 # return
 
-            embed.set_footer(text="A = 1, | J, Q, K = 10")
+            embed.set_footer(text="A = 1 | J, Q, K = 10")
             await ctx.send(embed=embed)
 
             def check(m):
