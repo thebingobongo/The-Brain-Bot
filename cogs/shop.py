@@ -12,10 +12,10 @@ class Shop(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    #minute_mute = {'name': '1 Minute Mute', 'cost': 17500, 'effect': "You can mute anyone in the server in a VC for 1 minute."}
+    minute_mute = {'name': '1 Minute Mute', 'cost': 17500, 'effect': "You can mute anyone in the server in a VC for 1 minute."}
     dj_role = {'name': 'DJ Role', 'cost': 25000, 'effect': 'You gain the DJ role for the music bot.'}
     book = {'name': 'Book', 'cost': 6000, 'effect': 'Gives you access to the .study command.'}
-    items = {'DJ Role':  dj_role, 'Book': book} # "1 Minute Mute":minute_mute,
+    items = {'DJ Role':  dj_role, 'Book': book, "1 Minute Mute":minute_mute}
 
     @commands.command()
     async def shop(self, ctx):
@@ -135,22 +135,13 @@ class Shop(commands.Cog):
                 await ctx.send("That member has already been muted.")
                 return
 
-            rook_role = discord.utils.get(ctx.guild.roles, id=831227767671619636)
-            bishop_role = discord.utils.get(ctx.guild.roles, id=831213133066534993)
-            knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
-            pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
+            member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
 
             if member == self.client.user:
                 await ctx.send("You cannot do that to me, young one.")
                 return
-            if rook_role in member.roles:
-                await member.remove_roles(rook_role, reason='use item')
-            elif bishop_role in member.roles:
-                await member.remove_roles(bishop_role, reason='use item')
-            elif knight_role in member.roles:
-                await member.remove_roles(knight_role, reason='use item')
-            elif pawn_role in member.roles:
-                await member.remove_roles(pawn_role, reason='use item')
+
+            await member.remove_roles(member_role, reason='use item')
 
             await member.add_roles(muted_role, reason='use item')
             voice_state = member.voice
@@ -173,9 +164,7 @@ class Shop(commands.Cog):
             voice_state = member.voice
             if voice_state is not None:
                 await member.edit(mute=False)
-            roleid = int(getUserRole(member.id))
-            memberrole = discord.utils.get(ctx.guild.roles, id=roleid)
-            await member.add_roles(memberrole, reason="time's up")
+            await member.add_roles(member_role, reason="time's up")
 
             await ctx.send(f"{member.mention} has been unmuted.")
 
