@@ -666,19 +666,22 @@ class Moderation(commands.Cog):
         if 'discord.gg' in message.content:
             if message.guild.id == 831211215375433728:
                 # await message.channel.send(f"{message.channel.category_id} == 831211215375433731")
-                if message.channel.id != 838442788021993484 and message.channel.category_id != 831211215375433731:
-                    await message.delete()
-                    embed = discord.Embed(
-                        title="Sorry, that isn't allowed here. Contact a mod if you would like to partner.",
-                        colour=0xff0000)
-                    embed.add_field(name="If you need an invite to the Vat, try .invite.", value="** **")
-                    embed.set_footer(text="DM me or any mods for problems/questions!")
-                    await message.channel.send(embed=embed)
-                    sendchannel = self.client.get_channel(831214657439924284)
-                    embedVar2 = discord.Embed(title="Filtered Message:", color=0xff0000)
-                    embedVar2.add_field(name=f"{message.author} sent an invite in {message.channel}:",
-                                        value=f"{message.content}", inline=False)
-                    await sendchannel.send(embed=embedVar2)
+                staffrole = discord.utils.get(message.guild.roles, id=831214459682029588)
+                if staffrole not in message.author.roles:
+
+                    if message.channel.id != 838442788021993484 and message.channel.category_id != 831211215375433731 and message.author.id != 819778342818414632:
+                        await message.delete()
+                        embed = discord.Embed(
+                            title="Sorry, that isn't allowed here. Contact a mod if you would like to partner.",
+                            colour=0xff0000)
+                        embed.add_field(name="If you need an invite to the Vat, try .invite.", value="** **")
+                        embed.set_footer(text="DM me or any mods for problems/questions!")
+                        await message.channel.send(embed=embed)
+                        sendchannel = self.client.get_channel(831214657439924284)
+                        embedVar2 = discord.Embed(title="Filtered Message:", color=0xff0000)
+                        embedVar2.add_field(name=f"{message.author} sent an invite in {message.channel}:",
+                                            value=f"{message.content}", inline=False)
+                        await sendchannel.send(embed=embedVar2)
 
 
 def setup(client):
