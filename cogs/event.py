@@ -127,13 +127,13 @@ class Events(commands.Cog):
                 overwrite.read_message_history = True
                 overwrite.send_messages = False
                 await c.set_permissions(blueteam, overwrite=overwrite)
-        elif answer.lower() in ["jenny"]:
-            await ctx.send(
-                "Congratulations for finishing Nebu's trial.")
+        elif answer.lower() in ['ellie', "<:ellie:891836725129777212>", ":ellie:"]:
+            await ctx.send("**Congratulations on completing the final trial. You have proved that you have what it takes.** ")
+            c = self.client.get_channel(903491071550558218)
             if redteam in ctx.author.roles:
-                await ctx.send("Red team has won.")
+                await c.send(f"{ctx.author.mention} from Red Team has solved the final trial!")
             elif blueteam in ctx.author.roles:
-                await ctx.send("Blue team has won.")
+                await c.send(f"{ctx.author.mention} from Blue Team has solved the final trial!")
         else:
             await ctx.send("That is incorrect.")
             return

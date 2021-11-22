@@ -97,6 +97,7 @@ class Shop(commands.Cog):
     async def use(self, ctx,*, item=None):
         if item == None:
             await ctx.send("What would you like to use?")
+            self.use.reset_cooldown(ctx)
             return
         item = item.lower().strip()
         # if item in ['mute', 'minute mute', '1 minute mute', '1mm']:
@@ -114,6 +115,7 @@ class Shop(commands.Cog):
         elif item in ['mute', 'minute mute', '1 minute mute', '1mm']:
             if not hasItem(ctx.author.id, "1 Minute Mute"):
                 await ctx.send("You do not have that item.")
+                self.use.reset_cooldown(ctx)
                 return
             # if member == None or not isinstance(member, discord.Member):
             #     await ctx.send("Try .use mute @(whoever)")
@@ -127,6 +129,7 @@ class Shop(commands.Cog):
                 reply = await self.client.wait_for('message', check=check, timeout = 30.0)
             except asyncio.TimeoutError:
                 await ctx.send("Timed out, try again.")
+                self.use.reset_cooldown(ctx)
                 return
             member = reply.mentions[0]
             muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
@@ -139,6 +142,7 @@ class Shop(commands.Cog):
 
             if member == self.client.user:
                 await ctx.send("You cannot do that to me, young one.")
+                self.use.reset_cooldown(ctx)
                 return
 
             await member.remove_roles(member_role, reason='use item')
