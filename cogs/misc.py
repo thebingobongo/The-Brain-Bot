@@ -62,11 +62,16 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def mel(self, ctx):
-        await ctx.send("Mel passed on, and from the flaming ashes of her corpse arose Miffy.")
+        await ctx.send("Mel is studying you goof")
+
+    @commands.command()
+    async def wenis(self, ctx):
+        await ctx.send("*Insert choid joke here*")
+
 
     @commands.command()
     async def alpha(self,ctx):
-        await ctx.send("We all know BingoBongo is the alpha around here.")
+        await ctx.send("We all know bingo is the alpha around here.")
 
     @commands.command(aliases=['8ball'])
     async def eightball(self, ctx):

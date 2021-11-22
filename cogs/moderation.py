@@ -645,10 +645,14 @@ class Moderation(commands.Cog):
                 await message.add_reaction("<:gag:837859560566816788>")
             if msgword.lower() in ["brain", "<:happybrain:838485449512452157>", "vat"]:
                 await message.add_reaction("<:happybrain:838485449512452157>")
-            if msgword.lower() in ["canada", 'toronto', 'eh', 'timmies', 'tims', "timbits", 'hortons', 'maple']:
+            if msgword.lower() in ["canada", 'toronto', 'eh', 'timmies', 'tims', "timbits", 'hortons', 'maple', 'poutine', 'beiber', 'drake']:
                 await message.add_reaction("🍁")
             if msgword.lower() == "<:feelsbadeh:854187237356863489>":
                 await message.add_reaction("<:feelsbadeh:854187237356863489>")
+            if msgword.lower() in ["wenis", 'wemis', 'wamis', 'wanis', 'millian', '<:wenis:838097027392864316>']:
+                await message.add_reaction("<:wenis:838097027392864316>")
+            if msgword.lower() in ['mel', 'miffy', 'hgc', 'grapefruit','<:melverified:912131837910990919>']:
+                await message.add_reaction('<:melverified:912131837910990919>')
             if msgword.lower() in ['marz','barz', '<:marzbarz:867622876004745236>', 'marzbarz']:
                 await message.add_reaction('<:marzbarz:867622876004745236>')
 

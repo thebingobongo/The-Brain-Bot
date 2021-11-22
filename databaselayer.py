@@ -162,3 +162,33 @@ def addItem(discordid, itemname):
 def removeItem(discordid, itemname):
     cur.execute(f"DELETE FROM inventory WHERE discordid = '{discordid}' AND item_name = '{itemname}';")
     con.commit()
+
+
+def addBounty(user_id, challenge, amount):
+    cur.execute("INSERT INTO bounties (user_id, challenge, amount) VALUES (?,?,?)", (user_id, challenge, amount))
+    con.commit()
+
+
+def removeBounty(bounty_id):
+    cur.execute("DELETE FROM bounties WHERE bounty_id=?", (bounty_id,))
+    con.commit()
+
+
+def showBounties(user_id):
+    cur.execute("SELECT * FROM bounties WHERE user_id=?", (user_id,))
+    res = cur.fetchall()
+    return res
+
+
+def getBountyAmount(bounty_id):
+    cur.execute("SELECT amount FROM bounties WHERE bounty_id=?", (bounty_id,))
+    res = cur.fetchall()
+    amount = res[0]
+    return amount
+
+
+def completeBounty(bounty_id):
+    amount = getBountyAmount(bounty_id)
+    removeBounty(bounty_id)
+    return amount
+
