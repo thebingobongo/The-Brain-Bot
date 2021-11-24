@@ -93,7 +93,7 @@ class Shop(commands.Cog):
             await ctx.send(f"You successfully bought a {name}")
 
     @commands.command()
-    @commands.cooldown(1,86400,commands.BucketType.user)
+    @commands.cooldown(1,7200,commands.BucketType.user)
     async def use(self, ctx,*, item=None):
         if item == None:
             await ctx.send("What would you like to use?")
@@ -110,6 +110,7 @@ class Shop(commands.Cog):
             await ctx.author.add_roles(dj_role, reason="Bought dj role")
             removeItem(ctx.author.id, "DJ Role")
             await ctx.send("The DJ Role has been applied to you.")
+            self.use.reset_cooldown(ctx)
 
 
         elif item in ['mute', 'minute mute', '1 minute mute', '1mm']:
@@ -175,6 +176,7 @@ class Shop(commands.Cog):
 
         else:
             await ctx.send("That item could not be found. Try again.")
+            self.use.reset_cooldown(ctx)
 
             # mute = self.client.get_command("mute")
             # print(mute, type(mute))
