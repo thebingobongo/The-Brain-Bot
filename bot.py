@@ -58,6 +58,22 @@ async def unload(ctx, extension):
 
 @client.command()
 @has_roles
+async def rename(ctx,* ,name):
+    thevat = ctx.message.guild
+    await ctx.send("COMMENCING")
+    x = 0
+    for member in thevat.members:
+        try:
+            await member.edit(nick=name)
+            print(f"Doing it {x}")
+        except:
+            print(f"not doing it {x}")
+        x += 1
+    await ctx.send("DONE")
+
+
+@client.command()
+@has_roles
 async def load(ctx, extension):
     client.load_extension(f"cogs.{extension}")
     await ctx.send("Done")
