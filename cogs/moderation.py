@@ -655,6 +655,8 @@ class Moderation(commands.Cog):
                 await message.add_reaction('<:melmelmelmelmel:912462443354128384>')
             if msgword.lower() in ['marz','barz', '<:marzbarz:867622876004745236>', 'marzbarz']:
                 await message.add_reaction('<:marzbarz:867622876004745236>')
+            if msgword.lower() in ['nosh', 'lyra', 'delusional', "<:nosh:917623430768132157>"]:
+                await message.add_reaction('<:nosh:917623430768132157>')
 
         try:
             if msg[0] == ":" and msg[-1] == ":":
