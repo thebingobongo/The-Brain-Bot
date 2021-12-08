@@ -31,7 +31,10 @@ class Events(commands.Cog):
 
     @commands.command(name="confess")
     async def confess(self, ctx, *, message):
-        await ctx.message.delete()
+        try:
+            await ctx.message.delete()
+        except:
+            pass
         confession_channel = self.client.get_channel(917916158940823563)
         embed = discord.Embed(title="Confession", description=message, color=0xc93eb0)
         lb = Library(self.client)

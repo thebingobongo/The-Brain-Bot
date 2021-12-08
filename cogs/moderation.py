@@ -582,6 +582,14 @@ class Moderation(commands.Cog):
             # Checking if its a dm channel
         if isinstance(message.channel, discord.DMChannel):
             # Getting the channel
+
+            # --------------------------------------------------------------------------------
+            # CONFESSION STUFF
+            # DELETE AFTER EVENT IS OVER
+            if message.content.startswith(".confess "):
+                return
+            # ---------------------------------------------------------------------------------
+
             sendchannel = self.client.get_channel(831214657439924284)
             embedVar = discord.Embed(title="BOT RECIEVED DM", color=0x00ff00)
             embedVar.add_field(name=f"{message.author} sent the bot:",
@@ -655,7 +663,7 @@ class Moderation(commands.Cog):
                 await message.add_reaction('<:melmelmelmelmel:912462443354128384>')
             if msgword.lower() in ['marz','barz', '<:marzbarz:867622876004745236>', 'marzbarz']:
                 await message.add_reaction('<:marzbarz:867622876004745236>')
-            if msgword.lower() in ['nosh', 'lyra', 'delusional', "<:nosh:917623430768132157>"]:
+            if msgword.lower() in ['nosh', 'lyra', 'delusional', 'despicable', "<:nosh:917623430768132157>"]:
                 await message.add_reaction('<:nosh:917623430768132157>')
 
         try:
