@@ -5,6 +5,9 @@ from databaselayer import hasEnough
 
 
 class ApprovalButton(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+     
     @discord.ui.button(label="✅", style=discord.ButtonStyle.green)
     async def checkmark(self, button: discord.ui.Button, interaction: discord.Interaction):
         self.value = True
