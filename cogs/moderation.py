@@ -606,7 +606,7 @@ class Moderation(commands.Cog):
         msg = message.content
 
         filteredwords = ['nigger', 'nigga', 'faggot', 'testbingobongo', 'niggers', 'fag', 'fagging', 'faggitt',
-                         'faggot',
+                         'faggot', 'retarded', 'r3tarded', 'r3tard3d',
                          'faggs', 'fagot', 'fagots', 'fags', 'dyke', 'n1gga', 'n1gger', 'nigg3r', 'nigg4h', 'nigga',
                          'niggah', 'niggas', 'niggaz', 'nigger', 'niggers', 'retard', 'assnigger', 'douche-fag',
                          'fagbag',
@@ -663,8 +663,8 @@ class Moderation(commands.Cog):
                 await message.add_reaction('<:melmelmelmelmel:912462443354128384>')
             if msgword.lower() in ['marz','barz', '<:marzbarz:867622876004745236>', 'marzbarz']:
                 await message.add_reaction('<:marzbarz:867622876004745236>')
-            if msgword.lower() in ['nosh', 'lyra', 'delusional', 'despicable', "<:nosh:917623430768132157>"]:
-                await message.add_reaction('<:nosh:917623430768132157>')
+            if msgword.lower() in ['nosh', 'lyra', 'delusional', 'despicable', "<:nosh:920397187081457727>"]:
+                await message.add_reaction('<:nosh:920397187081457727>')
             if msgword.lower() == '<:fuckthemods:912130927231111268>':
                 await message.add_reaction('<:fucktheusers:912130974886801439>')
 
