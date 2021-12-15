@@ -657,7 +657,7 @@ class Moderation(commands.Cog):
                 await message.add_reaction("🍁")
             if msgword.lower() == "<:feelsbadeh:854187237356863489>":
                 await message.add_reaction("<:feelsbadeh:854187237356863489>")
-            if msgword.lower() in ["wenis", 'wemis', 'wamis', 'wanis', 'millian', '<:wenis:838097027392864316>']:
+            if msgword.lower() in ["wenis", 'wemis', 'wamis', 'wanis','wnais', 'wensi','wemsi',"l" , 'millian', '<:wenis:838097027392864316>']:
                 await message.add_reaction("<:wenis:838097027392864316>")
             if msgword.lower() in ['mel', 'miffy', 'hgc', 'grapefruit','<:melmelmelmelmel:912462443354128384>']:
                 await message.add_reaction('<:melmelmelmelmel:912462443354128384>')
