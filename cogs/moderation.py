@@ -89,6 +89,27 @@ class Moderation(commands.Cog):
         await ctx.send("Underage Tag has been removed!")
 
 
+    @commands.command(aliases=['woman','makewoman','givewoman'])
+    @has_roles
+    async def iswoman(self,ctx,member:discord.Member=None):
+        if member == None:
+            await ctx.send("Whos a woman?")
+            return
+        textchannel = self.client.get_channel(919810228621561867)
+        await textchannel.set_permissions(member,
+                                        view_channel=True,
+                                        send_messages=True,
+                                        add_reactions = True,
+                                        attach_files = True,
+                                        embed_links = True,
+                                        use_external_emojis = True,
+                                        read_messages = True,
+                                        read_message_history = True,
+
+                                                    )
+        await ctx.send(f"{member} has been granted access to the women only channel.")
+
+
     @commands.command(aliases=["sew"])
     @has_roles
     async def mute(self, ctx, members: commands.Greedy[discord.Member],
