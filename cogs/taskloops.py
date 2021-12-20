@@ -10,10 +10,10 @@ class Taskloops(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.data = []
-        # self.vccheck.add_exception_type(asyncpg.PostgresConnectionError)
-        # self.vccheck.start()
-        # self.waterreminder.add_exception_type(asyncpg.PostgresConnectionError)
-        # self.waterreminder.start()
+        self.vccheck.add_exception_type(asyncpg.PostgresConnectionError)
+        self.vccheck.start()
+        self.waterreminder.add_exception_type(asyncpg.PostgresConnectionError)
+        self.waterreminder.start()
 
     def cog_unload(self):
         self.vccheck.cancel()
