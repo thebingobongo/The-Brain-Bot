@@ -27,6 +27,10 @@ class Misc(commands.Cog):
     async def desire(self, ctx):
         await ctx.send("My only desire in this life is a gag AMA.")
 
+    @commands.command(aliases=['wbfrcu'])
+    async def joseph(self,ctx):
+        await ctx.send("https://tenor.com/view/monkey-pb2slow-cute-gif-23272957")
+
     @commands.command()
     async def pray(self, ctx):
         await ctx.send(
@@ -66,7 +70,7 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def wenis(self, ctx):
-        await ctx.send("U U UOUUUGHHH")
+        await ctx.send("U U UOOOUGGGHHH")
 
 
     @commands.command()

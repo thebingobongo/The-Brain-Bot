@@ -688,6 +688,8 @@ class Moderation(commands.Cog):
                 await message.add_reaction('<:nosh:920397187081457727>')
             if msgword.lower() == '<:fuckthemods:912130927231111268>':
                 await message.add_reaction('<:fucktheusers:912130974886801439>')
+            if msgword.lower() in ['joseph', 'josephs','wbfrcu','🍉']:
+                await message.add_reaction('🍉')
 
         try:
             if msg[0] == ":" and msg[-1] == ":":
