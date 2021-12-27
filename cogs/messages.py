@@ -8,6 +8,7 @@ import random
 import asyncio
 from debateTopics import debateTopics
 from databaselayer import addBal, getUserRole
+from timezones import *
 
 
 
@@ -201,11 +202,36 @@ def getZodiac(ctx, sign):
     embed.set_footer(text=res['current_date'])
     return embed
 
+def getTimeZones(ctx):
+    est = get_EST()
+    pst = get_PST()
+    eet = get_EET()
+    cet = get_CET()
+    gmt = get_GMT()
+    pkt = get_PKT()
+    d = get_Today()
+
+    embed = discord.Embed(title="Times in different parts of the world!", color=ctx.author.color)
+    embed.add_field(name="Current time in EST", value=est, inline=True)
+    embed.add_field(name="Current time in PST", value=pst, inline=True)
+    embed.add_field(name="Current time in GMT", value=gmt, inline=True)
+    embed.add_field(name="Current time in EET", value=eet, inline=True)
+    embed.add_field(name="Current time in CET", value=cet, inline=True)
+    embed.add_field(name="Current time in PKT", value=pkt, inline=True)
+    embed.set_footer(text=f"Today is {d}")
+
+    return embed
+
+
 
 class Messages(commands.Cog):
 
     def __init__(self, client):
         self.client = client
+
+    @commands.command(aliases=['timezone','times','clock','time'])
+    async def timezones(self, ctx):
+        await ctx.send(embed=getTimeZones(ctx))
 
     @commands.command()
     async def joke(self, ctx):
