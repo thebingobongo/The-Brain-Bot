@@ -218,7 +218,7 @@ def getTimeZones(ctx):
     embed.add_field(name="Current time in EET", value=eet, inline=True)
     embed.add_field(name="Current time in CET", value=cet, inline=True)
     embed.add_field(name="Current time in PKT", value=pkt, inline=True)
-    embed.set_footer(text=f"Today is {d}")
+    embed.set_footer(text=f"Today is {d}. All times are in 24 hour format.")
 
     return embed
 
