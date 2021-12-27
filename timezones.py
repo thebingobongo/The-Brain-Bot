@@ -30,7 +30,13 @@ def get_PKT():
     return get_time('Etc/GMT-5')
 
 
+def get_CST():
+    return get_time("Etc/GMT+6")
+
+
 def get_Today():
     today = date.today()
     d = today.strftime("%b %d, %Y")
     return d
+
+print(get_CST())

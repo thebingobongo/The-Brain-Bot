@@ -205,19 +205,19 @@ def getZodiac(ctx, sign):
 def getTimeZones(ctx):
     est = get_EST()
     pst = get_PST()
-    eet = get_EET()
+    cst = get_CST()
     cet = get_CET()
     gmt = get_GMT()
     pkt = get_PKT()
     d = get_Today()
 
     embed = discord.Embed(title="Times in different parts of the world!", color=ctx.author.color)
-    embed.add_field(name="Current time in EST", value=est, inline=True)
-    embed.add_field(name="Current time in PST", value=pst, inline=True)
-    embed.add_field(name="Current time in GMT", value=gmt, inline=True)
-    embed.add_field(name="Current time in EET", value=eet, inline=True)
-    embed.add_field(name="Current time in CET", value=cet, inline=True)
-    embed.add_field(name="Current time in PKT", value=pkt, inline=True)
+    embed.add_field(name="Eastern Standard Time | GMT-5", value=est, inline=True)
+    embed.add_field(name="Pacific Standard Time | GMT-8", value=pst, inline=True)
+    embed.add_field(name="Greenwich Mean Time or UTC", value=gmt, inline=True)
+    embed.add_field(name="Central Standard Time | GMT-6", value=cst, inline=True)
+    embed.add_field(name="Central European Time | GMT+1", value=cet, inline=True)
+    embed.add_field(name="Pakistan Standard Time | GMT+5", value=pkt, inline=True)
     embed.set_footer(text=f"Today is {d}. All times are in 24 hour format.")
 
     return embed
