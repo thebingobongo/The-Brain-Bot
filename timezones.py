@@ -39,4 +39,3 @@ def get_Today():
     d = today.strftime("%b %d, %Y")
     return d
 
-print(get_CST())
