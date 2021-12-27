@@ -66,7 +66,7 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def wenis(self, ctx):
-        await ctx.send("*Insert choid joke here*")
+        await ctx.send("U U UOUUUGHHH")
 
 
     @commands.command()
