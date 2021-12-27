@@ -48,22 +48,22 @@ class Library(commands.Cog):
         await msg.edit(view=None)
         return view.value
 
-    async def check_input(self, channel, amount):
-        try:
-            amount = int(amount)
-        except:
-            await channel.send("There was an error, try again.")
-            return False
-        if amount <= 0:
-            await channel.send("Can't do negative numbers.")
-            return False
-        elif amount < 50:
-            await channel.send("Need to bet at least 50 Brain Cells.")
-            return False
-        elif not hasEnough(channel.author.id, amount):
-            await channel.send("You do not have enough Brain Cells.")
-            return False
-        return True
+async def check_input(channel, amount):
+    try:
+        amount = int(amount)
+    except:
+        await channel.send("There was an error, try again.")
+        return False
+    if amount <= 0:
+        await channel.send("Can't do negative numbers.")
+        return False
+    elif amount < 50:
+        await channel.send("Need to bet at least 50 Brain Cells.")
+        return False
+    elif not hasEnough(channel.author.id, amount):
+        await channel.send("You do not have enough Brain Cells.")
+        return False
+    return True
 
 
 def setup(client):
