@@ -177,8 +177,12 @@ class Database(commands.Cog):
         count = 1
         embed = discord.Embed(title="The Smartest",colour=ctx.author.color)
         for member in res:
-            user = self.client.get_user(int(member[0]))
-            embed.add_field(name=f"{count}. {user.display_name}",value=f"{member[1]} Brain Cells",inline=False)
+            try:
+                user = self.client.get_user(int(member[0]))
+                name = user.display_name
+            except:
+                name = "Unknown User"
+            embed.add_field(name=f"{count}. {name}",value=f"{member[1]} Brain Cells",inline=False)
             count += 1
         await ctx.send(embed=embed)
 
