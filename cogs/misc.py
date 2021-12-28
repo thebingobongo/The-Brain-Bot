@@ -74,6 +74,10 @@ class Misc(commands.Cog):
 
 
     @commands.command()
+    async def vinnie(self,ctx):
+        await ctx.send(" UM OCK AND ALLS")
+
+    @commands.command()
     async def alpha(self,ctx):
         await ctx.send("We all know bingo is the alpha around here.")
 
