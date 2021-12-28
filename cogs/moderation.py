@@ -690,7 +690,7 @@ class Moderation(commands.Cog):
                 await message.add_reaction('<:fucktheusers:912130974886801439>')
             if msgword.lower() in ['joseph', 'josephs','wbfrcu','🍉']:
                 await message.add_reaction('🍉')
-            if msgword.lower() in ['vinnie', 'vinchenzo', 'vin']:
+            if msgword.lower() in ['vinnie', 'vinchenzo', 'vin', 'osito']:
                 await message.add_reaction("<:vinnie2:925188230150758432>")
 
         try:
