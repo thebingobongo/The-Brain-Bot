@@ -103,6 +103,11 @@ def updateUserBal(memberid, amount):
     con.commit()
 
 
+def resetBalance():
+    cur.execute(f'UPDATE users SET balance = {0};')
+    con.commit()
+
+
 def addBal(memberid, amount):
     bal = getUserBal(memberid)
     bal = int(bal) + int(amount)

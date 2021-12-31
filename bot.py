@@ -139,6 +139,13 @@ async def init(ctx):
             createUser(member.id)
 
 
+@client.command()
+@commands.is_owner()
+async def resetdatabase(ctx):
+    resetBalance()
+    await ctx.send("The brain cell table has been reset.")
+
+
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
