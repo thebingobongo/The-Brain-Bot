@@ -204,6 +204,9 @@ class Games(commands.Cog):
 
     @commands.command(aliases=['bj'])
     async def blackjack(self, ctx, ammount:str = None):
+        if ctx.channel.id == 831211215878488078:
+            await ctx.send("Use <#835370412161630270> you stupid fuck")
+            return
         if ammount == None:
             await ctx.send("How much do you want to bet? Try again.")
             return
@@ -324,6 +327,9 @@ class Games(commands.Cog):
     @commands.command()
     @commands.cooldown(1,15,commands.BucketType.guild)
     async def trivia(self, ctx):
+        if ctx.channel.id == 831211215878488078:
+            await ctx.send("Use <#835370412161630270> you stupid fuck")
+            return
         res = requests.get("https://opentdb.com/api.php?amount=1&type=multiple")
         result = json.loads(res.text)
         ans = result['results'][0]
@@ -407,6 +413,9 @@ class Games(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 2, commands.BucketType.user)
     async def coinflip(self, ctx, ammount: str = '10', options: str = None):
+        if ctx.channel.id == 831211215878488078:
+            await ctx.send("Use <#835370412161630270> you stupid fuck")
+            return
         if 'all' in ammount.strip().lower():
             # if ammount == "all":
             ammount = getUserBal(ctx.author.id)
@@ -452,6 +461,9 @@ class Games(commands.Cog):
 
     @commands.command()
     async def dice(self, ctx, number:int, ammount:str):
+        if ctx.channel.id == 831211215878488078:
+            await ctx.send("Use <#835370412161630270> you stupid fuck")
+            return
         if 'all' in ammount.strip().lower():
         # if ammount == "all":
             ammount = getUserBal(ctx.author.id)
