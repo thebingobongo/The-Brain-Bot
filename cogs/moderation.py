@@ -643,7 +643,7 @@ class Moderation(commands.Cog):
                          'injun', '1njun', 'jewboy', 'kyke', 'mayo monkey', 'mayonnaise monkey', 'pickaninny',
                          'polack',
                          'polak', 'polack', 'prarie nigger', 'prarie nigga', 'tacohead', 'thicklips', 'thicklips',
-                         'thick lips', 'ting tong', 'towel head', 'twink', 'uncle tom', 'uncle-tom', 'Wigger',
+                         'thick lips', 'ting tong', 'towel head', 'uncle tom', 'uncle-tom', 'Wigger',
                          'wigga', "moretesting",
                          'zipperhead', 'zippahead', 'zipper-head', 'zippa-head', 'twinks']
 
