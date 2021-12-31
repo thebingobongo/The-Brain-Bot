@@ -33,6 +33,9 @@ class Database(commands.Cog):
 
     @commands.command()
     async def give(self, ctx, member: discord.Member = None, ammount: str = None):
+        if ctx.channel.id == 831211215878488078:
+            await ctx.send("Use <#835370412161630270> you stupid fuck")
+            return
         if 'all' in ammount.strip().lower():
         # if ammount == "all":
             ammount = getUserBal(ctx.author.id)
@@ -69,6 +72,9 @@ class Database(commands.Cog):
     @commands.command(aliases=["think", "earn"])
     @commands.cooldown(1, 3600, commands.BucketType.user)
     async def work(self, ctx):
+        if ctx.channel.id == 831211215878488078:
+            await ctx.send("Use <#835370412161630270> you stupid fuck")
+            return
         earned = random.randint(200, 1000)
         addBal(ctx.author.id, earned)
         embed = discord.Embed(title=f"You just earned {earned} Brain Cells!",

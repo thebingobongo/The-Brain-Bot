@@ -19,6 +19,9 @@ class Shop(commands.Cog):
 
     @commands.command()
     async def shop(self, ctx):
+        if ctx.channel.id == 831211215878488078:
+            await ctx.send("Use <#835370412161630270> you stupid fuck")
+            return
         embed = discord.Embed(title="The Vat's Shop", color=0x00ffff)
         for item in self.items:
             embed.add_field(name=self.items[item]['name'], value=f"Cost = {self.items[item]['cost']} \n {self.items[item]['effect']}")
@@ -27,6 +30,9 @@ class Shop(commands.Cog):
 
     @commands.command(aliases=['inventory'])
     async def inv(self, ctx, member:discord.Member=None):
+        if ctx.channel.id == 831211215878488078:
+            await ctx.send("Use <#835370412161630270> you stupid fuck")
+            return
         if member == None:
             member = ctx.author
         res= getInventory(member.id)
@@ -40,6 +46,9 @@ class Shop(commands.Cog):
     @commands.command(aliases=['read'])
     @commands.cooldown(1,3600,commands.BucketType.user)
     async def study(self,ctx):
+        if ctx.channel.id == 831211215878488078:
+            await ctx.send("Use <#835370412161630270> you stupid fuck")
+            return
         if not hasItem(ctx.author.id, "Book"):
             await ctx.send("You need a book for that command.")
             self.study.reset_cooldown(ctx)
@@ -67,6 +76,9 @@ class Shop(commands.Cog):
 
     @commands.command()
     async def buy(self,ctx,*, item = None):
+        if ctx.channel.id == 831211215878488078:
+            await ctx.send("Use <#835370412161630270> you stupid fuck")
+            return
         if item == None:
             await ctx.send("Which item would you like to buy?")
             return
