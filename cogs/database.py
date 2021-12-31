@@ -173,6 +173,9 @@ class Database(commands.Cog):
 
     @commands.command(aliases=['leaderboard','top','rich','smart'])
     async def smartest(self, ctx):
+        if ctx.channel.id == 831211215878488078:
+            await ctx.send("Use <#835370412161630270> you stupid fuck")
+            return
         res = getLeaderBoard()
         count = 1
         embed = discord.Embed(title="The Smartest",colour=ctx.author.color)
