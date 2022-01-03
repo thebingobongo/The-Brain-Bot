@@ -630,22 +630,17 @@ class Moderation(commands.Cog):
                          'faggot', 'retarded', 'r3tarded', 'r3tard3d',
                          'faggs', 'fagot', 'fagots', 'fags', 'dyke', 'n1gga', 'n1gger', 'nigg3r', 'nigg4h', 'nigga',
                          'niggah', 'niggas', 'niggaz', 'nigger', 'niggers', 'retard', 'assnigger', 'douche-fag',
-                         'fagbag',
+                         'negro', 'fagbag','goyim', 'goyum', 'gringo', 'mutt', 'Kike',
                          'fagfucker', 'faggit', 'faggotcock', 'fagtard', 'mc faggot', 'mcfaggot', 'mcfagget',
-                         'negro',
                          'nigaboo', 'niglet', 'sand nigger', 'sandnigger', 'darkie', 'sand nigga', 'niggerfucker',
                          'pissnigger', 'pissnigga', 'lolli', 'loli', 'porch monkey', 'porchmonkey',
-                         'porch-monkey', 'bluegum', 'boonga', 'cabbage eater', 'ching-chong', 'dog-eater',
-                         'dog eater',
-                         'cat-eater', 'cat eater', 'Ching Chong', 'ching chong', 'chink', 'cholo', 'chinky',
+                         'porch-monkey', 'bluegum', 'ching-chong', 'dog-eater',
+                         'cat-eater', 'chink', 'cholo', 'chinky',
                          'Chink', 'Cholo', 'Chinky', 'jigaboo', 'jiggaboo', 'retards',
-                         'gin jockey', 'goyim', 'goyum', 'gringo', 'mutt', 'honky', 'honkey', 'honkie', 'Kike',
-                         'injun', '1njun', 'jewboy', 'kyke', 'mayo monkey', 'mayonnaise monkey', 'pickaninny',
-                         'polack',
-                         'polak', 'polack', 'prarie nigger', 'prarie nigga', 'tacohead', 'thicklips', 'thicklips',
-                         'thick lips', 'ting tong', 'towel head', 'uncle tom', 'uncle-tom', 'Wigger',
-                         'wigga', "moretesting",
-                         'zipperhead', 'zippahead', 'zipper-head', 'zippa-head', 'twinks']
+                         'injun', '1njun', 'jewboy', 'kyke', 'pickaninny',
+                         'polack','polak', 'polack', 'tacohead', 'thicklips', 'thicklips',
+                         'uncle-tom', 'Wigger','wigga', "moretesting",
+                         'zipperhead', 'zippahead', 'zipper-head', 'zippa-head']
 
         msgwords = msg.split()
         for msgword in msgwords:
