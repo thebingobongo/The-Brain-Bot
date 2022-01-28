@@ -150,6 +150,10 @@ class Moderation(commands.Cog):
         await logs.send(
             "{0.mention} has been muted by {1} for *{2}* {3}".format(member, ctx.author, reason,
                                                                              time))
+        userlogs = self.client.get_channel(934867511273476177)
+        await userlogs.send(
+            "{0.mention} has been muted by {1} for *{2}* {3}".format(member, ctx.author, reason,
+                                                                     time))
         if mute_minutes > 0:
             await asyncio.sleep(mute_minutes * 60)
             for member in members:
@@ -244,6 +248,11 @@ class Moderation(commands.Cog):
         logs = self.client.get_channel(831214657439924284)
         await logs.send("{0.mention} has been punished by {1} for *{2}* {3}".format(member, ctx.author,
                                                                                              reason, time))
+
+        userlogs = self.client.get_channel(934867511273476177)
+        await userlogs.send("{0.mention} has been punished by {1} for *{2}* {3}".format(member, ctx.author,
+                                                                                             reason, time))
+
         if dungeon_minutes > 0:
             await asyncio.sleep(dungeon_minutes * 60)
             for member in members:
@@ -271,6 +280,9 @@ class Moderation(commands.Cog):
         await ctx.send("{0.mention} has been kicked by {1} for *{2}* ".format(member, ctx.author, reason))
         logs = self.client.get_channel(831214657439924284)
         await logs.send("{0.mention} has been kicked by {1} for *{2}* ".format(member, ctx.author, reason))
+
+        userlogs = self.client.get_channel(934867511273476177)
+        await userlogs.send("{0.mention} has been kicked by {1} for *{2}* ".format(member, ctx.author, reason))
         await member.kick(reason=reason)
 
 
@@ -291,6 +303,8 @@ class Moderation(commands.Cog):
         await ctx.send("{0.mention} has been banned by {1} for *{2}* ".format(member, ctx.author, reason))
         logs = self.client.get_channel(831214657439924284)
         await logs.send("{0.mention} has been banned by {1} for *{2}* ".format(member, ctx.author, reason))
+        userlogs = self.client.get_channel(934867511273476177)
+        await userlogs.send("{0.mention} has been banned by {1} for *{2}* ".format(member, ctx.author, reason))
 
     @commands.command()
     @has_roles
@@ -332,6 +346,9 @@ class Moderation(commands.Cog):
         logs = self.client.get_channel(831214657439924284)
         await logs.send("{0.mention} has been promoted by {1}.".format(member, ctx.author))
 
+        userlogs = self.client.get_channel(934867511273476177)
+        await userlogs.send("{0.mention} has been promoted by {1}.".format(member, ctx.author))
+
 
     @commands.command()
     @commands.has_role(831214459682029588)
@@ -370,6 +387,9 @@ class Moderation(commands.Cog):
 
         logs = self.client.get_channel(831214657439924284)
         await logs.send("{0.mention} has been demoted by {1}.".format(member, ctx.author))
+
+        userlogs = self.client.get_channel(934867511273476177)
+        await userlogs.send("{0.mention} has been demoted by {1}.".format(member, ctx.author))
 
     @commands.command(aliases=['gbr', 'brainrole'])
     @has_roles
@@ -488,6 +508,10 @@ class Moderation(commands.Cog):
                 "{0.mention} has been awarded the brain role for {1} by {2}".format(member, role, ctx.author))
             logs = self.client.get_channel(831214657439924284)
             await logs.send(
+                "{0.mention} has been awarded the brain role for {1} by {2}".format(member, role, ctx.author))
+
+            userlogs = self.client.get_channel(934867511273476177)
+            await userlogs.send(
                 "{0.mention} has been awarded the brain role for {1} by {2}".format(member, role, ctx.author))
 
     @commands.command()

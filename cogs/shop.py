@@ -190,56 +190,6 @@ class Shop(commands.Cog):
             await ctx.send("That item could not be found. Try again.")
             self.use.reset_cooldown(ctx)
 
-            # mute = self.client.get_command("mute")
-            # print(mute, type(mute))
-            # print('got mute')
-            # m = Moderation(self.client)
-            # await m.mute(ctx=ctx, members=member,mute_minutes= 1, reason='use item')
-            # #await self.client.invoke(mute, members=member,mute_minutes= 1, reason='use item')
-            # print('muted')
-
-            # if member.voice is not None:
-            #     await member.edit(mute=True)
-            #     await ctx.send(f"{member.mention} has been muted for a minute by {ctx.author.mention}")
-            #     logs = self.client.get_channel(831214657439924284)
-            #     await logs.send(
-            #         "{0.mention} has been muted by {1.mention} using the item.".format(member, ctx.author))
-            #     await asyncio.sleep(60)
-            #     await member.edit(mute=False)
-            #     removeItem(ctx.author.id, "1 Minute Mute")
-            # else:
-            #     await ctx.send("The member isn't connected to a VC.")
-                    # await ctx.send("That part is still under construction.")
-            # await ctx.invoke(self.client.get_command('mute'), members = member, mute_minutes = 1)
-            # await ctx.Moderation.mute(member, 1, 'use item')
-            # await Moderation.mute(self.client, ctx, member, 1, 'use item')
-            # mute = self.client.get_command('mute')
-            # await ctx.invoke(mute,members = member, mute_minutes = 1 )
-
-
-    # @commands.command()
-    # @commands.cooldown(1,42200,commands.BucketType.user)
-    # async def steal(self,ctx, member:discord.Member):
-    #     stealbal = getUserBal(member.id)
-    #     chances = random.randint(0,2)
-    #     success = False
-    #     if chances == 0:
-    #         success = True
-    #         newbal = int(stealbal * 0.15)
-    #     elif chances == 1:
-    #         success = True
-    #         newbal = int(stealbal * 0.35)
-    #     else:
-    #         userbal = getUserBal(ctx.author.id)
-    #         newuserbal = int(userbal * 0.80)
-    #         subBal(ctx.author.id, newuserbal)
-    #         addBal(member.id, newuserbal)
-    #         await ctx.send("You got caught, stupid. You lost 20% of your brain cells.")
-    #         return
-    #     if success == True:
-    #         addBal(ctx.author.id, newbal)
-    #         subBal(member.id, newbal)
-    #         await ctx.send(f"You stole {newbal} Brain Cells from {member.display_name}!")
 
 
 def setup(client):
