@@ -84,6 +84,10 @@ class Misc(commands.Cog):
 
 
     @commands.command()
+    async def sen(self, ctx):
+        await ctx.send("**SWOLE IS THE GOAL SIZE IS THE PRIZE**")
+
+    @commands.command()
     async def emi(self, ctx):
         await ctx.send("💖 the heart yoooo")
 
