@@ -713,6 +713,9 @@ class Moderation(commands.Cog):
                 await message.add_reaction("<:vinnie2:925188230150758432>")
             if msgword.lower() in ['sterg', 'stergiara', 'mizkif']:
                 await message.add_reaction('<:patrick:840390533892407296>')
+            if msgword.lower() in ['emi', 'artemida', 'emii', 'emiii']:
+                await message.add_reaction('💖')
+
 
         try:
             if msg[0] == ":" and msg[-1] == ":":

@@ -82,6 +82,11 @@ class Misc(commands.Cog):
     async def stergiara(self, ctx):
         await ctx.send("https://www.twitch.tv/mizkif")
 
+
+    @commands.command()
+    async def emi(self, ctx):
+        await ctx.send("💖 the heart yoooo")
+
     @commands.command()
     async def alpha(self,ctx):
         await ctx.send("We all know bingo is the alpha around here.")
