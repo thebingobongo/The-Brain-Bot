@@ -89,7 +89,7 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def emi(self, ctx):
-        await ctx.send("💖 the heart yoooo")
+        await ctx.send("https://youtu.be/L9rGGtSaMjk")
 
     @commands.command()
     async def alpha(self,ctx):
