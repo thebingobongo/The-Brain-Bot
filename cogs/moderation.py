@@ -713,8 +713,10 @@ class Moderation(commands.Cog):
                 await message.add_reaction("<:vinnie2:925188230150758432>")
             elif msgword.lower() in ['sterg', 'stergiara', 'mizkif']:
                 await message.add_reaction('<:patrick:840390533892407296>')
-            elif msgword.lower() in ['emi', 'artemida', 'emii', 'emiii']:
+            elif msgword.lower() in ['emi', 'artemida', 'emii', 'emiii', 'aviata']:
                 await message.add_reaction('💖')
+            elif msgword.lower() in ['sen', 'swole']:
+                await message.add_reaction('<:sen:936785558703853578>')
 
 
         try:
