@@ -689,31 +689,31 @@ class Moderation(commands.Cog):
                     break
             if msgword.lower() in ["bingo", "bingobongo", "<:bingo:838288733748461588>"]:
                 await message.add_reaction("<:bingo:838288733748461588>")
-            if msgword.lower() in ["gag", "<:gag:837859560566816788>"]:
+            elif msgword.lower() in ["gag", "<:gag:837859560566816788>"]:
                 await message.add_reaction("<:gag:837859560566816788>")
-            if msgword.lower() in ["brain", "<:happybrain:838485449512452157>", "vat"]:
+            elif msgword.lower() in ["brain", "<:happybrain:838485449512452157>", "vat"]:
                 await message.add_reaction("<:happybrain:838485449512452157>")
-            if msgword.lower() in ["canada", 'toronto', 'eh', 'timmies', 'tims', "timbits", 'hortons', 'maple', 'poutine', 'beiber', 'drake']:
+            elif msgword.lower() in ["canada", 'toronto', 'eh', 'timmies', 'tims', "timbits", 'hortons', 'maple', 'poutine', 'beiber', 'drake']:
                 await message.add_reaction("🍁")
-            if msgword.lower() == "<:feelsbadeh:854187237356863489>":
+            elif msgword.lower() == "<:feelsbadeh:854187237356863489>":
                 await message.add_reaction("<:feelsbadeh:854187237356863489>")
-            if msgword.lower() in ["wenis", 'wemis', 'wamis', 'wanis','wnais', 'wensi','wemsi',"l" , 'millian', '<:wenis:838097027392864316>']:
+            elif msgword.lower() in ["wenis", 'wemis', 'wamis', 'wanis','wnais', 'wensi','wemsi',"l" , 'millian', '<:wenis:838097027392864316>']:
                 await message.add_reaction("<:wenis:838097027392864316>")
-            if msgword.lower() in ['mel', 'miffy', 'hgc', 'grapefruit','<:melmelmelmelmel:912462443354128384>']:
+            elif msgword.lower() in ['mel', 'miffy', 'hgc', 'grapefruit','<:melmelmelmelmel:912462443354128384>']:
                 await message.add_reaction('<:melmelmelmelmel:912462443354128384>')
-            if msgword.lower() in ['marz','barz', '<:marzbarz:867622876004745236>', 'marzbarz']:
+            elif msgword.lower() in ['marz','barz', '<:marzbarz:867622876004745236>', 'marzbarz']:
                 await message.add_reaction('<:marzbarz:867622876004745236>')
-            if msgword.lower() in ['nosh', 'lyra', 'delusional', 'despicable', "<:nosh:920397187081457727>"]:
+            elif msgword.lower() in ['nosh', 'lyra', 'delusional', 'despicable', "<:nosh:920397187081457727>"]:
                 await message.add_reaction('<:nosh:920397187081457727>')
-            if msgword.lower() == '<:fuckthemods:912130927231111268>':
+            elif msgword.lower() == '<:fuckthemods:912130927231111268>':
                 await message.add_reaction('<:fucktheusers:912130974886801439>')
-            if msgword.lower() in ['joseph', 'josephs','wbfrcu','🍉']:
+            elif msgword.lower() in ['joseph', 'josephs','wbfrcu','🍉']:
                 await message.add_reaction('🍉')
-            if msgword.lower() in ['vinnie', 'vinchenzo', 'vin', 'osito']:
+            elif msgword.lower() in ['vinnie', 'vinchenzo', 'vin', 'osito']:
                 await message.add_reaction("<:vinnie2:925188230150758432>")
-            if msgword.lower() in ['sterg', 'stergiara', 'mizkif']:
+            elif msgword.lower() in ['sterg', 'stergiara', 'mizkif']:
                 await message.add_reaction('<:patrick:840390533892407296>')
-            if msgword.lower() in ['emi', 'artemida', 'emii', 'emiii']:
+            elif msgword.lower() in ['emi', 'artemida', 'emii', 'emiii']:
                 await message.add_reaction('💖')
 
 
