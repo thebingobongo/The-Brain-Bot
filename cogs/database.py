@@ -101,8 +101,7 @@ class Database(commands.Cog):
     @commands.command(aliases=['showwarns','swarns','warns'])
     async def showWarns(self,ctx,target:discord.Member=None):
         if target == None:
-            await ctx.send("Name a member.")
-            return
+            target = ctx.author
         res = getWarns(target.id)
         embed = discord.Embed(title=f"Warns for {target.display_name}", colour=target.colour)
         count = 1
@@ -149,8 +148,7 @@ class Database(commands.Cog):
     @has_roles
     async def showNotes(self,ctx,target:discord.Member=None):
         if target == None:
-            await ctx.send("Name a member.")
-            return
+            target = ctx.author
         res = getNotes(target.id)
         embed = discord.Embed(title=f"Notes for {target.display_name}",colour=target.colour)
         count = 1
