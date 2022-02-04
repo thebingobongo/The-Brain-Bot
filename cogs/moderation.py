@@ -31,11 +31,20 @@ class Moderation(commands.Cog):
             await ctx.send("You cannot do that to me, young one.")
             return
 
+        aboveage_placeholder_role = discord.utils.get(ctx.guild.roles, id=939060590188589057)
         aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
         underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
 
-        if underage_role not in member.roles:
+        if underage_role not in member.roles and aboveage_placeholder_role not in member.roles:
+            m = await ctx.send("Please ask {member.name} to react to the age message.")
+            await asyncio.sleep(30)
+            await m.delete()
+            return
+            # await member.add_roles(aboveage_role)
+
+        if aboveage_placeholder_role in ctx.author.roles:
             await member.add_roles(aboveage_role)
+            await member.remove_roles(aboveage_placeholder_role)
 
         member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
         sendchannel = self.client.get_channel(831211215878488078)
@@ -46,7 +55,7 @@ class Moderation(commands.Cog):
         await member.add_roles(member_role)
         await ctx.send("User has been approved.")
         await sendchannel.send(
-            " Welcome to **The Vat!**  :confetti_ball: \n {0.mention} \n If you run into issues in the server, please message  :brain: **The Brain** bot listed at the top of the user panel on the right.  Here, we are all brains in a vat, sharing our knowledge together in the virtual world of Discord!".format(
+            " Welcome to **The Vat!**  :confetti_ball: \n {0.mention} \n If you run into issues in the server, please message  :brain: **The Brain** bot listed at the top of the user panel on the right. Make sure to grab some roles from <#831215253076574219>! Here, we are all brains in a vat, sharing our knowledge together in the virtual world of Discord!".format(
                 member))
 
     @commands.command()
