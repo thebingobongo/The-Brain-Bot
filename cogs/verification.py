@@ -11,18 +11,23 @@ class Verification(commands.Cog):
     @commands.command()
     async def verify(self, ctx):
 
+        aboveage_placeholder_role = discord.utils.get(ctx.guild.roles, id=939060590188589057)
         aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
         underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
+        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
+        sendchannel = self.client.get_channel(831211215878488078)
 
-        if aboveage_role not in ctx.author.roles and underage_role not in ctx.author.roles:
+        if aboveage_placeholder_role not in ctx.author.roles and underage_role not in ctx.author.roles:
             m = await ctx.send("Please react to the age message.")
             await ctx.message.delete()
             await asyncio.sleep(30)
             await m.delete()
             return
 
-        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
-        sendchannel = self.client.get_channel(831211215878488078)
+        if aboveage_placeholder_role in ctx.author.roles:
+            await ctx.author.add_roles(aboveage_role)
+            await ctx.author.remove_roles(aboveage_placeholder_role)
+
         try:
             createUser(ctx.author.id)
         except:
