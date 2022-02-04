@@ -66,25 +66,25 @@ def getAnswer3(question):
 
 
 def getJoke():
-    response = requests.get('https://official-joke-api.appspot.com/random_joke', timeout=30)
+    response = requests.get('https://joke.deno.dev/type/general/1', timeout=30)
     joke = json.loads(response.text)
-    text = joke['setup'] + " \n " + joke['punchline']
+    text = joke[0]['setup'] + " \n" + joke[0]['punchline']
     embed = discord.Embed(title=text, color=0x00ffff)
     return embed
 
 
 def getProgrammingJoke():
-    response = requests.get('https://official-joke-api.appspot.com/jokes/programming/random', timeout=30)
+    response = requests.get('https://joke.deno.dev/type/programming/1', timeout=30)
     joke = json.loads(response.text)
-    text = joke[0]['setup'] + " \n " + joke[0]['punchline']
+    text = joke[0]['setup'] + " \n" + joke[0]['punchline']
     embed = discord.Embed(title=text, color=0x00ffff)
     return embed
 
 
 def getKnockKnock():
-    response = requests.get('https://official-joke-api.appspot.com/jokes/knock-knock/random', timeout=30)
+    response = requests.get('https://joke.deno.dev/type/knock-knock/1', timeout=30)
     joke = json.loads(response.text)
-    text = joke[0]['setup'] + " \n " + joke[0]['punchline']
+    text = joke[0]['setup'] + " \n" + joke[0]['punchline']
     embed = discord.Embed(title=text, color=0x00ffff)
     return embed
 
