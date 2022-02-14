@@ -167,7 +167,7 @@ class Shop(commands.Cog):
                 await member.edit(mute=True)
             await ctx.send(
                 "{0.mention} has been muted by {1.mention} with the item.".format(member, ctx.author))
-            logs = self.client.get_channel(831214657439924284)
+            logs = self.client.get_channel(934867511273476177)
             await logs.send(
                 "{0.mention} has been muted by {1.mention} with the item.".format(member, ctx.author))
 

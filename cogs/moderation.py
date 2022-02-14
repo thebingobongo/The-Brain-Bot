@@ -155,10 +155,10 @@ class Moderation(commands.Cog):
             await ctx.send(
                 "{0.mention} has been muted by {1} for *{2}* {3}".format(member, ctx.author, reason,
                                                                                  time))
-        logs = self.client.get_channel(831214657439924284)
-        await logs.send(
-            "{0.mention} has been muted by {1} for *{2}* {3}".format(member, ctx.author, reason,
-                                                                             time))
+        # logs = self.client.get_channel(831214657439924284)
+        # await logs.send(
+        #     "{0.mention} has been muted by {1} for *{2}* {3}".format(member, ctx.author, reason,
+        #                                                                      time))
         userlogs = self.client.get_channel(934867511273476177)
         await userlogs.send(
             "{0.mention} has been muted by {1} for *{2}* {3}".format(member, ctx.author, reason,
@@ -174,7 +174,7 @@ class Moderation(commands.Cog):
                     if voice_state is not None:
                         await member.edit(mute=False)
                     await member.add_roles(member_role, reason=reason)
-                    await logs.send(f"{member.mention} has been unmuted.")
+                    await userlogs.send(f"{member.mention} has been unmuted.")
 
     @commands.command()
     @has_roles
@@ -197,7 +197,7 @@ class Moderation(commands.Cog):
             await member.edit(mute=False)
         await ctx.send(
             "{0.mention} has been unmuted by {1} for *{2}* ".format(member, ctx.author, reason))
-        logs = self.client.get_channel(831214657439924284)
+        logs = self.client.get_channel(934867511273476177)
         await logs.send("{0.mention} has been unmuted by {1} for *{2}* ".format(member, ctx.author, reason))
 
     @commands.command(aliases=['unpunish', 'unpanopticon', 'unprison'])
@@ -218,7 +218,7 @@ class Moderation(commands.Cog):
         await member.move_to(None)
         await ctx.send(
             "{0.mention} has been unpunished by {1.mention} for *{2}* ".format(member, ctx.author, reason))
-        logs = self.client.get_channel(831214657439924284)
+        logs = self.client.get_channel(934867511273476177)
         await logs.send("{0.mention} has been unpunished by {1.mention} for *{2}* ".format(member, ctx.author, reason))
 
     @commands.command(aliases=['punish', 'prison', 'panopticon'])
@@ -254,9 +254,9 @@ class Moderation(commands.Cog):
             await ctx.send(
                 "{0.mention} has been punished by {1} for *{2}* {3}".format(member, ctx.author,
                                                                                     reason, time))
-        logs = self.client.get_channel(831214657439924284)
-        await logs.send("{0.mention} has been punished by {1} for *{2}* {3}".format(member, ctx.author,
-                                                                                             reason, time))
+        # logs = self.client.get_channel(831214657439924284)
+        # await logs.send("{0.mention} has been punished by {1} for *{2}* {3}".format(member, ctx.author,
+        #                                                                                      reason, time))
 
         userlogs = self.client.get_channel(934867511273476177)
         await userlogs.send("{0.mention} has been punished by {1} for *{2}* {3}".format(member, ctx.author,
@@ -271,7 +271,7 @@ class Moderation(commands.Cog):
                     await member.remove_roles(dungeon_role, reason="time's up ")
                     await member.add_roles(member_role, reason="times up")
 
-                    await logs.send(f"{member.mention} has been released from the Panopticon.")
+                    await userlogs.send(f"{member.mention} has been released from the Panopticon.")
 
     @commands.command()
     @has_roles
@@ -352,8 +352,8 @@ class Moderation(commands.Cog):
             await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
             return
 
-        logs = self.client.get_channel(831214657439924284)
-        await logs.send("{0.mention} has been promoted by {1}.".format(member, ctx.author))
+        # logs = self.client.get_channel(831214657439924284)
+        # await logs.send("{0.mention} has been promoted by {1}.".format(member, ctx.author))
 
         userlogs = self.client.get_channel(934867511273476177)
         await userlogs.send("{0.mention} has been promoted by {1}.".format(member, ctx.author))
@@ -394,8 +394,8 @@ class Moderation(commands.Cog):
             await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
             return
 
-        logs = self.client.get_channel(831214657439924284)
-        await logs.send("{0.mention} has been demoted by {1}.".format(member, ctx.author))
+        # logs = self.client.get_channel(831214657439924284)
+        # await logs.send("{0.mention} has been demoted by {1}.".format(member, ctx.author))
 
         userlogs = self.client.get_channel(934867511273476177)
         await userlogs.send("{0.mention} has been demoted by {1}.".format(member, ctx.author))
