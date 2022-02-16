@@ -343,6 +343,26 @@ class Messages(commands.Cog):
         await ctx.message.delete()
 
 
+    @commands.command(aliases=['remind','remindme'])
+    async def reminder(self,ctx,time=None,unit=None,*,reminder=None):
+        if time == None or unit == None or reminder == None or unit not in ['minute','second','minutes', 'seconds','hours','hour','day','days','sec','min','secs','mins','hr','hrs'] or time.isdigit() == False:
+            await ctx.send("The way to use this command is with .reminder [time with unit like 1 second or 2 minutes] [what you want to be reminded of]")
+            return
+        if unit in ['days', 'day']:
+            await ctx.send("Days are not currently supported. Please ping bingobongo if you really want it")
+            return
+        await ctx.send("Reminder has been set.")
+        time = int(time)
+        if unit in ['seconds','second','sec','secs']:
+            await asyncio.sleep(time)
+        elif unit in ['minute','minute','min','mins']:
+            time = time * 60
+            await asyncio.sleep(time)
+        elif unit in ['hour','hours','hr','hrs']:
+            time = time * 60 * 60
+            await asyncio.sleep(time)
+        await ctx.send(f"Hello {ctx.author.mention}, reminding you to {reminder}.")
+
 
     @commands.command()
     async def advice(self,ctx):
