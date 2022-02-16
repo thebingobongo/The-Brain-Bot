@@ -136,7 +136,7 @@ class Messages(commands.Cog):
 
     @commands.command(aliases=['remind','remindme'])
     async def reminder(self,ctx,time=None,unit=None,*,reminder=None):
-        if time == None or unit == None or reminder == None or unit not in ['minute','second','minutes', 'seconds','hours','hour','day','days','sec','min','secs','mins','hr','hrs'] or time.isdigit() == False:
+        if time == None or unit == None or reminder == None or unit.lower() not in ['minute','second','minutes', 'seconds','hours','hour','day','days','sec','min','secs','mins','hr','hrs'] or time.isdigit() == False:
             await ctx.send("The way to use this command is with .reminder [time with unit like 1 second or 2 minutes] [what you want to be reminded of]")
             return
         if unit in ['days', 'day']:
