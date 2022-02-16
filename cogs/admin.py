@@ -68,11 +68,11 @@ class Admin(commands.Cog):
         panopticon = self.client.get_channel(835630845996826676)
         await panopticon.purge(limit=amount)
 
-    # @commands.command()
-    # @has_roles
-    # async def echo(self, ctx, channelID: int, *, txt):
-    #     sendchannel = self.client.get_channel(channelID)
-    #     await sendchannel.send(txt)
+    @commands.command()
+    @has_roles
+    async def echo(self, ctx, channelID: int, *, txt):
+        sendchannel = self.client.get_channel(channelID)
+        await sendchannel.send(txt)
 
     @commands.command()
     @has_roles
