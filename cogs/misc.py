@@ -84,6 +84,11 @@ class Misc(commands.Cog):
 
 
     @commands.command()
+    async def nosh(self,ctx):
+        await ctx.send('go look at the moon')
+
+
+    @commands.command()
     async def sen(self, ctx):
         await ctx.send("**SWOLE IS THE GOAL SIZE IS THE PRIZE**")
 
