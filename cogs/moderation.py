@@ -743,6 +743,8 @@ class Moderation(commands.Cog):
                 await message.add_reaction('💖')
             elif msgword.lower() in ['sen', 'swole']:
                 await message.add_reaction('<:sen:936785558703853578>')
+            elif msgword.lower() in ['marc','marcdoof','biblegun', 'die', 'lilo','foodcram', 'doof', 'macdoof', 'liar','kill','keel']:
+                await message.add_reaction('<:marcdoof:840467806231461931>')
 
 
         try:
