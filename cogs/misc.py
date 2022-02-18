@@ -113,7 +113,7 @@ class Misc(commands.Cog):
     async def kay(self, ctx):
         t = random.randint(1, 2)
         if t == 1:
-            await ctx.send("https: // cdn.discordapp.com / attachments / 831211215878488078 / 944151595241852968 / muslim.gif")
+            await ctx.send("https://cdn.discordapp.com/attachments/831211215878488078/944151595241852968/muslim.gif")
         else:
             await ctx.send("**UNDISPUTED QUEEN OF GLOBAL UMMAH**")
 
