@@ -96,6 +96,11 @@ class Misc(commands.Cog):
     async def emi(self, ctx):
         await ctx.send("https://youtu.be/L9rGGtSaMjk")
 
+
+    @commands.command()
+    async def marc(self, ctx):
+        await ctx.send("DIE")
+
     @commands.command()
     async def alpha(self,ctx):
         await ctx.send("We all know bingo is the alpha around here.")
