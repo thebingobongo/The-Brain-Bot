@@ -29,7 +29,7 @@ class Misc(commands.Cog):
 
     @commands.command(aliases=['wbfrcu'])
     async def joseph(self,ctx):
-        await ctx.send("https://tenor.com/view/monkey-pb2slow-cute-gif-23272957")
+        await ctx.send("https://cdn.discordapp.com/attachments/835575962519339008/944115507232129054/e5eee121a202fb21372fd504404ed78c.mov")
 
     @commands.command()
     async def pray(self, ctx):
@@ -70,7 +70,11 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def wenis(self, ctx):
-        await ctx.send("U U UOOOUGGGHHH")
+        t = random.randint(1,2)
+        if t == 1:
+            await ctx.send("U U UOOOUGGGHHH")
+        else:
+            await ctx.send("h-h-hhiiAAAIiii")
 
 
     @commands.command()
