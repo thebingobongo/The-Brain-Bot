@@ -155,7 +155,13 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def bingo(self, ctx):
-        await ctx.send('Please do not say the Lords name in vain.')
+        t = random.randint(1,3)
+        if t == 1:
+            await ctx.send('shut the fuck up')
+        elif t == 2:
+            await ctx.send("stop")
+        else:
+            await ctx.send("dont care didnt ask plus youre annoying")
 
     @commands.command()
     async def trumped(self, ctx):
