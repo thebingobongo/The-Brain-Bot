@@ -101,9 +101,13 @@ class Misc(commands.Cog):
         await ctx.send("https://youtu.be/L9rGGtSaMjk")
 
 
-    @commands.command()
+    @commands.command(aliases=['marcdoof'])
     async def marc(self, ctx):
-        await ctx.send("DIE")
+        t = random.randint(1, 2)
+        if t == 1:
+            await ctx.send("DIE")
+        else:
+            await ctx.send("FOOL")
 
     @commands.command()
     async def alpha(self,ctx):
