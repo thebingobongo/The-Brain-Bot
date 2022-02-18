@@ -713,7 +713,7 @@ class Moderation(commands.Cog):
                                         value=f"{message.content} \n \n Word = **{msgword}**", inline=False)
                     await sendchannel.send(embed=embedVar2)
                     break
-            if msgword.lower() in ["bingo", "bingobongo", "<:bingo:838288733748461588>"]:
+            if msgword.lower() in ["bingo",'bongo', "bingobongo", "<:bingo:838288733748461588>"]:
                 await message.add_reaction("<:bingo:838288733748461588>")
             elif msgword.lower() in ["gag", "<:gag:837859560566816788>"]:
                 await message.add_reaction("<:gag:837859560566816788>")
