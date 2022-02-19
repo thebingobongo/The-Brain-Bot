@@ -724,7 +724,7 @@ class Moderation(commands.Cog):
             elif msgword.lower() == "<:feelsbadeh:854187237356863489>":
                 await message.add_reaction("<:feelsbadeh:854187237356863489>")
             elif msgword.lower() in ["wenis", 'wemis', 'wamis', 'wanis','wnais', 'wensi','wemsi',"l" , 'millian', '<:wenis:838097027392864316>','max']:
-                await message.add_reaction("<:simp:944148582175477760>")
+                await message.add_reaction("<:wenis:838097027392864316>")
             elif msgword.lower() in ['mel', 'miffy', 'hgc', 'grapefruit','<:melmelmelmelmel:912462443354128384>']:
                 await message.add_reaction('<:melmelmelmelmel:912462443354128384>')
             elif msgword.lower() in ['marz','barz', '<:marzbarz:867622876004745236>', 'marzbarz']:
