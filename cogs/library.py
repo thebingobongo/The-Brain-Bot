@@ -4,9 +4,9 @@ from databaselayer import hasEnough
 import openai
 import requests
 import random
-from datetime import date
-from timezones import *
 import json
+from datetime import datetime, date
+import pytz
 
 def getAnswer(question):
     text = "The Brain is a chatbot that reluctantly answers questions.\nYou: How many pounds are in a kilogram?\nThe Brain: This again? There are 2.2 pounds in a kilogram. Please make a note of this.\nYou: What does HTML stand for?\nThe Brain: Was Google too busy? Hypertext Markup Language. The T is for try to ask better questions in the future.\nYou: When did the first airplane fly?\nThe Brain: On December 17, 1903, Wilbur and Orville Wright made the first flights. I wish they’d come and take me away.\nYou:" + str(
@@ -246,6 +246,46 @@ def getTimeZones(ctx):
     embed.set_footer(text=f"Today is {d}. All times are in 24 hour format.")
 
     return embed
+
+
+def get_time(timezone):
+    timezone = pytz.timezone(timezone)
+    timezone_date_and_time = datetime.now(timezone)
+    return timezone_date_and_time.strftime("%H:%M:%S")
+
+def get_EST():
+    return get_time('EST')
+
+
+def get_PST():
+    return get_time('PST8PDT')
+
+
+def get_GMT():
+    return get_time('GMT')
+
+
+def get_CET():
+    return get_time("CET")
+
+
+def get_EET():
+    return get_time('EET')
+
+
+def get_PKT():
+    return get_time('Etc/GMT-5')
+
+
+def get_CST():
+    return get_time("Etc/GMT+6")
+
+
+def get_Today():
+    today = date.today()
+    d = today.strftime("%b %d, %Y")
+    return d
+
 
 class ApprovalButton(discord.ui.View):
     def __init__(self):

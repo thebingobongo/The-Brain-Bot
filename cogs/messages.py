@@ -7,11 +7,6 @@ import asyncio
 from debateTopics import debateTopics
 from databaselayer import addBal, getUserRole
 from cogs.library import *
-from timezones import *
-
-
-
-
 
 
 
