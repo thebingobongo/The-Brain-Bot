@@ -183,6 +183,16 @@ class Messages(commands.Cog):
             await ctx.send(result[0])
 
 
+    @commands.command(aliases=['urban','urbandict','urbandefine','udefine'])
+    async def urbandictionary(self,ctx,*,word):
+        embed = getUrbanDefinition(word)
+        if embed == None:
+            await ctx.send("Word not found.")
+        elif type(embed) == str:
+            await ctx.send(embed)
+        else:
+            await ctx.send(embed=embed)
+
     @commands.command()
     async def sep(self,ctx, *, text):
         text = text.strip()

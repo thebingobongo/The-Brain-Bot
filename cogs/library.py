@@ -198,6 +198,35 @@ def getZodiac(ctx, sign):
     embed.set_footer(text=res['current_date'])
     return embed
 
+
+def getUrbanDefinition(word):
+    word = word.strip()
+    newword = word.replace(" ", "-")
+    link = f"https://api.urbandictionary.com/v0/define?term={newword}"
+    response = requests.get(link)
+    res = json.loads(response.text)
+    if res['list'] == []:
+        return None
+    definition = res['list'][0]['definition']
+    example = res['list'][0]['example']
+    i=1
+    while len(definition) > 256 or len(example) > 1024:
+        try:
+            definition = res['list'][i]['definition']
+            example = res['list'][i]['example']
+        except:
+            return "Something broke. i cant fix it."
+        i+=1
+    definition = [char for char in definition if (char != '[' and char != ']' )]
+    definition = "".join(definition)
+    example = [char for char in example if (char != '[' and char != ']' )]
+    example = "".join(example)
+    embed = discord.Embed(title=f"Urban definition for {word}",color=0xff0000)
+    embed.add_field(name=definition,value=f"\nExample:\n{example}")
+    return embed
+
+
+
 def getTimeZones(ctx):
     est = get_EST()
     pst = get_PST()
