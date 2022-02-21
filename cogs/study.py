@@ -48,6 +48,16 @@ class Study(commands.Cog):
         await ctx.author.move_to(None)
 
 
+    def findgroup(self, member:discord.Member):
+        # global groups
+        # global activegroups
+
+        for key in self.groups:
+            for curr in self.groups[key]:
+                if member == curr:
+                    return key
+        return None
+
 
     @commands.command()
     async def startpomo(self, ctx, members: commands.Greedy[discord.Member],studytime:int=None, breaktime:int=None ):
@@ -81,27 +91,41 @@ class Study(commands.Cog):
         for member in members:
             await member.add_roles(pomo_role)
 
+        async def check_pomo_role(member):
+            if pomo_role not in member.roles:
+                try:
+                    self.groups[currentgroup].remove(member)
+                    return False
+                except:
+                    pass
+            else:
+                return True
+
+
         while len(self.groups[currentgroup]) > 0:
             for member in self.groups[currentgroup]:
-                if pomo_role not in member.roles:
-                    try:
-                        self.groups[currentgroup].remove(member)
-                    except:
-                        pass
-                else:
+                result = await check_pomo_role(member)
+                if result:
                     await member.add_roles(study_role)
                     await member.remove_roles(member_role)
                     if aboveage_role in member.roles:
                         await member.remove_roles(aboveage_role)
             await asyncio.sleep((studytime*60))
+            for member in self.groups[currentgroup]:
+                r = await check_pomo_role(member)
             if len(self.groups[currentgroup]) != 0:
-                await ctx.send("A study session has been completed, time to take a break!")
+                print(self.groups[currentgroup])
+                member_ping = ''
+                for member in self.groups[currentgroup]:
+                    member_ping = member_ping + f"{member.mention}"
+                await ctx.send(f"Your study session has been completed, time to take a break!\n {member_ping}")
             else:
+                await ctx.send("This group is empty")
                 del self.groups[currentgroup]
                 self.activegroups -= 1
                 return
             for member in self.groups[currentgroup]:
-                print(f"{self.groups[currentgroup]} {len(self.groups[currentgroup])} and {member}")
+                # print(f"{self.groups[currentgroup]} {len(self.groups[currentgroup])} and {member}")
                 if pomo_role not in member.roles:
                     try:
                         await members.remove(member)
@@ -114,9 +138,15 @@ class Study(commands.Cog):
                     if not underage_role in member.roles:
                         await member.add_roles(aboveage_role)
             await asyncio.sleep((breaktime*60))
+            for member in self.groups[currentgroup]:
+                r = await check_pomo_role(member)
             if len(self.groups[currentgroup]) != 0:
-                await ctx.send("Your break time is over. Time to start studying again!")
+                member_ping = ''
+                for member in self.groups[currentgroup]:
+                    member_ping = member_ping + f"{member.mention}"
+                await ctx.send(f"Your break time is over. Time to start studying again!\n{member_ping}")
             else:
+                await ctx.send("This group is empty")
                 del self.groups[currentgroup]
                 self.activegroups -= 1
                 return
@@ -132,11 +162,13 @@ class Study(commands.Cog):
         aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
         underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
 
+
         if pomo_role not in ctx.author.roles:
             await ctx.send("You are not currently in a pomodoro session.")
             return
 
         await ctx.author.remove_roles(pomo_role)
+        self.groups[self.findgroup(ctx.author)].remove(ctx.author)
         if member_role not in ctx.author.roles:
             await ctx.author.add_roles(member_role)
         if study_role in ctx.author.roles:
@@ -147,15 +179,7 @@ class Study(commands.Cog):
         await ctx.send("You have been removed from the pomodoro session.")
 
 
-    def findgroup(self, member:discord.Member):
-        # global groups
-        # global activegroups
 
-        for key in self.groups:
-            for curr in self.groups[key]:
-                if member == curr:
-                    return key
-        return None
 
 
 
@@ -177,9 +201,10 @@ class Study(commands.Cog):
             await ctx.send("That session could not be found.")
             return
 
-        self.groups[membergroup].append(member)
+        self.groups[membergroup].append(ctx.author)
         await ctx.author.add_roles(pomo_role)
-        await ctx.send("You have successfully joined that pomodoro session!")
+        await ctx.send("You have successfully joined that pomodoro session! Your permissions will sync up in the next cycle.")
+        # perms sync up on next run
 
 
 
