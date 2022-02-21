@@ -114,13 +114,13 @@ class Study(commands.Cog):
             for member in self.groups[currentgroup]:
                 r = await check_pomo_role(member)
             if len(self.groups[currentgroup]) != 0:
-                print(self.groups[currentgroup])
+                # print(self.groups[currentgroup])
                 member_ping = ''
                 for member in self.groups[currentgroup]:
                     member_ping = member_ping + f"{member.mention}"
                 await ctx.send(f"Your study session has been completed, time to take a break!\n {member_ping}")
             else:
-                await ctx.send("This group is empty")
+                # await ctx.send("This group is empty")
                 del self.groups[currentgroup]
                 self.activegroups -= 1
                 return
@@ -146,7 +146,7 @@ class Study(commands.Cog):
                     member_ping = member_ping + f"{member.mention}"
                 await ctx.send(f"Your break time is over. Time to start studying again!\n{member_ping}")
             else:
-                await ctx.send("This group is empty")
+                # await ctx.send("This group is empty")
                 del self.groups[currentgroup]
                 self.activegroups -= 1
                 return
