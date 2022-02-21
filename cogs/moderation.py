@@ -641,7 +641,8 @@ class Moderation(commands.Cog):
 
                 embed.add_field(name=user.display_name,value="** **")
             except:
-                print(f'failed for {ticket[0]}')
+                closeTicket(int(ticket[0]))
+                # print(f'failed for {ticket[0]}')
         await ctx.send(embed=embed)
 
 
