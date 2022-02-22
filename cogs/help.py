@@ -27,6 +27,10 @@ class Help(commands.Cog):
                                value="For the chat bot commands", inline=False)
             embedVar.add_field(name="Utility",
                                value="For the utility commands", inline=False)
+            embedVar.add_field(name="Games",
+                               value="For the games you can play", inline=False)
+            embedVar.add_field(name="Studying",
+                               value="For the commands that will help you study", inline=False)
             embedVar.add_field(name="Rook",
                                value="For the commands only rook and up can use", inline=False)
 
@@ -48,6 +52,10 @@ class Help(commands.Cog):
                 embedVar.add_field(name=".note or .warn [@user]", value="Adds notes/warns accessible to all mods.")
                 embedVar.add_field(name=".notes or .warns [@user]",
                                    value="Shows all the notes/warns a user has gotten.")
+                embedVar.add_field(name='.iswoman [@user]', value="Gives user access to the female only channel.")
+                embedVar.add_field(name='.gbr [@user] [number(leave empty to see list) ]', value="This gives the user the brain role, or displays the list of all brain roles.")
+                embedVar.add_field(name='.moveto[channel name] (no space)', value="Moves all members in the current vc to the one mentioned.")
+
             else:
                 embedVar = discord.Embed(title="You dont have access to those commands.", color=0xff0000)
 
@@ -58,19 +66,35 @@ class Help(commands.Cog):
                                value='Gives the user the specified number of Brain cells.')
             embedVar.add_field(name='.think', value='You earn a random ammount of brain cells. Cooldown for an hour!')
             embedVar.add_field(name='.smartest', value="Shows you the smartest people in the server.")
-            embedVar.add_field(name='.coinflip [ammount] [heads or tails] ', value='Flips a coin!')
             embedVar.add_field(name=".warns", value="Shows you the active warnings for you.")
-            embedVar.add_field(name=".blackjack [ammount]", value="You can play blackjack!")
-            embedVar.add_field(name=".dice [guess] [amount]",
-                               value="I will roll a die and if you get it right, you get 6 times the brain cells!")
+
             embedVar.add_field(name='.shop', value="I will show you the shop!")
             embedVar.add_field(name='.inventory', value='I will show you your inventory.')
             embedVar.add_field(name='.buy [item]', value='You can buy an item!')
             embedVar.add_field(name='.use [item]', value='Use the item!')
             embedVar.add_field(name='.study', value='You can earn extra coins if you own a book!')
 
+        elif type.lower() in ['study','studying']:
+            embedVar = discord.Embed(title="Studying commands:", color=0x00ff00)
+            embedVar.add_field(name='.studymode', value='Restricts your access from the rest of the server, you can only use the Study Realm.')
+            embedVar.add_field(name='.unstudymode', value='Gives you back access to the rest of the server.')
+            embedVar.add_field(name='.startpomo [study time] [break time]', value='Starts a pomodoro session for you with reminders and restricts access to the rest of the server.')
+            embedVar.add_field(name='.joinpomo', value='Adds you to someones existing pomodoro session.')
+            embedVar.add_field(name='.endpomo', value='Ends/Removes you from the pomodoro session.')
 
-        elif type.lower() == "message" or type.lower() == 'messages':
+
+
+        elif type.lower() in ['game','games']:
+            embedVar = discord.Embed(title="Games:", color=0x00ff00)
+            embedVar.add_field(name=".blackjack [ammount]", value="You can play blackjack!")
+            embedVar.add_field(name=".hangman", value="I will start a game of hangman.")
+            embedVar.add_field(name='.coinflip [ammount] [heads or tails] ', value='Flips a coin!')
+            embedVar.add_field(name=".dice [guess] [amount]",
+                               value="I will roll a die and if you get it right, you get 6 times the brain cells!")
+            embedVar.add_field(name='.trivia', value="Sends a trivia question.")
+
+
+        elif type.lower() in ["message", 'messages']:
             embedVar = discord.Embed(title="Message commands:", color=0x00ff00)
             embedVar.add_field(name=".ask [question]", value="I will answer your question.")
             embedVar.add_field(name=".ask2 [question]", value="I will answer your question in a more intellectual way.")
@@ -88,17 +112,18 @@ class Help(commands.Cog):
             embedVar.add_field(name=".insult", value="I will insult you. Be careful, I can be mean!")
             embedVar.add_field(name=".today", value="I will tell you a random fact about todays date in history.")
             embedVar.add_field(name=".mathfact", value="I will send a math fact for the nerds among you!")
+            embedVar.add_field(name=".zodiac [sign]", value="Gives you your horoscope of the day.")
+            embedVar.add_field(name=".clock", value="Sends the time for places around the world..")
 
-        elif type.lower() == "utillity" or type.lower() == "utility":
+        elif type.lower() in ["utillity", "utility"]:
             embedVar = discord.Embed(title="Utility commands:", color=0x00ff00)
             embedVar.add_field(name=".sep [article name]", value="I will send a link to the sep article.")
             embedVar.add_field(name=".wiki [article name]", value="I will send a link to the wikipedia article.")
             embedVar.add_field(name=".google [search]", value="I will send a link to the google search.")
             embedVar.add_field(name=".define [word]", value="I will define that word!")
+            embedVar.add_field(name='.urbandictionary [word]', value='searches a word in urban dictionary')
             embedVar.add_field(name=".poll [poll question]", value="I will create a poll for you.")
-            embedVar.add_field(name=".hangman", value="I will start a game of hangman.")
-            embedVar.add_field(name=".studymode", value="Will put you into the special study mode.")
-            embedVar.add_field(name=".unstudymode", value="Will take you out of study mode.")
+            embedVar.add_field(name=".reminder [time with unit like 1 second] [reminder]", value="Will remind you of something after the time.")
 
         elif type.lower() == "rook":
             embedVar = discord.Embed(title="Rook commands:", color=0x00ff00)
@@ -189,7 +214,7 @@ class Help(commands.Cog):
         embed.set_footer(text=".ideas for more")
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=['fermi'])
     async def aliens(self, ctx):
         embed = discord.Embed(
             title="The Alien Paradox", color=0x00ffff)
@@ -211,7 +236,7 @@ class Help(commands.Cog):
         embedVar.add_field(name=".arrow", value="** **", inline=True)
         embedVar.add_field(name=".ship", value="** **", inline=True)
         embedVar.add_field(name=".godrock", value="** **", inline=True)
-        embedVar.add_field(name=".aliens", value="** **", inline=True)
+        embedVar.add_field(name=".aliens/.fermi", value="** **", inline=True)
         embedVar.add_field(name=".bootstrap", value="** **", inline=True)
         await ctx.send(embed=embedVar)
 
