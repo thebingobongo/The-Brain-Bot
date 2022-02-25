@@ -712,6 +712,7 @@ class Moderation(commands.Cog):
                     embedVar2 = discord.Embed(title="Filtered Message:", color=0xff0000)
                     embedVar2.add_field(name=f"{message.author} said in {message.channel}:",
                                         value=f"{message.content} \n \n Word = **{msgword}**", inline=False)
+                    await message.channel.send("You used a word that is not allowed to be used in this server. **Do not do it again.**")
                     await sendchannel.send(embed=embedVar2)
                     break
             if msgword.lower() in ["bingo",'bongo', "bingobongo", "<:bingo:838288733748461588>"]:
