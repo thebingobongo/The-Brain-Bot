@@ -42,7 +42,7 @@ class Taskloops(commands.Cog):
         embed = getDateFact()
         embed.add_field(name="This is your reminder to go drink some water!", value="** **")
         embed.set_footer(
-            text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
+            text="For more info check the Rules and Info channel. \nIf you encounter any issues, DM me or any of the mods!")
         await general.send(embed=embed)
 
 
