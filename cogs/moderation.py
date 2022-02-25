@@ -297,7 +297,7 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @has_roles
-    async def ban(self, ctx, member: discord.Member,time_to_ban=None, *, reason=None):
+    async def ban(self, ctx, member: discord.Member, *, reason=None):
         if not member:
             await ctx.send("You need to name someone to ban.")
             return
@@ -308,13 +308,7 @@ class Moderation(commands.Cog):
         if staff_role in member.roles:
             await ctx.send("Cannot ban staff. Please contact a Mod III")
             return
-        if time_to_ban == None:
-            time_to_ban = 5
-        elif time_to_ban.isdigit():
-            time_to_ban = int(time_to_ban)
-        else:
-            reason = str(time_to_ban) + reason
-            time_to_ban = 5
+        time_to_ban = 5
         await ctx.send(
             f" <a:vibing:847619864738267217> <a:vibing:847619864738267217> {member.mention} is gonna get banned in {time_to_ban} seconds!!!! <a:vibing:847619864738267217> <a:vibing:847619864738267217>")
         for i in range(time_to_ban):
