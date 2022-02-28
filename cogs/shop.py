@@ -105,7 +105,7 @@ class Shop(commands.Cog):
             await ctx.send(f"You successfully bought a {name}")
 
     @commands.command()
-    @commands.cooldown(1,7200,commands.BucketType.user)
+    @commands.cooldown(1,3600,commands.BucketType.user)
     async def use(self, ctx,*, item=None):
         if item == None:
             await ctx.send("What would you like to use?")
