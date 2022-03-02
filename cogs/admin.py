@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 from databaselayer import *
+import datetime
 
 def predicate(ctx):
     admin_role1 = discord.utils.get(ctx.guild.roles, id=835623182484373535)
@@ -38,6 +39,16 @@ class Admin(commands.Cog):
         for mem in voice_channel.members:
             addBal(mem.id,ammount)
         await ctx.send(f"All members in this VC have been awarded {ammount} Brain Cells!")
+
+    @commands.command(name="raidban")
+    @has_roles
+    async def raidban(self, ctx, minutes: int):
+        log_channel = self.bot.get_channel(934867511273476177)
+        for member in ctx.guild.members:
+            check_time = datetime.datetime.now(member.joined_at.tzinfo) - datetime.timedelta(minutes=minutes)
+            if member.joined_at > check_time:
+                await member.ban(reason="raid")
+                await log_channel.send(f"Banned: {member.name} for raiding")
 
     @commands.command()
     @has_roles
