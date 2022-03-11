@@ -743,6 +743,9 @@ class Moderation(commands.Cog):
                 await message.add_reaction('<:marcdoof:840467806231461931>')
             elif msgword.lower() in ['kay', 'kaytheengineer']:
                 await message.add_reaction("<:lovecat:840653631308562462>")
+            elif msgword.lower() in ['kuzco', 'muni','municakes']:
+                await message.add_reaction('<:kuzco:911675990315507753>')
+
 
 
         try:
