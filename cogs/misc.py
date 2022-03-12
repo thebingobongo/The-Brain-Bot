@@ -161,7 +161,7 @@ class Misc(commands.Cog):
     async def hohoho(self, ctx):
         await ctx.send("Santa does not exist. Grow up.")
 
-    @commands.command(aliases=['kuzco'])
+    @commands.command(aliases=['kuzco','boop'])
     async def muni(self, ctx):
         await ctx.send("https://cdn.discordapp.com/attachments/831211215878488078/951728677236903946/2A8BE0D7-DE10-4188-988B-861A9A3B395B.jpg")
 
