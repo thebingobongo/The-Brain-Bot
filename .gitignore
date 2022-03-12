@@ -115,3 +115,7 @@ dmypy.json
 token.json
 query.txt
 todo.pkl
+cogs/.DS_Store
+.idea/The-Brain-Bot.iml
+.idea/inspectionProfiles/profiles_settings.xml
+*.xml
