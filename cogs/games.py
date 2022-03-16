@@ -66,7 +66,6 @@ def hangman(word, guessedletters, game_in_progress):
             printletter.append("  ")
     if guessedletters == '':
         text = ''
-        # text = ''.join(printletter)
         for i in printletter:
             text = text + i
         return [(hangmanpics[0] + '\n' + text), game_in_progress]
@@ -98,7 +97,6 @@ def hangman(word, guessedletters, game_in_progress):
         return [(hangmanpics[errors] + "\n" + guessedletters + '\n' + text), game_in_progress]
 
 
-# Python3 program to Split string into characters
 def split(word):
     return [char for char in word]
 
@@ -136,7 +134,6 @@ game_in_progress = False
 
 def getCard(deck):
     rand = random.randint(0, len(deck) - 1)
-    # print(f"card index {rand} in {len(deck)}")
     card = deck.pop(rand)
     # diamonds -> spades -> clubs -> hearts
     if card <= 13:
@@ -190,8 +187,6 @@ def predicate(ctx):
     admin_role1 = discord.utils.get(ctx.guild.roles, id=835623182484373535)
     admin_role2 = discord.utils.get(ctx.guild.roles, id=835400292979179530)
     return admin_role1 in ctx.author.roles or admin_role2 in ctx.author.roles or ctx.author.id == 339070790987284491
-    # test = discord.utils.get(ctx.guild.roles, id=858614845363322881)
-    # return test in ctx.author.roles
 
 
 has_roles = commands.check(predicate)
@@ -211,7 +206,6 @@ class Games(commands.Cog):
             await ctx.send("How much do you want to bet? Try again.")
             return
         if 'all' in ammount.strip().lower():
-        # if ammount == "all":
             ammount = getUserBal(ctx.author.id)
         try:
             ammount = int(ammount)
@@ -241,7 +235,6 @@ class Games(commands.Cog):
         bot_hand.append(getCard(deck))
         bot_hand.append(getCard(deck))
 
-        # bot_hand_to_print = f"
         lost = False
 
         while game_state:
@@ -250,15 +243,11 @@ class Games(commands.Cog):
                             inline=True)
             embed.add_field(name=f"My hand: {printCard(bot_hand[0])} `?`", value="Value = `?`")
             embed.add_field(name='H for Hit, S for Stand.', value="** **", inline=False)
-            # {printHand(bot_hand)}, value = {getValue(bot_hand)}")
             if getValue(player_hand) > 21:
                 embed.add_field(name="**You lose.**", value="** **", inline=False)
                 embed.color = 0xff0000
-                #await ctx.send(embed=embed)
                 lost = True
                 break
-                # subBal(ctx.author.id, ammount)
-                # return
 
             embed.set_footer(text="A = 1 | J, Q, K = 10")
             await ctx.send(embed=embed)
@@ -284,21 +273,17 @@ class Games(commands.Cog):
                 await ctx.send("Since you didn't give me a valid response, I'm assuming you Stand.")
                 game_state = False
 
-        # game_state = True
         while not getValue(bot_hand) >= 17:
             bot_card = getCard(deck)
             bot_hand.append(bot_card)
 
-            # await ctx.send(printCard(card))
         embed = discord.Embed(title=f"{ctx.author.display_name}'s blackjack game")
         embed.add_field(name=f"Your hand: {printHand(player_hand)}", value=f"Value = {getValue(player_hand)}",
                         inline=True)
         embed.add_field(name=f"My hand: {printHand(bot_hand)}", value=f"Value = {getValue(bot_hand)}")
-        # await ctx.send(embed=embed)
         if lost:
             embed.add_field(name="**You lose.**", value="** **", inline=False)
             embed.color = 0xff0000
-            # subBal(ctx.author.id, ammount)
         elif getValue(player_hand) == 21 and getValue(bot_hand) == 21:
             embed.add_field(name="**It's a draw.**", value="** **", inline=False)
             addBal(ctx.author.id, ammount)
@@ -319,7 +304,6 @@ class Games(commands.Cog):
         else:
             embed.add_field(name="**You lose.**", value="** **", inline=False)
             embed.color = 0xff0000
-            # subBal(ctx.author.id, ammount)
 
         embed.set_footer(text="A = 1 | J, Q, K = 10")
         await ctx.send(embed=embed)
@@ -342,9 +326,7 @@ class Games(commands.Cog):
             index = random.randint(0, 3)
             answerlist.insert(index, ans['correct_answer'])
             answers = f"1️⃣: {answerlist[0]}\n2️⃣: {answerlist[1]}\n3️⃣: {answerlist[2]}\n4️⃣: {answerlist[3]} "
-            # msg = await ctx.send(ans['question'])
             embed.add_field(name=question, value=answers)
-            # await msg.add_reaction("✅")
 
             embed.set_footer(text=f"Category: {ans['category']}  Difficulty: {ans['difficulty']}")
             embed.set_thumbnail(
@@ -374,17 +356,11 @@ class Games(commands.Cog):
 
             for reaction in cache_reaction:
                 temp = await reaction.users().flatten()
-                # print(f"{user} reacted {reaction}")
-                # print(temp)
                 if user in temp:
-                    # print(f"User was in temp")
                     try:
                         removelist.append(user)
-                        # users.remove(user)
                     except:
                         print("something")
-                        # pass
-                    # print('removed user')
 
         for user in removelist:
             try:
@@ -402,9 +378,6 @@ class Games(commands.Cog):
                 else:
                     sendmsg = sendmsg + f"{user.mention} "
                     addBal(user.id, award)
-                # addbal
-                # print(f"Added bal to {user.display_name}")
-                # await ctx.send(user.display_name)
             sendmsg = sendmsg + f" for getting it right! They win {award} Brain Cells. "
 
             sendmsg = sendmsg + f"The correct answer was: {index + 1}. {answerlist[index]}"
@@ -417,7 +390,6 @@ class Games(commands.Cog):
             await ctx.send("Use <#835370412161630270> you stupid fuck")
             return
         if 'all' in ammount.strip().lower():
-            # if ammount == "all":
             ammount = getUserBal(ctx.author.id)
         try:
             ammount = int(ammount)
@@ -465,7 +437,6 @@ class Games(commands.Cog):
             await ctx.send("Use <#835370412161630270> you stupid fuck")
             return
         if 'all' in ammount.strip().lower():
-        # if ammount == "all":
             ammount = getUserBal(ctx.author.id)
         try:
             ammount = int(ammount)

@@ -150,9 +150,6 @@ class Misc(commands.Cog):
     async def end(self, ctx, *, msg):
         await ctx.send("*look towards " + msg + "* . **bang bang**")
 
-        # elif msg.startswith('.georg'):
-        #     await message.channel.send('Nice corpse you got there. Mind if I stop the hearse at my place for 2 minutes?')
-
     @commands.command()
     async def georg(self, ctx):
         await ctx.send("The milf magnet.")

@@ -4,7 +4,6 @@ from databaselayer import getTodo, deleteTodo, addTodo
 
 def displayToDo():
     todolist = getTodo()
-    #returntext = '**To Do list:**\n'
     returnembed = discord.Embed(title="To Do List",color=0x12ffdb)
     for i in range(len(todolist)):
         returntext = (str(i + 1) + '. ' + todolist[i][0])
@@ -32,8 +31,6 @@ def addToDo(task):
 def predicate(ctx):
     staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
     return staff_role in ctx.author.roles
-    # test = discord.utils.get(ctx.guild.roles, id=858614845363322881)
-    # return test in ctx.author.roles
 
 
 has_roles = commands.check(predicate)

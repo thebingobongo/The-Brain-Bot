@@ -55,7 +55,6 @@ class Shop(commands.Cog):
             return
         else:
             bookburn = random.randint(0,9)
-            # await ctx.send(bookburn)
             if bookburn in [0,1,2]:
                 await ctx.send("Your book spontaneously combusted. Get another book if you'd like to keep studying.")
                 removeItem(ctx.author.id, "Book")
@@ -112,8 +111,6 @@ class Shop(commands.Cog):
             self.use.reset_cooldown(ctx)
             return
         item = item.lower().strip()
-        # if item in ['mute', 'minute mute', '1 minute mute', '1mm']:
-        #     await ctx.invoke(self.client.get_command('mute'), )
         if item in ['dj', 'djrole', 'dj role']:
             if not hasItem(ctx.author.id, "DJ Role"):
                 await ctx.send("You do not have that item.")
@@ -130,9 +127,6 @@ class Shop(commands.Cog):
                 await ctx.send("You do not have that item.")
                 self.use.reset_cooldown(ctx)
                 return
-            # if member == None or not isinstance(member, discord.Member):
-            #     await ctx.send("Try .use mute @(whoever)")
-            #     return
             await ctx.send("Who do you want to mute?")
 
             def check(m):
