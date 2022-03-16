@@ -59,7 +59,7 @@ class Study(commands.Cog):
         return None
 
 
-    @commands.command()
+    @commands.command(aliases=['pomodoro','startpomodorosession','startpomodoro'])
     async def startpomo(self, ctx, members: commands.Greedy[discord.Member],studytime:int=None, breaktime:int=None ):
         # global activegroups
         # global groups
@@ -76,7 +76,8 @@ class Study(commands.Cog):
         if not members:
             members = [ctx.author]
         else:
-            members.append(ctx.author)
+            if ctx.author not in members:
+                members.append(ctx.author)
 
         self.groups[currentgroup] = members
 
@@ -201,9 +202,27 @@ class Study(commands.Cog):
             await ctx.send("That session could not be found.")
             return
 
+        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
+        study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
+        pomo_role =discord.utils.get(ctx.guild.roles, id=897958571306811442)
+        aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
+        underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
+
+
+        if study_role in member.roles:
+            await ctx.author.add_roles(study_role)
+            await ctx.author.remove_roles(member_role)
+            if aboveage_role in ctx.author.roles:
+                await ctx.author.remove_roles(aboveage_role)
+        else:
+            await ctx.author.add_roles(member_role)
+            await ctx.author.remove_roles(study_role)
+            if not underage_role in ctx.author.roles:
+                await ctx.author.add_roles(aboveage_role)
+
         self.groups[membergroup].append(ctx.author)
         await ctx.author.add_roles(pomo_role)
-        await ctx.send("You have successfully joined that pomodoro session! Your permissions will sync up in the next cycle.")
+        await ctx.send("You have successfully joined that pomodoro session!")
         # perms sync up on next run
 
 
