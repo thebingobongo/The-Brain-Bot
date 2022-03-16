@@ -121,7 +121,6 @@ def getAdvice():
 def getSearch(searchterm):
     response = requests.get('http://philosophyapi.herokuapp.com/api/ideas/?search=' + str(searchterm), timeout=30)
     json_data = json.loads(response.text)
-    # print(json_data)
     if json_data['count'] != 0:
         quotelist = json_data['results']
         if len(quotelist) == 1:
@@ -136,7 +135,6 @@ def getSearch(searchterm):
                 quote = '"' + quotelist[rand]['quote'] + '" \n                           -' + quotelist[rand]['author']
     else:
         quote = "Couldn't find a quote with that search. Try another search term."
-    # print(quote)
     embed = discord.Embed(title=quote, color=0x00ffff)
     return embed
 

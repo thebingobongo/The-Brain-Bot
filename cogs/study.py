@@ -49,8 +49,6 @@ class Study(commands.Cog):
 
 
     def findgroup(self, member:discord.Member):
-        # global groups
-        # global activegroups
 
         for key in self.groups:
             for curr in self.groups[key]:
@@ -61,8 +59,6 @@ class Study(commands.Cog):
 
     @commands.command(aliases=['pomodoro','startpomodorosession','startpomodoro'])
     async def startpomo(self, ctx, members: commands.Greedy[discord.Member],studytime:int=None, breaktime:int=None ):
-        # global activegroups
-        # global groups
 
         pom_tracker = self.client.get_channel(898047525188173854)
         self.activegroups += 1
@@ -115,18 +111,15 @@ class Study(commands.Cog):
             for member in self.groups[currentgroup]:
                 r = await check_pomo_role(member)
             if len(self.groups[currentgroup]) != 0:
-                # print(self.groups[currentgroup])
                 member_ping = ''
                 for member in self.groups[currentgroup]:
                     member_ping = member_ping + f"{member.mention}"
                 await ctx.send(f"Your study session has been completed, time to take a break!\n {member_ping}")
             else:
-                # await ctx.send("This group is empty")
                 del self.groups[currentgroup]
                 self.activegroups -= 1
                 return
             for member in self.groups[currentgroup]:
-                # print(f"{self.groups[currentgroup]} {len(self.groups[currentgroup])} and {member}")
                 if pomo_role not in member.roles:
                     try:
                         await members.remove(member)
@@ -147,7 +140,6 @@ class Study(commands.Cog):
                     member_ping = member_ping + f"{member.mention}"
                 await ctx.send(f"Your break time is over. Time to start studying again!\n{member_ping}")
             else:
-                # await ctx.send("This group is empty")
                 del self.groups[currentgroup]
                 self.activegroups -= 1
                 return
@@ -186,10 +178,6 @@ class Study(commands.Cog):
 
     @commands.command()
     async def joinpomo(self, ctx, member:discord.Member=None):
-        # global activegroups
-        # global groups
-
-        pomo_role = discord.utils.get(ctx.guild.roles, id=897958571306811442)
 
         if member == None:
             await ctx.send("Please name someone whose pomodoro session you would like to join.")
@@ -223,7 +211,6 @@ class Study(commands.Cog):
         self.groups[membergroup].append(ctx.author)
         await ctx.author.add_roles(pomo_role)
         await ctx.send("You have successfully joined that pomodoro session!")
-        # perms sync up on next run
 
 
 

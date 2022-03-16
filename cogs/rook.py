@@ -7,8 +7,6 @@ def predicate(ctx):
     staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
     monarch_role = discord.utils.get(ctx.guild.roles, id=886454608774459403)
     return rook_role in ctx.author.roles or staff_role in ctx.author.roles or monarch_role in ctx.author.roles
-    # test = discord.utils.get(ctx.guild.roles, id=858614845363322881)
-    # return test in ctx.author.roles
 
 
 has_roles = commands.check(predicate)

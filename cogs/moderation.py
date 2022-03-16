@@ -8,8 +8,6 @@ from databaselayer import *
 def predicate(ctx):
     staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
     return staff_role in ctx.author.roles or ctx.author.id == 339070790987284491
-    # test = discord.utils.get(ctx.guild.roles, id=858614845363322881)
-    # return test in ctx.author.roles
 
 
 has_roles = commands.check(predicate)
@@ -155,10 +153,6 @@ class Moderation(commands.Cog):
             await ctx.send(
                 "{0.mention} has been muted by {1} for *{2}* {3}".format(member, ctx.author, reason,
                                                                                  time))
-        # logs = self.client.get_channel(831214657439924284)
-        # await logs.send(
-        #     "{0.mention} has been muted by {1} for *{2}* {3}".format(member, ctx.author, reason,
-        #                                                                      time))
         userlogs = self.client.get_channel(934867511273476177)
         await userlogs.send(
             "{0.mention} has been muted by {1} for *{2}* {3}".format(member, ctx.author, reason,
@@ -254,9 +248,6 @@ class Moderation(commands.Cog):
             await ctx.send(
                 "{0.mention} has been punished by {1} for *{2}* {3}".format(member, ctx.author,
                                                                                     reason, time))
-        # logs = self.client.get_channel(831214657439924284)
-        # await logs.send("{0.mention} has been punished by {1} for *{2}* {3}".format(member, ctx.author,
-        #                                                                                      reason, time))
 
         userlogs = self.client.get_channel(934867511273476177)
         await userlogs.send("{0.mention} has been punished by {1} for *{2}* {3}".format(member, ctx.author,
@@ -318,9 +309,6 @@ class Moderation(commands.Cog):
         await ctx.send(
             f"<a:vibing:847619864738267217><a:vibing:847619864738267217><a:vibing:847619864738267217> {member.display_name} IS GONE NOW! <a:vibing:847619864738267217><a:vibing:847619864738267217><a:vibing:847619864738267217>")
 
-        # await member.ban(reason=reason)
-        # await ctx.send("{0.mention} has been banned by {1} for *{2}* ".format(member, ctx.author, reason))
-
         logs = self.client.get_channel(831214657439924284)
         await logs.send("{0.mention} has been banned by {1} for *{2}* ".format(member, ctx.author, reason))
         userlogs = self.client.get_channel(934867511273476177)
@@ -363,8 +351,6 @@ class Moderation(commands.Cog):
             await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
             return
 
-        # logs = self.client.get_channel(831214657439924284)
-        # await logs.send("{0.mention} has been promoted by {1}.".format(member, ctx.author))
 
         userlogs = self.client.get_channel(934867511273476177)
         await userlogs.send("{0.mention} has been promoted by {1}.".format(member, ctx.author))
@@ -404,9 +390,6 @@ class Moderation(commands.Cog):
         else:
             await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
             return
-
-        # logs = self.client.get_channel(831214657439924284)
-        # await logs.send("{0.mention} has been demoted by {1}.".format(member, ctx.author))
 
         userlogs = self.client.get_channel(934867511273476177)
         await userlogs.send("{0.mention} has been demoted by {1}.".format(member, ctx.author))
@@ -636,7 +619,6 @@ class Moderation(commands.Cog):
                 embed.add_field(name=user.display_name,value="** **")
             except:
                 closeTicket(int(ticket[0]))
-                # print(f'failed for {ticket[0]}')
         await ctx.send(embed=embed)
 
 
@@ -699,7 +681,6 @@ class Moderation(commands.Cog):
             msgword = msgword.replace("~", "")
 
             for filter in filteredwords:
-                # print(f'{msgword} {filter}')
                 if msgword.lower() == filter.lower():
                     await message.delete()
                     sendchannel = self.client.get_channel(831214657439924284)
@@ -761,7 +742,6 @@ class Moderation(commands.Cog):
 
         if 'discord.gg' in message.content:
             if message.guild.id == 831211215375433728:
-                # await message.channel.send(f"{message.channel.category_id} == 831211215375433731")
                 staffrole = discord.utils.get(message.guild.roles, id=831214459682029588)
                 if staffrole not in message.author.roles:
 

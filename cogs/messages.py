@@ -42,7 +42,6 @@ class Messages(commands.Cog):
     @commands.command()
     async def debatetopic(self,ctx):
         rand = random.randint(1, len(debateTopics))
-        # await ctx.send(debateTopics[rand])
         while len(debateTopics[rand]) > 256:
             rand = random.randint(1, len(debateTopics))
 
@@ -65,7 +64,6 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def ask2(self,ctx, *, question: str):
-        # if '@everyone' in question or '@here' in question or '@Member':
         answer = getAnswer2(question)
         if '@' in question or '@' in answer:
             await ctx.send("No.")
@@ -74,7 +72,6 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def ask(self,ctx, *, question):
-        # if '@everyone' in question or '@here' in question:
         answer = getAnswer(question)
         if '@' in question or '@' in answer:
             await ctx.send("No.")
