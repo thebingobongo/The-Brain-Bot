@@ -726,6 +726,10 @@ class Moderation(commands.Cog):
                 await message.add_reaction("<:lovecat:840653631308562462>")
             elif msgword.lower() in ['kuzco', 'muni','municakes']:
                 await message.add_reaction('<:kuzco:911675990315507753>')
+            elif msgword.lower() in ['leo','leon','cunt']:
+                await message.add_reaction('<:leo:920413129366732910>')
+            elif msgword.lower() in ['skye','skype','skjye', 'japan', 'japanese']:
+                await message.add_reaction('<:kne:958959713272352848>')
 
 
 
