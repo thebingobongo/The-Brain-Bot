@@ -162,6 +162,23 @@ class Misc(commands.Cog):
     async def muni(self, ctx):
         await ctx.send("https://cdn.discordapp.com/attachments/831211215878488078/951728677236903946/2A8BE0D7-DE10-4188-988B-861A9A3B395B.jpg")
 
+
+    @commands.command(aliases=['seal','animal'])
+    async def naturesanimal(self, ctx):
+        await ctx.send("https://tenor.com/view/happy-fluffy-seal-gif-21617739")
+
+    @commands.command(aliases=['sky'])
+    async def skye(self, ctx):
+        await ctx.send("https://cdn.discordapp.com/attachments/861788174249754634/959570542174810162/Oj2w8Dcz72mwLY8T.mp4")
+    
+    @commands.command(aliases=['leo'])
+    async def leon(self,ctx):
+        t = random.randint(1,2)
+        if t == 1:
+            await ctx.send('https://tenor.com/view/periodt-period-saucy-santana-gif-23048163')
+        else:
+            await ctx.send('https://tenor.com/view/saucy-santana-period-walking-away-kinkytwt-gif-20846060')
+
     @commands.command()
     async def bingo(self, ctx):
         t = random.randint(1,3)
