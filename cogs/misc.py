@@ -170,7 +170,7 @@ class Misc(commands.Cog):
     @commands.command(aliases=['sky'])
     async def skye(self, ctx):
         await ctx.send("https://cdn.discordapp.com/attachments/861788174249754634/959570542174810162/Oj2w8Dcz72mwLY8T.mp4")
-    
+
     @commands.command(aliases=['leo'])
     async def leon(self,ctx):
         t = random.randint(1,2)
@@ -188,6 +188,10 @@ class Misc(commands.Cog):
             await ctx.send("stop")
         else:
             await ctx.send("dont care didnt ask plus youre annoying")
+
+    @commands.command()
+    async def sealtherapy(self,ctx):
+        await ctx.send("https://youtube.com/playlist?list=PLPGXDgNi3cOasnX-UT7ABFa9ixGn4V4yw")
 
     @commands.command()
     async def trumped(self, ctx):
