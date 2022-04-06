@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import typing
 import asyncio
+import datetime
 
 from databaselayer import *
 
@@ -621,6 +622,15 @@ class Moderation(commands.Cog):
                 closeTicket(int(ticket[0]))
         await ctx.send(embed=embed)
 
+    @commands.command(name="raidban")
+    @has_roles
+    async def raidban(self, ctx, minutes: int):
+        log_channel = self.bot.get_channel(934867511273476177)
+        for member in ctx.guild.members:
+            check_time = datetime.datetime.now(member.joined_at.tzinfo) - datetime.timedelta(minutes=minutes)
+            if member.joined_at > check_time:
+                await member.ban(reason="raid")
+                await log_channel.send(f"Banned: {member.name} for raiding")
 
     @commands.Cog.listener()
     async def on_message(self, message):
