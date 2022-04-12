@@ -652,7 +652,8 @@ class Moderation(commands.Cog):
             embedVar = discord.Embed(title="BOT RECIEVED DM", color=0x00ff00)
             embedVar.add_field(name=f"{message.author} sent the bot:",
                                value=f"{message.content}", inline=False)
-            embedVar.set_footer(text=f"Member discord ID is {message.author.id}")
+            embedVar.add_field(name="Pingable role:", value=f"{message.author.mention}")
+            embedVar.set_footer(text=f"Member discord ID is {message.author.id} | {message.author.mention}")
             await sendchannel.send(embed=embedVar)
             if not hasOpenTicket(message.author.id):
                 embedVar1 = discord.Embed(title="Ticket created", color=0x00ff00)
@@ -697,6 +698,7 @@ class Moderation(commands.Cog):
                     embedVar2 = discord.Embed(title="Filtered Message:", color=0xff0000)
                     embedVar2.add_field(name=f"{message.author} said in {message.channel}:",
                                         value=f"{message.content} \n \n Word = **{msgword}**", inline=False)
+                    embedVar2.add_field(name="Pingable role:", value=f"{message.author.mention}")
                     await message.channel.send("You used a word that is not allowed to be used in this server. **Do not do it again.**")
                     await sendchannel.send(embed=embedVar2)
                     break
