@@ -131,20 +131,20 @@ class Messages(commands.Cog):
         if '@' in reminder:
             await ctx.send("Sorry, I cannot ping anyone. Try it without using an @")
             return
-        if time == None or unit == None or reminder == None or unit.lower() not in ['minute','second','minutes', 'seconds','hours','hour','day','days','sec','min','secs','mins','hr','hrs'] or time.isdigit() == False:
+        if time == None or unit == None or reminder == None or unit.lower() not in ['minute','second','minutes', 'seconds','hours','hour','day','days','sec','min','secs','mins','hr','hrs','m','h'] or time.replace('.','',1).isdigit() == False:
             await ctx.send("The way to use this command is with .reminder [time with unit like 1 second or 2 minutes] [what you want to be reminded of]")
             return
         if unit in ['days', 'day']:
             await ctx.send("Days are not currently supported. Please ping bingobongo if you really want it")
             return
         await ctx.send("Reminder has been set.")
-        time = int(time)
+        time = float(time)
         if unit in ['seconds','second','sec','secs']:
             await asyncio.sleep(time)
-        elif unit in ['minute','minute','min','mins']:
+        elif unit in ['minute','minute','min','mins','m']:
             time = time * 60
             await asyncio.sleep(time)
-        elif unit in ['hour','hours','hr','hrs']:
+        elif unit in ['hour','hours','hr','hrs','h']:
             time = time * 60 * 60
             await asyncio.sleep(time)
         await ctx.send(f"Hello {ctx.author.mention}, reminding you to {reminder}.")
