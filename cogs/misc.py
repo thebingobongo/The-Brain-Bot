@@ -163,6 +163,14 @@ class Misc(commands.Cog):
         await ctx.send("https://cdn.discordapp.com/attachments/831211215878488078/951728677236903946/2A8BE0D7-DE10-4188-988B-861A9A3B395B.jpg")
 
 
+    @commands.command()
+    async def mousy(self, ctx):
+        await ctx.send("Mousy please tell bingo what to put here")
+
+    @commands.command()
+    async def fez(self, ctx):
+        await ctx.send("Fez please tell bingo what to put here")
+
     @commands.command(aliases=['seal','animal'])
     async def naturesanimal(self, ctx):
         await ctx.send("https://tenor.com/view/happy-fluffy-seal-gif-21617739")
