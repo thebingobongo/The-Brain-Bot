@@ -170,12 +170,12 @@ def removeItem(discordid, itemname):
 
 
 def addBounty(user_id, challenge, amount):
-    cur.execute("INSERT INTO bounties (user_id, challenge, amount) VALUES (?,?,?)", (user_id, challenge, amount))
+    cur.execute("INSERT INTO bounties (user_id, challenge, amount) VALUES (?,?,?);", (user_id, challenge, amount))
     con.commit()
 
 
 def removeBounty(bounty_id):
-    cur.execute("DELETE FROM bounties WHERE bounty_id=?", (bounty_id,))
+    cur.execute("DELETE FROM bounties WHERE bounty_id=? ", (bounty_id,))
     con.commit()
 
 
@@ -197,3 +197,49 @@ def completeBounty(bounty_id):
     removeBounty(bounty_id)
     return amount
 
+
+def addStock(user_id, stock_name, stock_price, quantity:int):
+    cur.execute(f"INSERT INTO stocks (discordid, stock_name, stockprice, quantity) values ('{user_id}', '{stock_name}', '{stock_price}', {quantity});")
+    con.commit()
+
+
+def getStocks(user_id, stock_name):
+    cur.execute(f"SELECT * FROM stocks WHERE user_id= ({user_id},) AND stock_name= {stock_name};")
+    res = cur.fetchall()
+    return res
+
+
+def getPortfolio(user_id):
+    cur.execute(f"SELECT * FROM stocks WHERE user_id= '{user_id}';")
+    res = cur.fetchall()
+    return res
+
+
+def getStocksbyPrice(user_id, stock_name, stock_price):
+    cur.execute(f"SELECT * FROM stocks WHERE user_id= ({user_id},) AND stock_name= {stock_name} AND stockprice= {stock_price};")
+    res = cur.fetchall()
+    return res
+
+
+def getQuantitybyPrice(user_id, stock_name, stock_price):
+    cur.execute(
+        f"SELECT quantity FROM stocks WHERE user_id= ({user_id},) AND stock_name= {stock_name} AND stockprice= {stock_price};")
+    res = cur.fetchall()
+    return res[0]
+
+
+def addQuantity(user_id, stock_name, stock_price, quantity_to_add:int):
+    quantity = getQuantitybyPrice(user_id,stock_name,stock_price)
+    quantity += quantity_to_add
+    deleteStock(user_id,stock_name, stock_price)
+    addStock(user_id, stock_name, stock_price, quantity)
+
+
+def delQuantity(user_id, stock_name, stock_price, quantity_to_add:int):
+    quantity_to_add =  -abs(quantity_to_add)
+    addQuantity(user_id, stock_name, stock_price, quantity_to_add)
+
+
+def deleteStock(user_id,stock_name, stock_price):
+    cur.execute(f"DELETE FROM stocks WHERE discordid=? ({user_id},) AND stock_name=? ({stock_name},) AND stockprice=? ({stock_price},);")
+    con.commit()
