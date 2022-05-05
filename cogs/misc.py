@@ -169,7 +169,7 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def fez(self, ctx):
-        await ctx.send("Fez please tell bingo what to put here")
+        await ctx.send("https://cdn.discordapp.com/attachments/861788174249754634/971537929740615680/unknown.png")
 
     @commands.command(aliases=['seal','animal'])
     async def naturesanimal(self, ctx):
