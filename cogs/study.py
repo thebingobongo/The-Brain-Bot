@@ -124,7 +124,10 @@ class Study(commands.Cog):
                 return True
 
 
+        completed_poms = 0
         while len(self.groups[currentgroup]) > 0:
+
+            # starts pomodoro for all members in the current group
             for member in self.groups[currentgroup]:
                 result = await check_pomo_role(member)
                 if result:
@@ -133,17 +136,21 @@ class Study(commands.Cog):
                     if aboveage_role in member.roles:
                         await member.remove_roles(aboveage_role)
             await asyncio.sleep((studytime*60))
+
+            # starts break time
+            completed_poms += 1
             for member in self.groups[currentgroup]:
                 r = await check_pomo_role(member)
             if len(self.groups[currentgroup]) != 0:
                 member_ping = ''
                 for member in self.groups[currentgroup]:
                     member_ping = member_ping + f"{member.mention}"
-                await ctx.send(f"Your study session has been completed, time to take a break!\n {member_ping}")
+                await ctx.send(f"Your study session has been completed, time to take a break!\n Your group has completed {completed_poms} study session(s)!\n {member_ping}")
             else:
                 del self.groups[currentgroup]
                 self.activegroups -= 1
                 return
+            # announces completed pom
             for member in self.groups[currentgroup]:
                 if pomo_role not in member.roles:
                     try:
@@ -156,7 +163,14 @@ class Study(commands.Cog):
                     await member.remove_roles(study_role)
                     if not underage_role in member.roles:
                         await member.add_roles(aboveage_role)
-            await asyncio.sleep((breaktime*60))
+            if completed_poms % 4 == 0:
+                await ctx.send(f"Your group has completed {completed_poms} sessions. Every fourth session you get a break twice as long as your previous ones ({breaktime*2} minutes)! Good work!")
+                longer_break_time = breaktime * 2
+                await asyncio.sleep((longer_break_time*60))
+            else:
+                await asyncio.sleep((breaktime*60))
+
+            # ends break time, sets up next pom
             for member in self.groups[currentgroup]:
                 r = await check_pomo_role(member)
             if len(self.groups[currentgroup]) != 0:
