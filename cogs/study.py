@@ -40,12 +40,20 @@ class Study(commands.Cog):
         member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
         aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
         underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
+        pomo_role =discord.utils.get(ctx.guild.roles, id=897958571306811442)
+
+        if study_role not in member.roles:
+            await ctx.send("You are not currently in study mode.")
+            return
 
         await member.remove_roles(study_role, reason='study mode disactivated')
         await member.add_roles(member_role, reason='study mode disactivated')
+        await ctx.send("Study Mode has been deactivated.")
         if not underage_role in member.roles:
             await member.add_roles(aboveage_role)
-        await ctx.send("Study Mode has been deactivated.")
+        if pomo_role in member.roles:
+            await member.remove_roles(pomo_role)
+            await ctx.send("You have been removed from your pomodoro session as well.")
         await ctx.author.move_to(None)
 
     def findgroup(self, member:discord.Member):
