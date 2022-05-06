@@ -6,11 +6,11 @@ from discord.ext import commands
 class Study(commands.Cog):
     activegroups = 0
     groups = {}
+
     def __init__(self, client):
         self.client = client
         activegroups = 0
         groups = {}
-
 
     @commands.command()
     async def studymode(self, ctx):
@@ -18,8 +18,10 @@ class Study(commands.Cog):
         member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
         study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
         aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
+        study_realm = self.client.get_channel(895898369019478046)
 
-        await ctx.send("You have activated Study Mode, Good Luck!")
+        await ctx.send("Activated.")
+        await study_realm.send(f"Hello {ctx.author.mention}. You have activated Study Mode, Good Luck!\n To exit use .unstudymode")
 
         member = ctx.author
         reason = 'study mode activated'
@@ -29,7 +31,6 @@ class Study(commands.Cog):
         if aboveage_role in member.roles:
             await member.remove_roles(aboveage_role)
         await ctx.author.move_to(None)
-
 
     @commands.command()
     async def unstudymode(self,ctx):
@@ -47,7 +48,6 @@ class Study(commands.Cog):
         await ctx.send("Study Mode has been deactivated.")
         await ctx.author.move_to(None)
 
-
     def findgroup(self, member:discord.Member):
 
         for key in self.groups:
@@ -56,6 +56,23 @@ class Study(commands.Cog):
                     return key
         return None
 
+    @commands.command(aliases=['activegroups'])
+    async def showgroups(self,ctx):
+        i=0
+        embed = discord.Embed(title="Active Groups", color=ctx.author.color)
+        if len(self.groups) == 0:
+            await ctx.send("There are no active pomodoro groups right now.\n You can start one with .startpomo")
+            return
+
+        # print(self.groups)
+        for key in self.groups:
+            memberString=''
+            # print(key)
+            for member in self.groups[key]:
+                memberString = memberString + member.name + "\n"
+                # print(memberString)
+            embed.add_field(name=f"Group number {i}", value=memberString)
+        await ctx.send(embed=embed)
 
     @commands.command(aliases=['pomodoro','startpomodorosession','startpomodoro'])
     async def startpomo(self, ctx, members: commands.Greedy[discord.Member],studytime:int=None, breaktime:int=None ):
@@ -144,9 +161,6 @@ class Study(commands.Cog):
                 self.activegroups -= 1
                 return
 
-
-
-
     @commands.command()
     async def endpomo(self, ctx):
         member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
@@ -171,13 +185,14 @@ class Study(commands.Cog):
 
         await ctx.send("You have been removed from the pomodoro session.")
 
-
-
-
-
-
     @commands.command()
     async def joinpomo(self, ctx, member:discord.Member=None):
+
+        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
+        study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
+        pomo_role =discord.utils.get(ctx.guild.roles, id=897958571306811442)
+        aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
+        underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
 
         if member == None:
             await ctx.send("Please name someone whose pomodoro session you would like to join.")
@@ -190,11 +205,6 @@ class Study(commands.Cog):
             await ctx.send("That session could not be found.")
             return
 
-        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
-        study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
-        pomo_role =discord.utils.get(ctx.guild.roles, id=897958571306811442)
-        aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
-        underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
 
 
         if study_role in member.roles:
@@ -211,10 +221,6 @@ class Study(commands.Cog):
         self.groups[membergroup].append(ctx.author)
         await ctx.author.add_roles(pomo_role)
         await ctx.send("You have successfully joined that pomodoro session!")
-
-
-
-
 
 
 
