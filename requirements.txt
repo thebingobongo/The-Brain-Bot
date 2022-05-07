@@ -5,7 +5,7 @@ requests
 pymysql
 asyncpg
 colorthief
-matplotlib.pyplot
+matplotlib
 seaborn
 numpy
 pydash
