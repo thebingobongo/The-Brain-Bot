@@ -4,3 +4,8 @@ python-dotenv
 requests
 pymysql
 asyncpg
+colorthief
+matplotlib.pyplot
+seaborn
+numpy
+pydash

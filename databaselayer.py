@@ -1,6 +1,7 @@
 import os
-from dotenv import load_dotenv
+
 import pymysql
+from dotenv import load_dotenv
 
 load_dotenv()
 hostname = os.getenv('HOST')
@@ -43,8 +44,7 @@ def openTickets():
 
 
 def addWarn(target, warn, submitter):
-    cur.execute(
-        f"INSERT INTO warns (discordid, warnmessage, submitterid, submittime) values ({target}, '{warn}', {submitter}, now());")
+    cur.execute(f"INSERT INTO warns (discordid, warnmessage, submitterid, submittime) values ({target}, '{warn}', {submitter}, now());")
     con.commit()
 
 
@@ -198,48 +198,107 @@ def completeBounty(bounty_id):
     return amount
 
 
-def addStock(user_id, stock_name, stock_price, quantity:int):
-    cur.execute(f"INSERT INTO stocks (discordid, stock_name, stockprice, quantity) values ('{user_id}', '{stock_name}', '{stock_price}', {quantity});")
+# def addStock(user_id, stock_name, stock_price, quantity:int):
+#     cur.execute(f"INSERT INTO stocks (discordid, stock_name, stockprice, quantity) values ('{user_id}', '{stock_name}', '{stock_price}', {quantity});")
+#     con.commit()
+
+
+# def getStocks(user_id, stock_name):
+#     cur.execute(f"SELECT * FROM stocks WHERE user_id= ({user_id},) AND stock_name= {stock_name};")
+#     res = cur.fetchall()
+#     return res
+
+
+# def getPortfolio(user_id):
+#     cur.execute(f"SELECT * FROM stocks WHERE user_id= '{user_id}';")
+#     res = cur.fetchall()
+#     return res
+
+
+# def getStocksbyPrice(user_id, stock_name, stock_price):
+#     cur.execute(f"SELECT * FROM stocks WHERE user_id= ({user_id},) AND stock_name= {stock_name} AND stockprice= {stock_price};")
+#     res = cur.fetchall()
+#     return res
+
+
+# def getQuantitybyPrice(user_id, stock_name, stock_price):
+#     cur.execute(
+#         f"SELECT quantity FROM stocks WHERE user_id= ({user_id},) AND stock_name= {stock_name} AND stockprice= {stock_price};")
+#     res = cur.fetchall()
+#     return res[0]
+
+
+# def addQuantity(user_id, stock_name, stock_price, quantity_to_add:int):
+#     quantity = getQuantitybyPrice(user_id,stock_name,stock_price)
+#     quantity += quantity_to_add
+#     deleteStock(user_id,stock_name, stock_price)
+#     addStock(user_id, stock_name, stock_price, quantity)
+
+
+# def delQuantity(user_id, stock_name, stock_price, quantity_to_add:int):
+#     quantity_to_add =  -abs(quantity_to_add)
+#     addQuantity(user_id, stock_name, stock_price, quantity_to_add)
+
+
+# def deleteStock(user_id,stock_name, stock_price):
+#     cur.execute(f"DELETE FROM stocks WHERE discordid=? ({user_id},) AND stock_name=? ({stock_name},) AND stockprice=? ({stock_price},);")
+#     con.commit()
+
+def getStocks(memberid, stock=None):
+    if type(stock) == str:
+        keywords = ["SELECT ", "DROP ", "WHERE "]
+        for keyword in keywords:
+            if keyword in stock:
+                return []  # Malicious query, fuck off
+
+    cur.execute(
+        f"SELECT * FROM stocks WHERE discordid = {memberid}"
+        + (f" AND stockname = '{stock.upper()}'" if stock != None else "")
+        + " ORDER BY timestamp DESC;"
+    )
+    stocks = cur.fetchall()
+    return list(stocks)
+
+
+def hasStocks(memberid, stock, amount):
+    shares = sum([x[3] for x in getStocks(memberid, stock)])
+    return shares >= amount
+
+
+def addStocks(memberid, stock, amount, price):
+    cur.execute(
+        f"INSERT INTO stocks (discordid, stockname, stockprice, quantitybought, timestamp) values ({memberid}, '{stock.upper()}', {price}, {amount}, NOW());"
+    )
     con.commit()
 
 
-def getStocks(user_id, stock_name):
-    cur.execute(f"SELECT * FROM stocks WHERE user_id= ({user_id},) AND stock_name= {stock_name};")
-    res = cur.fetchall()
-    return res
+def removeStocks(memberid, stock, amount):
+    stocks = getStocks(memberid, stock)
+    if not sum([x[3] for x in stocks]) >= amount:
+        return
 
+    i = 0
+    num_to_remove = amount
+    queries = []
+    while num_to_remove > 0:
+        print(queries)
+        _, _, price, shares, timestamp = stocks[i]
 
-def getPortfolio(user_id):
-    cur.execute(f"SELECT * FROM stocks WHERE user_id= '{user_id}';")
-    res = cur.fetchall()
-    return res
+        if shares > num_to_remove:
+            num = num_to_remove
+            query = f"UPDATE stocks SET quantitybought={shares - num}"
+        else:
+            num = shares
+            query = "DELETE FROM stocks"
 
+        query += f" WHERE discordid={memberid} AND stockname='{stock.upper()}' AND timestamp='{timestamp}';"
+        queries.append(query)
 
-def getStocksbyPrice(user_id, stock_name, stock_price):
-    cur.execute(f"SELECT * FROM stocks WHERE user_id= ({user_id},) AND stock_name= {stock_name} AND stockprice= {stock_price};")
-    res = cur.fetchall()
-    return res
+        num_to_remove -= num
+        i += 1
 
+    for query in queries:
+        print(query)
+        cur.execute(query)
 
-def getQuantitybyPrice(user_id, stock_name, stock_price):
-    cur.execute(
-        f"SELECT quantity FROM stocks WHERE user_id= ({user_id},) AND stock_name= {stock_name} AND stockprice= {stock_price};")
-    res = cur.fetchall()
-    return res[0]
-
-
-def addQuantity(user_id, stock_name, stock_price, quantity_to_add:int):
-    quantity = getQuantitybyPrice(user_id,stock_name,stock_price)
-    quantity += quantity_to_add
-    deleteStock(user_id,stock_name, stock_price)
-    addStock(user_id, stock_name, stock_price, quantity)
-
-
-def delQuantity(user_id, stock_name, stock_price, quantity_to_add:int):
-    quantity_to_add =  -abs(quantity_to_add)
-    addQuantity(user_id, stock_name, stock_price, quantity_to_add)
-
-
-def deleteStock(user_id,stock_name, stock_price):
-    cur.execute(f"DELETE FROM stocks WHERE discordid=? ({user_id},) AND stock_name=? ({stock_name},) AND stockprice=? ({stock_price},);")
     con.commit()
