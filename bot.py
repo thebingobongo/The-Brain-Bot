@@ -80,8 +80,11 @@ async def load(ctx, extension):
 async def loadall(ctx):
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py"):
-            client.load_extension(f"cogs.{filename[:-3]}")
-            print(f"{filename} has been loaded.")
+            try:
+                client.load_extension(f"cogs.{filename[:-3]}")
+                print(f"{filename} has been loaded.")
+            except:
+                print(f"{filename} has already been loaded.")
     await ctx.send("Done.")
 
 
@@ -90,8 +93,11 @@ async def loadall(ctx):
 async def unloadall(ctx):
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py"):
-            client.unload_extension(f"cogs.{filename[:-3]}")
-            print(f"{filename} has been unloaded.")
+            try:
+                client.unload_extension(f"cogs.{filename[:-3]}")
+                print(f"{filename} has been unloaded.")
+            except:
+                print(f"{filename} is already unloaded")
     await ctx.send("Done.")
 
 
@@ -113,7 +119,7 @@ async def cogstatus(ctx):
     await ctx.send("Done.")
 
 
-@client.command()
+@client.command(aliases=["cogslist"])
 @has_roles
 async def coglist(ctx):
     embed = discord.Embed(title="List of Cogs",color=0x00ffff)
