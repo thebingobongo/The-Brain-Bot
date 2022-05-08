@@ -23,6 +23,8 @@ class Help(commands.Cog):
                                value="For moderators", inline=False)
             embedVar.add_field(name="Economy / Brain Cells",
                                value="For the economy with Brain Cells", inline=False)
+            embedVar.add_field(name="Stocks / Stock Market",
+                               value="For the stocks system.", inline=False)
             embedVar.add_field(name="Message",
                                value="For the chat bot commands", inline=False)
             embedVar.add_field(name="Utility",
@@ -74,15 +76,22 @@ class Help(commands.Cog):
             embedVar.add_field(name='.use [item]', value='Use the item!')
             embedVar.add_field(name='.study', value='You can earn extra coins if you own a book!')
 
+        elif type.lower() in ['stocks','stock']:
+            embedVar = discord.Embed(title="Stock Market commands:", color=0x00ff00)
+            embedVar.add_field(name='.stocks info [stock name]', value='Gives you info about the stock')
+            embedVar.add_field(name='.stocks price [stock name]', value='Gives you price of the stock')
+            embedVar.add_field(name='.stocks chart [stock name]', value='Gives you price chart of the stock')
+            embedVar.add_field(name='.stocks buy [stock name] [quantity]', value='Buys stocks')
+            embedVar.add_field(name='.stocks sell [stock name] [quantity]', value='Sells stocks')
+            embedVar.add_field(name='.stocks portfolio', value='Shows the stock that you own')
+
         elif type.lower() in ['study','studying']:
             embedVar = discord.Embed(title="Studying commands:", color=0x00ff00)
             embedVar.add_field(name='.studymode', value='Restricts your access from the rest of the server, you can only use the Study Realm.')
             embedVar.add_field(name='.unstudymode', value='Gives you back access to the rest of the server.')
             embedVar.add_field(name='.startpomo [study time] [break time]', value='Starts a pomodoro session for you with reminders and restricts access to the rest of the server.')
-            embedVar.add_field(name='.joinpomo', value='Adds you to someones existing pomodoro session.')
+            embedVar.add_field(name='.joinpomo [@user]', value='Adds you to someones existing pomodoro session.')
             embedVar.add_field(name='.endpomo', value='Ends/Removes you from the pomodoro session.')
-
-
 
         elif type.lower() in ['game','games']:
             embedVar = discord.Embed(title="Games:", color=0x00ff00)
@@ -92,7 +101,6 @@ class Help(commands.Cog):
             embedVar.add_field(name=".dice [guess] [amount]",
                                value="I will roll a die and if you get it right, you get 6 times the brain cells!")
             embedVar.add_field(name='.trivia', value="Sends a trivia question.")
-
 
         elif type.lower() in ["message", 'messages']:
             embedVar = discord.Embed(title="Message commands:", color=0x00ff00)
@@ -125,8 +133,8 @@ class Help(commands.Cog):
             embedVar.add_field(name=".poll [poll question]", value="I will create a poll for you.")
             embedVar.add_field(name=".reminder [time with unit like 1 second] [reminder]", value="Will remind you of something after the time.")
 
-        elif type.lower() == "rook":
-            embedVar = discord.Embed(title="Rook commands:", color=0x00ff00)
+        elif type.lower() in ["rook",'monarch']:
+            embedVar = discord.Embed(title="Rook/Monarch commands:", color=0x00ff00)
             embedVar.add_field(name=".pingvc", value="I will ping all members with the Ping for VC role.", inline=False)
             embedVar.add_field(name=".pinggame", value="I will ping all members with the Ping for Games role.",
                                inline=False)
