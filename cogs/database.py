@@ -71,7 +71,7 @@ class Database(commands.Cog):
         if ctx.channel.id == 831211215878488078:
             await ctx.send("Use <#835370412161630270> you stupid fuck")
             return
-        earned = random.randint(200, 1000)
+        earned = random.randint(10, 50)
         addBal(ctx.author.id, earned)
         embed = discord.Embed(title=f"You just earned {earned} Brain Cells!",
                               colour=ctx.author.colour)
