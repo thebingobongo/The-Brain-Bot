@@ -126,7 +126,7 @@ class Stocks(commands.Cog):
         for field in fields:
             embed.add_field(
                 name=f"${field['symbol'].upper()}",
-                value=f":happybrain:{field['latestPrice']:.3f}",
+                value=f"{field['latestPrice']:.3f}<:happybrain:838485449512452157>",
                 inline=True,
             )
 
@@ -283,7 +283,7 @@ class Stocks(commands.Cog):
 
             embed.add_field(name=ticker.upper(), value=f"\nShares: {total_shares}", inline=True)
             embed.add_field(
-                name=f":happybrain:{(price * total_shares):.1f}",
+                name=f"{(price * total_shares):.1f}<:happybrain:838485449512452157>",
                 value=f"```diff\n{'+' if change > 0 else ''}{change:.2f}%\n```",
                 inline=True,
             )

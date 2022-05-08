@@ -273,9 +273,10 @@ def addStocks(memberid, stock, amount, price):
 
 
 def removeStocks(memberid, stock, amount):
-    stocks = getStocks(memberid, stock)
-    if not sum([x[3] for x in stocks]) >= amount:
+    if not hasStocks(memberid, stock, amount):
         return
+
+    stocks = getStocks(memberid, stock)
 
     i = 0
     num_to_remove = amount
