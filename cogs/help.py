@@ -66,10 +66,9 @@ class Help(commands.Cog):
             embedVar.add_field(name='.bal or .balance', value="Tells you how many brain cells you have")
             embedVar.add_field(name='.give [@user] [ammount]',
                                value='Gives the user the specified number of Brain cells.')
-            embedVar.add_field(name='.think', value='You earn a random ammount of brain cells. Cooldown for an hour!')
+            embedVar.add_field(name='.think', value='You earn a random amount of brain cells. Cooldown for an hour!')
             embedVar.add_field(name='.smartest', value="Shows you the smartest people in the server.")
             embedVar.add_field(name=".warns", value="Shows you the active warnings for you.")
-
             embedVar.add_field(name='.shop', value="I will show you the shop!")
             embedVar.add_field(name='.inventory', value='I will show you your inventory.')
             embedVar.add_field(name='.buy [item]', value='You can buy an item!')
@@ -144,7 +143,7 @@ class Help(commands.Cog):
             await ctx.send("Invalid category. Try again")
             return
         embedVar.set_footer(
-            text="For more info check the Rules and Info channel. \nIf you encouter any issues, DM me or any of the mods!")
+            text="For more ifo check the Rules and Info channel. \nIf you encounter any issues, DM me or any of the mods!")
         await ctx.send(embed=embedVar)
 
     @commands.command()
