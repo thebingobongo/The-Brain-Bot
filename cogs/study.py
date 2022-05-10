@@ -26,10 +26,11 @@ class Study(commands.Cog):
         member = ctx.author
         reason = 'study mode activated'
 
-        await member.remove_roles(member_role, reason=reason)
-        await member.add_roles(study_role, reason = "study mode activated.")
-        if aboveage_role in member.roles:
-            await member.remove_roles(aboveage_role)
+        await self.add_study_roles(ctx, member)
+        # await member.remove_roles(member_role, reason=reason)
+        # await member.add_roles(study_role, reason = "study mode activated.")
+        # if aboveage_role in member.roles:
+        #     await member.remove_roles(aboveage_role)
         await ctx.author.move_to(None)
 
     @commands.command()
@@ -37,23 +38,18 @@ class Study(commands.Cog):
         member = ctx.author
 
         study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
-        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
-        aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
-        underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
         pomo_role =discord.utils.get(ctx.guild.roles, id=897958571306811442)
 
         if study_role not in member.roles:
             await ctx.send("You are not currently in study mode.")
             return
 
-        await member.remove_roles(study_role, reason='study mode disactivated')
-        await member.add_roles(member_role, reason='study mode disactivated')
         await ctx.send("Study Mode has been deactivated.")
-        if not underage_role in member.roles:
-            await member.add_roles(aboveage_role)
+
         if pomo_role in member.roles:
             await member.remove_roles(pomo_role)
             await ctx.send("You have been removed from your pomodoro session as well.")
+        await self.remove_study_roles(ctx,member)
         await ctx.author.move_to(None)
 
     def findgroup(self, member:discord.Member):
@@ -82,6 +78,51 @@ class Study(commands.Cog):
             embed.add_field(name=f"Group number {i}", value=memberString)
         await ctx.send(embed=embed)
 
+    async def add_study_roles(self,ctx, member:discord.Member):
+
+        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
+        study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
+        aboveage_role = discord.utils.get(ctx.guild.roles, id=897665019913842768)
+        staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
+        mod_3_role = discord.utils.get(ctx.guild.roles, id=835623182484373535)
+
+        await member.add_roles(study_role)
+        await member.remove_roles(member_role)
+        if aboveage_role in member.roles:
+            await member.remove_roles(aboveage_role)
+        if staff_role in member.roles:
+            await member.remove_roles(staff_role)
+            if mod_3_role in member.roles:
+                await member.remove_roles(mod_3_role)
+
+
+    async def remove_study_roles(self,ctx, member:discord.Member):
+
+        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
+        study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
+        aboveage_role = discord.utils.get(ctx.guild.roles, id=897665019913842768)
+        underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
+        staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
+        mod_1_role = discord.utils.get(ctx.guild.roles, id=831213087758614609)
+        mod_2_role = discord.utils.get(ctx.guild.roles, id=831213644058329151)
+        mod_3_role = discord.utils.get(ctx.guild.roles, id=835623182484373535)
+        mels_role = discord.utils.get(ctx.guild.roles, id=885650021251444737)
+        nosh_role = discord.utils.get(ctx.guild.roles, id=890059984203812924)
+        wenis_role = discord.utils.get(ctx.guild.roles, id=885648963473121280)
+
+        if mod_2_role in member.roles or mod_1_role in member.roles:
+            await member.add_roles(staff_role)
+        elif mels_role in member.roles or nosh_role in member.roles or wenis_role in member.roles:
+            await member.add_roles(staff_role)
+            await member.add_roles(mod_3_role)
+        else:
+            await member.add_roles(member_role)
+        await member.remove_roles(study_role)
+        if not underage_role in member.roles:
+            await member.add_roles(aboveage_role)
+
+
+
     @commands.command(aliases=['pomodoro','startpomodorosession','startpomodoro'])
     async def startpomo(self, ctx, members: commands.Greedy[discord.Member],studytime:int=None, breaktime:int=None ):
 
@@ -102,11 +143,7 @@ class Study(commands.Cog):
 
         self.groups[currentgroup] = members
 
-        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
-        study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
         pomo_role =discord.utils.get(ctx.guild.roles, id=897958571306811442)
-        aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
-        underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
 
 
         await ctx.send(f"OK! Your pomodoro session has begun! You will be studying for {studytime} minutes and you'll take a  break for {breaktime} minutes.")
@@ -131,10 +168,7 @@ class Study(commands.Cog):
             for member in self.groups[currentgroup]:
                 result = await check_pomo_role(member)
                 if result:
-                    await member.add_roles(study_role)
-                    await member.remove_roles(member_role)
-                    if aboveage_role in member.roles:
-                        await member.remove_roles(aboveage_role)
+                    await self.add_study_roles(ctx, member)
             await asyncio.sleep((studytime*60))
 
             # starts break time
@@ -150,6 +184,7 @@ class Study(commands.Cog):
                 del self.groups[currentgroup]
                 self.activegroups -= 1
                 return
+
             # announces completed pom
             for member in self.groups[currentgroup]:
                 if pomo_role not in member.roles:
@@ -159,10 +194,7 @@ class Study(commands.Cog):
                         pass
                 else:
                     await pom_tracker.send(f"{member.name} has completed a pomodoro study session!")
-                    await member.add_roles(member_role)
-                    await member.remove_roles(study_role)
-                    if not underage_role in member.roles:
-                        await member.add_roles(aboveage_role)
+                    await self.remove_study_roles(ctx, member)
             if completed_poms % 4 == 0:
                 await ctx.send(f"Your group has completed {completed_poms} sessions. Every fourth session you get a break twice as long as your previous ones ({breaktime*2} minutes)! Good work!")
                 longer_break_time = breaktime * 2
@@ -185,12 +217,8 @@ class Study(commands.Cog):
 
     @commands.command()
     async def endpomo(self, ctx):
-        member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
-        study_role = discord.utils.get(ctx.guild.roles, id=867540943217491978)
-        pomo_role = discord.utils.get(ctx.guild.roles, id=897958571306811442)
-        aboveage_role = discord.utils.get(ctx.guild.roles,  id=897665019913842768)
-        underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
 
+        pomo_role = discord.utils.get(ctx.guild.roles, id=897958571306811442)
 
         if pomo_role not in ctx.author.roles:
             await ctx.send("You are not currently in a pomodoro session.")
@@ -198,12 +226,8 @@ class Study(commands.Cog):
 
         await ctx.author.remove_roles(pomo_role)
         self.groups[self.findgroup(ctx.author)].remove(ctx.author)
-        if member_role not in ctx.author.roles:
-            await ctx.author.add_roles(member_role)
-        if study_role in ctx.author.roles:
-            await ctx.author.remove_roles(study_role)
-        if underage_role not in ctx.author.roles:
-            await ctx.author.add_roles(aboveage_role)
+
+        await self.remove_study_roles(ctx,ctx.author)
 
         await ctx.send("You have been removed from the pomodoro session.")
 
