@@ -6,6 +6,7 @@ import datetime
 
 from databaselayer import *
 
+
 def predicate(ctx):
     staff_role = discord.utils.get(ctx.guild.roles, id=831214459682029588)
     return staff_role in ctx.author.roles or ctx.author.id == 339070790987284491
@@ -96,7 +97,6 @@ class Moderation(commands.Cog):
         await member.add_roles(aboveage_role)
         await ctx.send("Underage Tag has been removed!")
 
-
     @commands.command(aliases=['woman','makewoman','givewoman'])
     @has_roles
     async def iswoman(self,ctx,member:discord.Member=None):
@@ -116,7 +116,6 @@ class Moderation(commands.Cog):
 
                                                     )
         await ctx.send(f"{member} has been granted access to the women only channel.")
-
 
     @commands.command(aliases=["sew"])
     @has_roles
@@ -355,7 +354,6 @@ class Moderation(commands.Cog):
 
         userlogs = self.client.get_channel(934867511273476177)
         await userlogs.send("{0.mention} has been promoted by {1}.".format(member, ctx.author))
-
 
     @commands.command()
     @commands.has_role(831214459682029588)
@@ -607,7 +605,6 @@ class Moderation(commands.Cog):
         else:
             await ctx.send("No open tickets for that member.")
 
-
     @commands.command()
     @has_roles
     async def opentickets(self, ctx):
@@ -631,6 +628,43 @@ class Moderation(commands.Cog):
             if member.joined_at > check_time:
                 await member.ban(reason="raid")
                 await log_channel.send(f"Banned: {member.name} for raiding")
+
+    @commands.command()
+    @has_roles
+    async def createevent(self, ctx, *, name=None):
+
+        EVENT_CATEGORY_ID = 850114378640261130
+        EVENT_PING_CHANNEL_ID = 831215161162858516
+
+        if name == None:
+            await ctx.send("No name entered. Try again with .event close [name of event]")
+
+        the_vat = self.bot.get_guild(831211215375433728)
+        event_category = discord.utils.get(the_vat.categories, id=EVENT_CATEGORY_ID)
+
+        await event_category.create_text_channel(name)
+        await event_category.create_voice_channel(name)
+        await event_category.edit(position=5)
+
+        ping_channel = self.bot.get_channel(EVENT_PING_CHANNEL_ID)
+        await ctx.send("Ok, setting up event now!")
+        await ping_channel.send(f"Event starting now: {name}")
+
+    @commands.command()
+    @has_roles
+    async def closeevent(self, ctx):
+
+        EVENT_CATEGORY_ID = 850114378640261130
+
+        the_vat = self.bot.get_guild(831211215375433728)
+        event_category = discord.utils.get(the_vat.categories, id=EVENT_CATEGORY_ID)
+
+        await event_category.edit(position=11)
+
+        for channel in event_category.channels:
+            await channel.delete()
+
+        await ctx.send("Ok, closing events down now.")
 
     @commands.Cog.listener()
     async def on_message(self, message):
