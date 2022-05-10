@@ -776,6 +776,8 @@ class Moderation(commands.Cog):
                 await message.add_reaction('<:leo:920413129366732910>')
             elif msgword.lower() in ['skye','skype','skjye','sjkye', 'japan', 'japanese','sky','weeb','bitch','fate','kimetsu','demon','slayer']:
                 await message.add_reaction('<:kne:958959713272352848>')
+            elif msgword.lower() in ["fez"]:
+                await message.add_reaction('<:fez:973716994073452595>')
 
 
 
