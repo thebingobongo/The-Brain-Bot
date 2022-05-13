@@ -21,18 +21,22 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def joke(self, ctx):
+        await ctx.trigger_typing()
         await ctx.send(embed=getJoke())
 
     @commands.command()
     async def programming(self, ctx):
+        await ctx.trigger_typing()
         await ctx.send(embed=getProgrammingJoke())
 
     @commands.command()
     async def knockknock(self, ctx):
+        await ctx.trigger_typing()
         await ctx.send(embed=getKnockKnock())
 
     @commands.command()
     async def zodiac(self, ctx, sign):
+        await ctx.trigger_typing()
         if sign.lower() not in ["aries", 'capricorn', 'sagittarius', 'aquarius', 'taurus', 'virgo', 'libra', 'gemini',
                                 'scorpio', 'pisces', 'leo', 'cancer']:
             await ctx.send("That is not a valid Zodiac sign.")
@@ -41,6 +45,7 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def debatetopic(self,ctx):
+        await ctx.trigger_typing()
         rand = random.randint(1, len(debateTopics))
         while len(debateTopics[rand]) > 256:
             rand = random.randint(1, len(debateTopics))
@@ -53,6 +58,7 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def quote(self, ctx, *, searchterm = None):
+        await ctx.trigger_typing()
         if searchterm == None:
             await ctx.send(embed=getQuote())
         else:
@@ -60,10 +66,13 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def search(self,ctx, *, searchterm):
+        await ctx.trigger_typing()
         await ctx.send(embed=getSearchPhilosopher(searchterm))
 
     @commands.command()
     async def ask2(self,ctx, *, question: str):
+        await ctx.trigger_typing()
+        await asyncio.sleep(1)
         answer = getAnswer2(question)
         if '@' in question or '@' in answer:
             await ctx.send("No.")
@@ -72,6 +81,8 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def ask(self,ctx, *, question):
+        await ctx.trigger_typing()
+        await asyncio.sleep(1)
         answer = getAnswer(question)
         if '@' in question or '@' in answer:
             await ctx.send("No.")
@@ -152,14 +163,20 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def advice(self,ctx):
+        await ctx.trigger_typing()
+        await asyncio.sleep(1)
         await ctx.send(embed=getAdvice())
 
     @commands.command()
     async def insult(self,ctx):
+        await ctx.trigger_typing()
+        await asyncio.sleep(1)
         await ctx.send(embed=getInsult())
 
     @commands.command()
     async def mathfact(self,ctx):
+        await ctx.trigger_typing()
+        await asyncio.sleep(1)
         await ctx.send(embed=getMathFact())
 
     @commands.command()
@@ -168,6 +185,8 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def define(self,ctx, *, search):
+        await ctx.trigger_typing()
+        await asyncio.sleep(1)
         result = getDefinition(search)
         if len(result) > 1:
             embedVar = discord.Embed(title=result[0], color=0x000000)
@@ -180,6 +199,8 @@ class Messages(commands.Cog):
 
     @commands.command(aliases=['urban','urbandict','urbandefine','udefine'])
     async def urbandictionary(self,ctx,*,word):
+        await ctx.trigger_typing()
+        await asyncio.sleep(1)
         embed = getUrbanDefinition(word)
         if embed == None:
             await ctx.send("Word not found.")
@@ -190,6 +211,8 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def sep(self,ctx, *, text):
+        await ctx.trigger_typing()
+        await asyncio.sleep(1)
         text = text.strip()
         text = text.replace(" ", "-")
         if '@' in text:
@@ -203,6 +226,8 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def wiki(self,ctx, *, text):
+        await ctx.trigger_typing()
+        await asyncio.sleep(1)
         text = text.strip()
         text = text.replace(" ", "_")
         if '@' in text:
@@ -216,6 +241,8 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def google(self,ctx, *, text):
+        await ctx.trigger_typing()
+        await asyncio.sleep(1)
         text = text.strip()
         text = text.replace(' ', '+')
         if '@' in text:
@@ -226,6 +253,8 @@ class Messages(commands.Cog):
 
     @commands.command()
     async def ob(self, ctx, *, emotename=None):
+        await ctx.trigger_typing()
+        await asyncio.sleep(1)
         if not emotename == None:
             emotename = emotename.strip()
             observer = self.client.get_guild(737104128777650217)
