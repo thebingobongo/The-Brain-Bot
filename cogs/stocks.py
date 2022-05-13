@@ -250,10 +250,13 @@ class Stocks(commands.Cog):
         )
 
     @stock.command(pass_context=True)
-    async def portfolio(self, ctx):
+    async def portfolio(self, ctx, member:discord.Member=None):
+
         await ctx.trigger_typing()
 
-        stocks = getStocks(ctx.author.id)
+        if member == None:
+            member == ctx.author
+        stocks = getStocks(member.id)
 
         data = defaultdict(lambda: [])
         for stock in stocks:
@@ -262,11 +265,14 @@ class Stocks(commands.Cog):
         data = dict(data)
 
         if len(data.keys()) == 0:
-            return await ctx.send("You got nothing to your name, poor boy.")
+            return await ctx.send(f"{member.name}'s got nothing to their name, poor boy.")
 
         quotes = make_request([*data.keys()], "quote")
+        total_portfolio = getStockBalance(member.id)
 
-        embed = discord.Embed(title=f"{ctx.author.name}'s portfolio", color=COLOR)
+        embed = discord.Embed(title=f"{member.name}'s portfolio", color=COLOR)
+        embed.add_field(name=f"Total Portfolio = {total_portfolio} <:happybrain:838485449512452157>", inline=False)
+
         for ticker, values in data.items():
             total_shares = sum([x[1] for x in values])
 
@@ -292,9 +298,6 @@ class Stocks(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command()
-    async def testbalance(self,ctx):
-        await ctx.send(f"{getStockBalance(ctx.author.id)}")
 
 
 def setup(bot):
