@@ -79,7 +79,7 @@ def deleteNote(memberid, note):
 def getTodo():
     cur.execute("SELECT * FROM todo;")
     res = cur.fetchall()
-    print(res)
+    # print(res)
     return res
 
 def deleteTodo(todo_item):
@@ -272,6 +272,13 @@ def addStocks(memberid, stock, amount, price):
     con.commit()
 
 
+def getStockBalance(memberid):
+    cur.execute(f"SELECT * FROM stocks WHERE discordid = {memberid}")
+    stocks = cur.fetchall()
+    for stock in stocks:
+        print(stock)
+
+
 def removeStocks(memberid, stock, amount):
     if not hasStocks(memberid, stock, amount):
         return
@@ -282,7 +289,7 @@ def removeStocks(memberid, stock, amount):
     num_to_remove = amount
     queries = []
     while num_to_remove > 0:
-        print(queries)
+        # print(queries)
         _, _, price, shares, timestamp = stocks[i]
 
         if shares > num_to_remove:
@@ -299,7 +306,7 @@ def removeStocks(memberid, stock, amount):
         i += 1
 
     for query in queries:
-        print(query)
+        # print(query)
         cur.execute(query)
 
     con.commit()
