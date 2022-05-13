@@ -24,8 +24,14 @@ class Database(commands.Cog):
             member = ctx.author
         brainCells = getUserBal(member.id)
         stockWorth = getStockBalance(member.id)
-        total = brainCells + stockWorth
-        embed = discord.Embed(title=f"{member.display_name} has a total net worth of {total} Brain cells!\n Brain Cells:  {brainCells} <:happybrain:838485449512452157> \n Stock Net Worth: {stockWorth} <:happybrain:838485449512452157>",colour=member.colour)
+        if stockWorth == 0:
+            embed = discord.Embed(title=f"{member.display_name} has {brainCells:.2f} Brain cells!",colour=member.colour)
+        elif stockWorth == None:
+            await ctx.send("There was an error calculating this.")
+            return
+        else:
+            total = brainCells + stockWorth
+            embed = discord.Embed(title=f"{member.display_name} has a total net worth of {total:.2f} Brain cells!\n Brain Cells:  {brainCells} <:happybrain:838485449512452157> \n Stock Net Worth: {stockWorth:.2f} <:happybrain:838485449512452157>",colour=member.colour)
         embed.set_thumbnail(
             url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
         await ctx.send(embed=embed)
