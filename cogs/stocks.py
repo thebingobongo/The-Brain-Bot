@@ -292,5 +292,10 @@ class Stocks(commands.Cog):
         await ctx.send(embed=embed)
 
 
+    @commands.command()
+    async def testbalance(self,ctx):
+        getStockBalance(ctx.author.id)
+
+
 def setup(bot):
     bot.add_cog(Stocks(bot))
