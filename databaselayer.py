@@ -2,6 +2,7 @@ import os
 
 import pymysql
 from dotenv import load_dotenv
+from cogs.stocks import make_request
 
 load_dotenv()
 hostname = os.getenv('HOST')
@@ -272,12 +273,26 @@ def addStocks(memberid, stock, amount, price):
     con.commit()
 
 
-def getStockBalance(memberid):
+def getStockBalance(ctx, memberid):
     cur.execute(f"SELECT * FROM stocks WHERE discordid = {memberid}")
     stocks = cur.fetchall()
+    total = 0.0
     for stock in stocks:
-        print(stock)
+        ticker = stock[1]
+        quantity = stock[3]
 
+        res = make_request(ticker, "quote")
+
+        try:
+            quote = res[ticker.upper()]["quote"]
+            price = float(quote["latestPrice"])
+        except Exception as e:
+            await ctx.send(f"Couldn't get the price of ${ticker.upper()} :(")
+            return
+
+        total += (price * quantity)
+
+    return total
 
 def removeStocks(memberid, stock, amount):
     if not hasStocks(memberid, stock, amount):

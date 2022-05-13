@@ -294,7 +294,7 @@ class Stocks(commands.Cog):
 
     @commands.command()
     async def testbalance(self,ctx):
-        getStockBalance(ctx.author.id)
+        await ctx.send(f"{getStockBalance(ctx.author.id)}")
 
 
 def setup(bot):
