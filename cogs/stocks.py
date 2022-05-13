@@ -250,12 +250,12 @@ class Stocks(commands.Cog):
         )
 
     @stock.command(pass_context=True)
-    async def portfolio(self, ctx, member:discord.Member=None):
+    async def portfolio(self, ctx, member: discord.Member = None):
 
         await ctx.trigger_typing()
 
         if member == None:
-            member == ctx.author
+            member = ctx.author
 
         stocks = getStocks(member.id)
 
