@@ -273,7 +273,7 @@ def addStocks(memberid, stock, amount, price):
     con.commit()
 
 
-def getStockBalance(ctx, memberid):
+def getStockBalance(memberid):
     cur.execute(f"SELECT * FROM stocks WHERE discordid = {memberid}")
     stocks = cur.fetchall()
     total = 0.0
