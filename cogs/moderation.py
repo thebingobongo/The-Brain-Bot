@@ -778,9 +778,11 @@ class Moderation(commands.Cog):
                 await message.add_reaction('<:kne:958959713272352848>')
             elif msgword.lower() in ["fez"]:
                 await message.add_reaction('<:fez:973716994073452595>')
-            elif msgword.lower() in ["maxinator","max"]:
+            elif msgword.lower() in ["maxinator"]:
                 await message.add_reaction("<a:deadpocoyo:974744641092071477>")
-
+            elif msgword.lower() in ['max']:
+                await message.add_reaction("<a:deadpocoyo:974744641092071477>")
+                await message.add_reaction("<:wenis:838097027392864316>")
 
 
         try:
