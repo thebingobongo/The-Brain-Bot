@@ -22,8 +22,10 @@ class Database(commands.Cog):
     async def balance(self, ctx, member: discord.Member = None):
         if member == None:
             member = ctx.author
-        res = getUserBal(member.id)
-        embed = discord.Embed(title=f"{member.display_name} has {res} Brain cells!",colour=member.colour)
+        brainCells = getUserBal(member.id)
+        stockWorth = getStockBalance(member.id)
+        total = brainCells + stockWorth
+        embed = discord.Embed(title=f"{member.display_name} has a total net worth of {total} Brain cells!\n Brain Cells:  {brainCells} <:happybrain:838485449512452157> \n Stock Net Worth: {stockWorth} <:happybrain:838485449512452157>",colour=member.colour)
         embed.set_thumbnail(
             url="https://media.discordapp.net/attachments/861788174249754634/863326727018905640/happybrain.png")
         await ctx.send(embed=embed)
