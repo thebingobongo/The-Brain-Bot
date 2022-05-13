@@ -256,6 +256,7 @@ class Stocks(commands.Cog):
 
         if member == None:
             member == ctx.author
+
         stocks = getStocks(member.id)
 
         data = defaultdict(lambda: [])
@@ -271,7 +272,7 @@ class Stocks(commands.Cog):
         total_portfolio = getStockBalance(member.id)
 
         embed = discord.Embed(title=f"{member.name}'s portfolio", color=COLOR)
-        embed.add_field(name=f"Total Portfolio = {total_portfolio} <:happybrain:838485449512452157>", inline=False)
+        embed.add_field(name=f"Total Portfolio = {total_portfolio:.2f} <:happybrain:838485449512452157>", inline=False)
 
         for ticker, values in data.items():
             total_shares = sum([x[1] for x in values])
