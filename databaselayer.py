@@ -287,8 +287,8 @@ def getStockBalance(ctx, memberid):
             quote = res[ticker.upper()]["quote"]
             price = float(quote["latestPrice"])
         except Exception as e:
-            await ctx.send(f"Couldn't get the price of ${ticker.upper()} :(")
-            return
+            # await ctx.send(f"Couldn't get the price of ${ticker.upper()} :(")
+            return None
 
         total += (price * quantity)
 
