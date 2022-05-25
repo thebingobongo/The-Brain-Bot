@@ -25,7 +25,7 @@ class Database(commands.Cog):
         brainCells = getUserBal(member.id)
         stockWorth = getStockBalance(member.id)
         if stockWorth == 0:
-            embed = discord.Embed(title=f"{member.display_name} has {brainCells:.2f} Brain cells!",colour=member.colour)
+            embed = discord.Embed(title=f"{member.display_name} has {brainCells} Brain cells!",colour=member.colour)
         elif stockWorth == None:
             await ctx.send("There was an error calculating this.")
             return
