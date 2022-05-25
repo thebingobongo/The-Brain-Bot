@@ -783,6 +783,8 @@ class Moderation(commands.Cog):
             elif msgword.lower() in ['max']:
                 await message.add_reaction("<a:deadpocoyo:974744641092071477>")
                 await message.add_reaction("<:wenis:838097027392864316>")
+            elif msgword.lower() in ['lemon','john','johnlemon']:
+                await message.add_reaction("<:lemonuwu:978879122845609984>")
 
 
         try:
