@@ -228,7 +228,13 @@ class Misc(commands.Cog):
     async def kill(self, ctx):
         await ctx.send("***bang bang***")
 
+    @commands.command()
+    async def zuko(self, ctx):
+        await ctx.send("https://cdn.discordapp.com/attachments/861788174249754634/989388168262483989/salah.jpeg")
 
+    @commands.command()
+    async def agni(self, ctx):
+        await ctx.send("https://tenor.com/view/gigachad-chad-gif-20773266")
 
 def setup(client):
     client.add_cog(Misc(client))
