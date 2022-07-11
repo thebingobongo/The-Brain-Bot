@@ -789,7 +789,10 @@ class Moderation(commands.Cog):
                 await message.add_reaction("<:agni:989387239769374720>")
             elif msgword.lower() in ['zxko', 'zuko', 'liverpool']:
                 await message.add_reaction("<:liverpool:989387712115134494>")
-
+            elif msgword.lower() in ['lei', 'lay', "lee"]:
+                await message.add_reaction("<a:winetime:995883860657184848>")
+            elif msgword.lower() in ["konsai", 'konsay', 'custer', 'citches']:
+                await message.add_reaction("<a:noted:995883895742550096>")
 
         try:
             if msg[0] == ":" and msg[-1] == ":":

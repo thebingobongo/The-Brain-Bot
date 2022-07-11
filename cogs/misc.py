@@ -236,5 +236,14 @@ class Misc(commands.Cog):
     async def agni(self, ctx):
         await ctx.send("https://tenor.com/view/gigachad-chad-gif-20773266")
 
+    @commands.command()
+    async def lei(self, ctx):
+        await ctx.send("eat shit and die")
+
+    @commands.command()
+    async def konsai(self, ctx):
+        await ctx.send("https://cdn.discordapp.com/attachments/835370412161630270/995884884566474772/unknown.png")
+
+
 def setup(client):
     client.add_cog(Misc(client))
