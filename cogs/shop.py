@@ -12,9 +12,9 @@ class Shop(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    minute_mute = {'name': '1 Minute Mute', 'cost': 100, 'effect': "You can mute anyone in the server in a VC for 1 minute."}
-    dj_role = {'name': 'DJ Role', 'cost': 300, 'effect': 'You gain the DJ role for the music bot.'}
-    book = {'name': 'Book', 'cost': 30, 'effect': 'Gives you access to the .study command.'}
+    minute_mute = {'name': '1 Minute Mute', 'cost': 2000, 'effect': "You can mute anyone in the server in a VC for 1 minute."}
+    dj_role = {'name': 'DJ Role', 'cost': 7500, 'effect': 'You gain the DJ role for the music bot.'}
+    book = {'name': 'Book', 'cost': 2000, 'effect': 'Gives you access to the .study command.'}
     items = {'DJ Role':  dj_role, 'Book': book, "1 Minute Mute":minute_mute}
 
     @commands.command()
@@ -60,10 +60,10 @@ class Shop(commands.Cog):
                 removeItem(ctx.author.id, "Book")
                 return
             elif bookburn in [4, 5]:
-                earned = random.randint(100, 200)
+                earned = random.randint(1500, 2500)
                 sendstring = f"You learned a lot from your book! You got {earned} Brain Cells!"
             elif bookburn in [3, 6, 7, 8, 9]:
-                earned = random.randint(20, 80)
+                earned = random.randint(1000, 1500)
                 sendstring = f"Studying has earned you {earned} Brain Cells!"
 
             embed = discord.Embed(title=sendstring,
