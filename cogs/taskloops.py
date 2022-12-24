@@ -33,7 +33,7 @@ class Taskloops(commands.Cog):
                     ammount = 5
                 addBal(member.id, ammount)
 
-    @tasks.loop(minutes=240)
+    @tasks.loop(minutes=480)
     async def waterreminder(self):
         # thevat = self.client.get_guild(id=831211215375433728)
         # thevat = discord.utils.get(self.client.guilds, id=831211215375433728)
