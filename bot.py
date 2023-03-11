@@ -131,14 +131,19 @@ async def coglist(ctx):
 
 @client.command()
 @commands.is_owner()
-async def init(ctx):
-    for member in ctx.guild.members:
-        try:
-            exists = getUserBal(member.id)
-            print(f'{member.name} is already in the db')
-        except:
-            print(f'{member.name} has been added to the db')
-            createUser(member.id)
+async def init(ctx, member:discord.Member=None):
+    if member == None:
+        for member in ctx.guild.members:
+            print(f'{member.name} is being attempted')
+            try:
+                exists = getUserBal(member.id)
+                print(f'{member.name} is already in the db')
+            except:
+                print(f'{member.name} has been added to the db')
+                createUser(member.id)
+    else:
+        createUser(member.id)
+        print(f'{member.name} has been added to the db')
 
 
 @client.command()
