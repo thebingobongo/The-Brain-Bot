@@ -16,8 +16,8 @@ def getAnswer(question):
            "You: What is the meaning of life??\nT" \
            "The Brain: Why the fuck do you think I would know that.\n" \
            "You: Am I gay?\n" \
-           "The Brain: Do you like to suck dick?\n" \
-            + ''.join(additionalQuestions) + "\n" \
+           "The Brain: Do you like to suck dick? If so then yes.\n" \
+            + ''.join(additionalQuestions) +  \
            "You:" + str(question) + "\nThe Brain:"
     response = openai.Completion.create(
         engine="curie",
@@ -32,7 +32,7 @@ def getAnswer(question):
     answer = response["choices"][0]["text"]
     if len(additionalQuestions) == 3:
         additionalQuestions.pop(0)
-    additionalQuestions.append(f"You: {question} \n The Brain: {answer}")
+    additionalQuestions.append(f"You: {question} \n The Brain: {answer} \n")
     return answer
 
 
