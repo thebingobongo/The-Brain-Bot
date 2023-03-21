@@ -328,25 +328,26 @@ class Moderation(commands.Cog):
         knight_role = discord.utils.get(ctx.guild.roles, id=831213165105643520)
         pawn_role = discord.utils.get(ctx.guild.roles, id=831213206155952179)
         member_role = discord.utils.get(ctx.guild.roles, id=835286042176127027)
+
         if rook_role in member.roles:
-            await ctx.send("{0.mention} is already a Rook!".format(member))
+            await ctx.send(f"{member.mention} is already a {rook_role.name}!")
         elif bishop_role in member.roles:
             await member.remove_roles(bishop_role, reason=reason)
             await member.add_roles(rook_role, reason=reason)
             updateUserRole(member.id, 831227767671619636)
-            await ctx.send("{0.mention} has been promoted to Rook!".format(member))
+            await ctx.send(f"{member.mention} has been promoted to {rook_role.name}!")
         elif knight_role in member.roles:
             await member.remove_roles(knight_role, reason=reason)
             await member.add_roles(bishop_role, reason=reason)
-            await ctx.send("{0.mention} has been promoted to Bishop!".format(member))
+            await ctx.send(f"{member.mention} has been promoted to {bishop_role.name}!")
             updateUserRole(member.id, 831213133066534993)
         elif pawn_role in member.roles:
             await member.remove_roles(pawn_role, reason=reason)
             await member.add_roles(knight_role, reason=reason)
-            await ctx.send("{0.mention} has been promoted to Knight!".format(member))
+            await ctx.send(f"{member.mention} has been promoted to {knight_role.name}!")
         elif member_role in member.roles:
             await member.add_roles(pawn_role, reason=reason)
-            await ctx.send("{0.mention} has been promoted to Pawn!".format(member))
+            await ctx.send(f"{member.mention} has been promoted to {pawn_role.name}!")
         else:
             await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
             return
@@ -371,21 +372,21 @@ class Moderation(commands.Cog):
         if rook_role in member.roles:
             await member.remove_roles(rook_role, reason=reason)
             await member.add_roles(bishop_role, reason=reason)
-            await ctx.send("{0.mention} has been demoted to bishop.".format(member))
+            await ctx.send(f"{member.mention} has been demoted to {bishop_role.name}.")
             updateUserRole(member.id, 831213133066534993)
         elif bishop_role in member.roles:
             await member.remove_roles(bishop_role, reason=reason)
             await member.add_roles(knight_role, reason=reason)
-            await ctx.send("{0.mention} has been demoted to a Knight.".format(member))
+            await ctx.send(f"{member.mention} has been demoted to a {knight_role.name}.")
             updateUserRole(member.id, 831213165105643520)
         elif knight_role in member.roles:
             await member.remove_roles(knight_role, reason=reason)
             await member.add_roles(pawn_role, reason=reason)
-            await ctx.send("{0.mention} has been demoted to Pawn.".format(member))
+            await ctx.send(f"{member.mention} has been demoted to {pawn_role.name}.")
             updateUserRole(member.id, 831213206155952179)
         elif pawn_role in member.roles:
             await member.remove_roles(pawn_role, reason=reason)
-            await ctx.send("{0.mention} has been demoted to Member.".format(member))
+            await ctx.send(f"{member.mention} has been demoted to Member.")
         else:
             await ctx.send("There was an error. Either that member is a Mod, or is not a pawn yet.")
             return
