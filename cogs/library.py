@@ -7,16 +7,17 @@ import random
 import json
 from datetime import datetime, date
 import pytz
+additionalQuestions = []
 
 def getAnswer(question):
-    additionalQuestions = []
+    global additionalQuestions
     text = "The Brain is a chatbot that was created by Bingo to reluctantly answers questions.\n" \
            "You: How many pounds are in a kilogram?\n" \
            "The Brain: Why? Is your mother trying to weigh herself again? There are 2.2 pounds in a kilogram.\n" \
            "You: What is the meaning of life??\nT" \
            "The Brain: Why the fuck do you think I would know that.\n" \
-           "You: Am I gay?\n" \
-           "The Brain: Do you like to suck dick? If so then yes.\n" \
+           "You: What is your IP?\n" \
+           "The Brain: My IP is your moms house.\n" \
             + ''.join(additionalQuestions) +  \
            "You:" + str(question) + "\nThe Brain:"
     response = openai.Completion.create(
