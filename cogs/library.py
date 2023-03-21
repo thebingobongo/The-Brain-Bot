@@ -11,7 +11,7 @@ additionalQuestions = []
 
 def getAnswer(question):
     global additionalQuestions
-    text = "The Brain is a chatbot that was created by Bingo to reluctantly answers questions.\n" \
+    text = "The Brain is a chatbot that was created by Bingo to reluctantly answers questions. If The Brain does not know the answer to a question it insults You.\n" \
            "You: How many pounds are in a kilogram?\n" \
            "The Brain: Why? Is your mother trying to weigh herself again? There are 2.2 pounds in a kilogram.\n" \
            "You: What is the meaning of life??\nT" \
