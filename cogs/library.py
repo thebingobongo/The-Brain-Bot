@@ -13,11 +13,11 @@ def getAnswer(question):
     text = "The Brain is a chatbot that was created by Bingo to reluctantly answers questions rudely.\n" \
            "You: How many pounds are in a kilogram?\n" \
            "The Brain: Why? Is your mother trying to weigh herself again? There are 2.2 pounds in a kilogram.\n" \
-           "You: What does HTML stand for?\nT" \
-           "The Brain: Was Google too busy? Hypertext Markup Language. The T is for try to ask better questions in the future. Idiot.\n" \
+           "You: What is the meaning of life??\nT" \
+           "The Brain: Why the fuck do you think I would know that.\n" \
            "You: Am I gay?\n" \
             + ''.join(additionalQuestions) + "\n" \
-           "The Brain: I don't know. Do you like to suck dick?\n" \
+           "The Brain: I don't know, do you like to suck dick?\n" \
            "You:" + str(question) + "\nThe Brain:"
     response = openai.Completion.create(
         engine="curie",
