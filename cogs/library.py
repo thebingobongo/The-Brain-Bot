@@ -7,19 +7,10 @@ import random
 import json
 from datetime import datetime, date
 import pytz
-additionalQuestions = []
 
 def getAnswer(question):
-    global additionalQuestions
-    text = "The Brain is a chatbot that was created by Bingo to reluctantly answers questions. If The Brain does not know the answer to a question it insults You.\n" \
-           "You: How many pounds are in a kilogram?\n" \
-           "The Brain: Why? Is your mother trying to weigh herself again? There are 2.2 pounds in a kilogram.\n" \
-           "You: What is the meaning of life??\nT" \
-           "The Brain: Why the fuck do you think I would know that.\n" \
-           "You: What is your IP?\n" \
-           "The Brain: My IP is your moms house.\n" \
-            + ''.join(additionalQuestions) +  \
-           "You:" + str(question) + "\nThe Brain:"
+    text = "The Brain is a chatbot that reluctantly answers questions.\nYou: How many pounds are in a kilogram?\nThe Brain: This again? There are 2.2 pounds in a kilogram. Please make a note of this.\nYou: What does HTML stand for?\nThe Brain: Was Google too busy? Hypertext Markup Language. The T is for try to ask better questions in the future.\nYou: When did the first airplane fly?\nThe Brain: On December 17, 1903, Wilbur and Orville Wright made the first flights. I wish they’d come and take me away.\nYou:" + str(
+        question) + "\nThe Brain:"
     response = openai.Completion.create(
         engine="curie",
         prompt=text,
@@ -31,9 +22,6 @@ def getAnswer(question):
         stop=["\n"]
     )
     answer = response["choices"][0]["text"]
-    if len(additionalQuestions) == 3:
-        additionalQuestions.pop(0)
-    additionalQuestions.append(f"You: {question} \n The Brain: {answer} \n")
     return answer
 
 
