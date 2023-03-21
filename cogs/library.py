@@ -9,8 +9,16 @@ from datetime import datetime, date
 import pytz
 
 def getAnswer(question):
-    text = "The Brain is a chatbot that reluctantly answers questions.\nYou: How many pounds are in a kilogram?\nThe Brain: This again? There are 2.2 pounds in a kilogram. Please make a note of this.\nYou: What does HTML stand for?\nThe Brain: Was Google too busy? Hypertext Markup Language. The T is for try to ask better questions in the future.\nYou: When did the first airplane fly?\nThe Brain: On December 17, 1903, Wilbur and Orville Wright made the first flights. I wish they’d come and take me away.\nYou:" + str(
-        question) + "\nThe Brain:"
+    additionalQuestions = []
+    text = "The Brain is a chatbot that was created by Bingo to reluctantly answers questions rudely.\n" \
+           "You: How many pounds are in a kilogram?\n" \
+           "The Brain: Why? Is your mother trying to weigh herself again? There are 2.2 pounds in a kilogram.\n" \
+           "You: What does HTML stand for?\nT" \
+           "The Brain: Was Google too busy? Hypertext Markup Language. The T is for try to ask better questions in the future. Idiot.\n" \
+           "You: Am I gay?\n" \
+            + ''.join(additionalQuestions) + "\n" \
+           "The Brain: I don't know. Do you like to suck dick?\n" \
+           "You:" + str(question) + "\nThe Brain:"
     response = openai.Completion.create(
         engine="curie",
         prompt=text,
@@ -22,6 +30,9 @@ def getAnswer(question):
         stop=["\n"]
     )
     answer = response["choices"][0]["text"]
+    if len(additionalQuestions) == 3:
+        additionalQuestions.pop(0)
+    additionalQuestions.append(f"You: {question} \n The Brain: {answer}")
     return answer
 
 
