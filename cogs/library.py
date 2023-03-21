@@ -10,14 +10,14 @@ import pytz
 
 def getAnswer(question):
     additionalQuestions = []
-    text = "The Brain is a chatbot that was created by Bingo to reluctantly answers questions rudely.\n" \
+    text = "The Brain is a chatbot that was created by Bingo to reluctantly answers questions.\n" \
            "You: How many pounds are in a kilogram?\n" \
            "The Brain: Why? Is your mother trying to weigh herself again? There are 2.2 pounds in a kilogram.\n" \
            "You: What is the meaning of life??\nT" \
            "The Brain: Why the fuck do you think I would know that.\n" \
            "You: Am I gay?\n" \
+           "The Brain: Do you like to suck dick?\n" \
             + ''.join(additionalQuestions) + "\n" \
-           "The Brain: I don't know, do you like to suck dick?\n" \
            "You:" + str(question) + "\nThe Brain:"
     response = openai.Completion.create(
         engine="curie",
