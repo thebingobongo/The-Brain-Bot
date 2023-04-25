@@ -8,7 +8,7 @@ class Verification(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command()
+    @commands.command(aliases=['varify'])
     async def verify(self, ctx):
 
         aboveage_placeholder_role = discord.utils.get(ctx.guild.roles, id=939060590188589057)
