@@ -36,13 +36,13 @@ class Moderation(commands.Cog):
         underage_role = discord.utils.get(ctx.guild.roles, id=839245778136072293)
 
         if underage_role not in member.roles and aboveage_placeholder_role not in member.roles:
-            m = await ctx.send("Please ask {member.name} to react to the age message.")
+            m = await ctx.send(f"Please ask {member.name} to react to the age message.")
             await asyncio.sleep(30)
             await m.delete()
             return
             # await member.add_roles(aboveage_role)
 
-        if aboveage_placeholder_role in ctx.author.roles:
+        if aboveage_placeholder_role in member.roles:
             await member.add_roles(aboveage_role)
             await member.remove_roles(aboveage_placeholder_role)
 
