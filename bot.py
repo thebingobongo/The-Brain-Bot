@@ -141,9 +141,12 @@ async def init(ctx, member:discord.Member=None):
             except:
                 print(f'{member.name} has been added to the db')
                 createUser(member.id)
+        await ctx.send("All members have been initialized.")
     else:
         createUser(member.id)
         print(f'{member.name} has been added to the db')
+        await ctx.send(f"{member.name} has been initialized.")
+
 
 
 @client.command()
